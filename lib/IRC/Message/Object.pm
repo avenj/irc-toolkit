@@ -1,4 +1,4 @@
-package IRC::Messsage::Object;
+package IRC::Message::Object;
 
 use strictures 1;
 use Carp;
@@ -8,8 +8,6 @@ use POE::Filter::IRCv3;
 
 use Exporter 'import';
 our @EXPORT_OK = 'ircmsg';
-
-use namespace::clean -except => 'import';
 
 sub ircmsg {
   __PACKAGE__->new(@_)
@@ -74,7 +72,7 @@ has 'tags' => (
   isa       => sub {
     ref $_[0] eq 'HASH'
     or confess "'tags =>' not a HASH: $_[0]"
-  }
+  },
   predicate => 'has_tags',
   writer    => 'set_tags',
   default   => sub {  {}  },
@@ -87,7 +85,7 @@ sub BUILDARGS {
   if (not defined $params{command}) {
     if (defined $params{raw_line}) {
       ## Try to create self from raw_line instead:
-      my $filt = $self->__build_filter;
+      my $filt = $class->__build_filter;
       my $refs = $filt->get( [$params{raw_line}] );
       %params = %{ $refs->[0] } if @$refs;
     } else {
