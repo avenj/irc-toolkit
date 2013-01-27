@@ -161,14 +161,14 @@ Returns an L<IRC::Message::Object> whose C<command> carries an
 appropriate prefix (one of B<ctcp>, B<ctcpreply>, or B<dcc_request>) prepended
 to the CTCP command:
 
-  ## '$ev' is your incoming or outgoing ::Pluggable::IRC::Event
-  ## CTCP VERSION
+  ## '$ev' is your incoming or outgoing IRC::Message::Object
+  ## CTCP VERSION request:
   $ev->command eq 'ctcp_version' 
 
-  ## Reply to CTCP VERSION
+  ## Reply to CTCP VERSION:
   $ev->command eq 'ctcpreply_version'
 
-  ## DCC SEND
+  ## DCC SEND:
   $ev->command eq 'dcc_request_send' 
 
 Returns empty list if no valid CTCP was found.
