@@ -9,8 +9,14 @@ our @EXPORT = qw/
   mode_to_hash
 /;
 
-sub mode_array_to_string {
+sub mode_array_to_str {
   my ($self, $array, $maxmodes) = @_;
+  ## FIXME
+  ...
+}
+
+sub mode_hash_to_str {
+  my ($self, $hash, $maxmodes) = @_;
   ## FIXME
   ...
 }

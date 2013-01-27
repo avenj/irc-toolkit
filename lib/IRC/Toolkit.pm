@@ -45,7 +45,7 @@ IRC::Toolkit - Collected IRC utilities
 
 =head1 DESCRIPTION
 
-A collection of useful IRC-related utilities:
+A collection of useful IRC-related utilities.
 
 L<IRC::Message::Object>; objects representing incoming or outgoing IRC events
 
