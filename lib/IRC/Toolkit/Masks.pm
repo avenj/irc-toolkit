@@ -3,7 +3,15 @@ package IRC::Toolkit::Masks;
 use Carp;
 use strictures 1;
 
+use Exporter 'import';
+our @EXPORT = qw/
+  matches_mask
+  normalize_mask
+  parse_user
+/;
+
 use IRC::Toolkit::Case;
+
 
 sub matches_mask {
   ## Imported from IRC::Utils:
@@ -64,3 +72,57 @@ sub parse_user {
 
 
 1;
+
+=pod
+
+=head1 NAME
+
+IRC::Toolkit::Masks - IRC mask-related utilities
+
+=head1 SYNOPSIS
+
+  use IRC::Toolkit::Masks;
+
+  if ( matches_mask($mask, $host, $casemap) ) {
+    ...
+  }
+
+  my $bmask = normalize_mask( 'somenick' );  # somenick!*@*
+  my $bmask = normalize_mask( 'user@host' ); # *!user@host
+
+  my ($nick, $user, $host) = parse_user( $full );
+  my $nick = parse_user( $full );
+
+=head1 DESCRIPTION
+
+IRC mask manipulation utilities derived from L<IRC::Utils>.
+
+=head2 matches_mask
+
+Takes an IRC mask, a string to match it against, and an optional IRC casemap
+(see L<IRC::Toolkit::Case>).
+
+Returns boolean true if the match applies successfully.
+
+=head2 normalize_mask
+
+Takes an IRC mask and returns the "normalized" version of the mask.
+
+=head2 parse_user
+
+Splits an IRC mask into components.
+
+Returns all available pieces (nickname, username, and host, if applicable) in
+list context.
+
+Returns just the nickname in scalar context.
+
+=head1 AUTHOR
+
+Mask-matching and normalization code derived from L<IRC::Utils>, 
+copyright Chris Williams
+
+Jon Portnoy L<avenj@cobaltirc.org>
+
+=cut
+
