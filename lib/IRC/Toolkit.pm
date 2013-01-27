@@ -40,12 +40,13 @@ IRC::Toolkit - Collected IRC utilities
 
 =head1 SYNOPSIS
 
-  ## Import all of the tools:
+  ## Import all of the included Tookit:: modules:
   use IRC::Toolkit;
 
 =head1 DESCRIPTION
 
-A collection of useful IRC-related utilities.
+A collection of useful IRC-related utilities. See their respective
+documentation, below.
 
 L<IRC::Message::Object>; objects representing incoming or outgoing IRC events
 
