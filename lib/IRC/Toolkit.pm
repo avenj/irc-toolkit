@@ -62,6 +62,12 @@ L<IRC::Toolkit::Modes>; Mode-line parsing tools
 
 L<IRC::Toolkit::Parser>; Functional interface to L<POE::Filter::IRCv3>
 
+=head1 SEE ALSO
+
+L<IRC::Utils>
+
+L<Parse::IRC>
+
 =head1 AUTHOR
 
 Jon Portnoy <avenj@cobaltirc.org>

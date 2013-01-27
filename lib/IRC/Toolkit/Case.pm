@@ -113,6 +113,6 @@ Returns boolean true if the strings are equal
 
 Jon Portnoy <avenj@cobaltirc.org>
 
-Inspired by L<IRC::Utils>, copyright Chris Williams
+Inspired by L<IRC::Utils>, copyright Chris Williams, Hinrik et al
 
 =cut
