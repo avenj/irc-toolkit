@@ -13,8 +13,14 @@ sub ircmsg {
   __PACKAGE__->new(@_)
 }
 
+=pod
+
+=for Pod::Coverage truncate
+
+=cut
 sub truncate {
-  ...
+  my ($self) = @_;
+
   ## FIXME truncate raw_line to 512 *with* \r\n
   ##  but *not* including message tags
   ##  (and trailing space after them)
@@ -26,14 +32,14 @@ has 'command' => (
   required  => 1,
   is        => 'ro',
   predicate => 'has_command',
-  writer    => 'set_command',
+  writer    => '_set_command',
 );
 
 has 'prefix' => (
   is        => 'ro',
   lazy      => 1,
   predicate => 'has_prefix',
-  writer    => 'set_prefix',
+  writer    => '_set_prefix',
   default   => sub { '' },
 );
 
@@ -45,7 +51,7 @@ has 'params' => (
     or confess "'params =>' not an ARRAY: $_[0]"
   },
   predicate => 'has_params',
-  writer    => 'set_params',
+  writer    => '_set_params',
   default   => sub { [] },
 );
 
@@ -53,7 +59,7 @@ has 'raw_line' => (
   is        => 'ro',
   lazy      => 1,
   predicate => 'has_raw_line',
-  writer    => 'set_raw_line',
+  writer    => '_set_raw_line',
   default   => sub {
     my ($self) = @_;
     my %hash;
@@ -74,9 +80,15 @@ has 'tags' => (
     or confess "'tags =>' not a HASH: $_[0]"
   },
   predicate => 'has_tags',
-  writer    => 'set_tags',
+  writer    => '_set_tags',
   default   => sub {  {}  },
 );
+
+=pod
+
+=for Pod::Coverage BUILDARGS
+
+=cut
 
 sub BUILDARGS {
   my $class = shift;
