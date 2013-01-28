@@ -9,6 +9,8 @@ our @EXPORT = qw/
   irc_line_from_ref
 /;
 
+use Scalar::Util 'reftype';
+
 use POE::Filter::IRCv3;
 my $filter = 'POE::Filter::IRCv3';
 
@@ -22,7 +24,7 @@ sub irc_ref_from_line {
 sub irc_line_from_ref {
   my $ref = shift;
   confess "Expected a HASH and optional filter arguments"
-    unless ref $ref eq 'HASH';
+    unless reftype $ref eq 'HASH';
   $filter->new(@_)->put([$ref])->[0]
 }
 
