@@ -19,13 +19,13 @@ our @EXPORT = qw/
 sub mode_array_to_str {
   my ($self, $array, $maxmodes) = @_;
   ## FIXME
-  ...
+  die "Unimplemented"
 }
 
 sub mode_hash_to_str {
   my ($self, $hash, $maxmodes) = @_;
   ## FIXME
-  ...
+  die "Unimplemented"
 }
 
 sub mode_to_array {
