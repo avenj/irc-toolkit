@@ -35,7 +35,7 @@ sub import {
 
 =head1 NAME
 
-IRC::Toolkit - Collected IRC utilities
+IRC::Toolkit - Useful IRC objects and utilities
 
 =head1 SYNOPSIS
 
