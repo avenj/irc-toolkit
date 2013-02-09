@@ -4,6 +4,12 @@ use 5.10.1;
 use strictures 1;
 use Carp;
 
+=pod
+
+=for Pod::Coverage FLAG MODE PARAM
+
+=cut
+
 sub FLAG  () { 0 }
 sub MODE  () { 1 }
 sub PARAM () { 2 }
@@ -23,7 +29,7 @@ sub new {
 
 sub flag  { $_[0]->[FLAG] }
 sub char  { $_[0]->[MODE] }
-sub param { $_[0]->[PARAM] // () }
+sub param { $_[0]->[PARAM] }
 
 sub as_string {
   my ($self) = @_;
@@ -64,9 +70,25 @@ into objects:
 
 Also see L<IRC::Mode::Set>
 
+=head2 new
+
+Constructs a new mode change; expects at least a flag and mode.
+
 =head2 as_string
 
 Produces a mode string (with params attached) for this single mode change.
+
+=head2 char
+
+The mode character.
+
+=head2 flag
+
+The '-' or '+' flag for this mode change.
+
+=head2 param
+
+The parameter attached to the mode, if any.
 
 =head1 AUTHOR
 

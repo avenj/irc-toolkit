@@ -178,6 +178,11 @@ sub reset {
   $self
 }
 
+=pod
+
+=for Pod::Coverage BUILD
+
+=cut
 
 sub BUILD {
   my ($self) = @_;
@@ -301,6 +306,11 @@ This is a data structure in the form of:
   ]
 
 Also see L<IRC::Toolkit::Modes/mode_to_array>
+
+=head2 modes_as_objects
+
+Returns a list of L<IRC::Mode::Single> objects constructed from our current
+L</mode_array>.
 
 =head2 mode_string
 
