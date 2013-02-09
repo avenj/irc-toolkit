@@ -3,7 +3,7 @@
 
 0.070001  (09 Feb 2013)
   Add IRC::Mode::Single, IRC::Mode::Set objects
-   (moved from IRC::Server::Pluggable)
+   (extracted from IRC::Server::Pluggable)
 
 
 0.06    (01 Feb 2013)
