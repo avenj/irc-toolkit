@@ -188,3 +188,150 @@ sub BUILD {
   
 
 1;
+
+=pod
+
+=head1 NAME
+
+IRC::Mode::Set - A set of parsed IRC mode changes
+
+=head1 SYNOPSIS
+
+  ## From a mode string:
+  my $from_string = IRC::Mode::Set->new(
+    mode_string => '+o-o+v avenj Joah Gilded',
+
+    ## Defaults, should vaguely match ISUPPORT CHANMODES parameters:
+    param_always => [ split //, 'bkohv' ],
+    param_on_set => [ 'l' ],
+  );
+
+  my $mode_array = $from_string->mode_array;
+  ## $mode_array looks like:
+  ##   [ '+', 'o', 'avenj' ],
+  ##   [ '-', 'o', 'Joah'  ],
+  ##   [ '+', 'v', 'Gilded' ],
+
+  ## Iterate over each mode change:
+  while (my $change = $from_string->next) {
+    ## $change is set to each individual array as seen above, in turn
+  }
+
+  ## Reset ->next() iterator:
+  $from_string->reset;
+
+  ## Like above, but get IRC::Mode::Single objects:
+  while (my $this_mode = $from_string->next(as_object => 1) ) {
+    ## $this_mode is an IRC::Mode::Single
+  }
+
+  ## Create a new mode set from an ARRAY
+  ## (such as produced by IRC::Toolkit::Modes)
+  my $from_array = IRC::Mode::Set->new(
+    mode_array => $array,
+  );
+
+  ## Get a string back out:
+  my $str_from_array = $from_array->mode_string;
+
+  ## Split a Set into multiple Sets with a max of $count items each:
+  my @sets = $from_array->split_mode_set($count);
+  
+  ## Create a new Set containing matching items from this Set:
+  my $modes_match = $from_array->new_from_mode('v');
+  my $args_match  = $from_array->new_from_params('Joah');
+
+=head1 DESCRIPTION
+
+These objects provide a simple parser interface to IRC mode changes.
+
+An understanding of the C<CHANMODES=> directive in C<ISUPPORT> will help
+immensely -- see L<http://www.irc.org/tech_docs/005.html>
+
+=head2 new
+
+  my $set = IRC::Mode::Set->new(
+    mode_string => '+o-o avenj Joah',
+  );
+
+  ## Or with IRC::Toolkit::Modes ->
+  my $mode_array = mode_to_array($string);
+  my $set = IRC::Mode::Set->new(
+    mode_array  => $mode_array,
+  );
+
+Create a new IRC::Mode::Set from either a string or an ARRAY produced by
+L<IRC::Toolkit::Modes>.
+
+B<param_always> can be specified (as a string or an ARRAY of modes) to
+indicate modes that are expected to always take a parameter. Defaults to
+'bkohv'
+
+B<param_on_set> can be specified (as a string or an ARRAY of modes) to
+indicate modes that are expected to take a parameter only when set. Defaults
+to 'l'
+
+=head2 new_from_mode
+
+Called on an instanced Mode::Set.
+
+Takes a single mode character.
+
+Returns a new Mode::Set composed of only modes in the existing set modifying
+the specified mode character.
+
+=head2 new_from_params
+
+Called on an instanced Mode::Set.
+
+Takes a pattern or regexp object.
+
+Returns a new Mode::Set composed of only modes in the existing set with
+parameters matching the pattern.
+
+=head2 mode_array
+
+Returns the array-of-arrays containing each change in the Set.
+
+This is a data structure in the form of:
+
+  [
+    [ $mode_flag, $mode_char, $param ],
+    ...
+  ]
+
+Also see L<IRC::Toolkit::Modes/mode_to_array>
+
+=head2 mode_string
+
+Returns the string representing the mode change.
+
+=head2 params
+
+Retrieve only the parameters to the mode change (as an ARRAY)
+
+=head2 next
+
+Iterates the array-of-arrays composing the Set.
+
+Returns the next ARRAY in the set (or empty list if none left).
+
+If C<< as_object => 1 >> is specified, an L<IRC::Mode::Single> object is
+returned.
+
+Reset to top by calling L</reset>.
+
+=head2 reset
+
+Resets the L</next> iterator.
+
+=head2 split_mode_set
+
+Given an integer parameter C<$x>, splits a Set into smaller Sets containing at
+most C<$x> single mode changes.
+
+=head1 AUTHOR
+
+Jon Portnoy <avenj@cobaltirc.org>
+
+=cut
