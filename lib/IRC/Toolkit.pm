@@ -49,6 +49,10 @@ documentation, below.
 
 L<IRC::Message::Object>; objects representing incoming or outgoing IRC events
 
+L<IRC::Mode::Single>; objects representing a single mode change
+
+L<IRC::Mode::Set>; objects representing a set of mode changes
+
 L<IRC::Toolkit::Case>; RFC-compliant case folding tools
 
 L<IRC::Toolkit::Colors>; Color/format interpolation in strings
