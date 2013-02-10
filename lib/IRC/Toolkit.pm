@@ -42,6 +42,13 @@ IRC::Toolkit - Useful IRC objects and utilities
   ## Import all of the included Tookit:: modules:
   use IRC::Toolkit;
 
+  ## Import specific modules:
+  use IRC::Toolkit qw/
+    CTCP
+    Masks
+    Modes
+  /;
+
 =head1 DESCRIPTION
 
 A collection of useful IRC-related utilities. See their respective
@@ -64,6 +71,8 @@ L<IRC::Toolkit::Masks>; Hostmask parsing and matching tools
 L<IRC::Toolkit::Modes>; Mode-line parsing tools
 
 L<IRC::Toolkit::Parser>; Functional interface to L<POE::Filter::IRCv3>
+
+L<IRC::Toolkit::TS6>; Produce TS6 IDs
 
 =head1 SEE ALSO
 
