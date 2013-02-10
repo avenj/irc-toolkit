@@ -337,6 +337,8 @@ Resets the L</next> iterator.
 Given an integer parameter C<$x>, splits a Set into smaller Sets containing at
 most C<$x> single mode changes.
 
+Defaults to 4, which is a common C<ISUPPORT MODES=> setting.
+
 =head1 AUTHOR
 
 Jon Portnoy <avenj@cobaltirc.org>
