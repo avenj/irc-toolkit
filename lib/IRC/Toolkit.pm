@@ -42,6 +42,13 @@ IRC::Toolkit - Useful IRC objects and utilities
   ## Import all of the included Tookit:: modules:
   use IRC::Toolkit;
 
+  ## Import specific modules:
+  use IRC::Toolkit qw/
+    CTCP
+    Masks
+    Modes
+  /;
+
 =head1 DESCRIPTION
 
 A collection of useful IRC-related utilities. See their respective
