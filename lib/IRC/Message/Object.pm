@@ -224,7 +224,12 @@ Shortcut for C<< IRC::Message::Object->new >>
 
 =head3 command
 
-The parsed command received. (No case-folding takes place.)
+The parsed command received.
+
+Note that if the C<command> is set at construction time, 
+no case-folding takes place.
+However, specifying a C<raw_line> at construction feeds 
+L<POE::Filter::IRCv3>, which will uppercase commands.
 
 predicate: C<has_command>
 
