@@ -13,10 +13,11 @@ my @modules = qw/
 /;
 
 sub import {
-  my $self = shift;
+  my ($self, @load) = @_;
+  @load = @modules unless @load;
   my $pkg = caller;
   my @failed;
-  for my $mod (@modules) {
+  for my $mod (@load) {
     my $c = "package $pkg; use IRC::Toolkit::$mod";
     eval $c;
     if ($@) {
