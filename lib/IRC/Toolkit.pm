@@ -40,7 +40,8 @@ IRC::Toolkit - Useful IRC objects and utilities
 
 =head1 SYNOPSIS
 
-  ## Import all of the included Tookit:: modules:
+  ## Import the most commonly used Tookit:: modules
+  ##  (Case, Colors, CTCP, Masks, Modes, and Parser)
   use IRC::Toolkit;
 
   ## Import specific modules:
