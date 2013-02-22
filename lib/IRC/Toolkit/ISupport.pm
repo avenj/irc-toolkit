@@ -323,6 +323,14 @@ tokens.
 
 With a token specified, returns boolean true if the token is enabled.
 
+=head3 extban
+
+Returns an object with two methods:
+
+B<prefix> returns the extended ban prefix character.
+
+B<flags> returns the supported extended ban flags as an ARRAY of flags.
+
 =head3 maxlist
 
 Without any arguments, returns a HASH mapping list-type modes (see
