@@ -75,8 +75,16 @@ is_deeply( $isup->chantypes,
   +{ '#' => 1, '&' => 1 },
   'chantypes() HASH ok'
 );
-ok( $isup->chantypes('#'), 'chantypes OBJ ok' );
+ok( $isup->chantypes('#'), 'chantypes() OBJ ok' );
 ok( !$isup->chantypes('+'), 'chantypes ne compare' );
+
+# elist()
+is_deeply( $isup->elist,
+  +{ map {; $_ => 1 } split '', 'CTU' },
+  'elist() HASH ok'
+);
+ok( $isup->elist('C'), 'elist() OBJ ok' );
+ok( !$isup->elist('M'), 'elist ne compare' );
 
 # maxlist()
 is_deeply( $isup->maxlist,
