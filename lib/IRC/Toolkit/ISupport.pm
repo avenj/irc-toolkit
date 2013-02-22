@@ -104,7 +104,7 @@ sub _isupport_hash {
     return +{}
   }
 
-  for my $param (map {; lc $_ } keys %split) {
+  for my $param (keys %split) {
     if (defined $parse->{$param}) {
       $cur{$param} = $parse->{$param}->($split{$param})
     } else {
