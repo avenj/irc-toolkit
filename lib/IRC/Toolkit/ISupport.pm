@@ -45,6 +45,12 @@ my $parse = +{
 
   elist     => $parse_simple_flags,
 
+  extban    => sub {
+    my ($val) = @_;
+    my ($prefix, $flags) = split /,/, $val;
+    +{ prefix => $prefix, flags => [ split '', $flags ] }
+  },
+
   maxlist => sub {
     my ($val) = @_;
     my $ref = {};
@@ -154,17 +160,26 @@ sub parse_isupport {
   IRC::Toolkit::_ISchanmodes;
   use Carp 'confess';
   use strictures 1;
-
   sub new {
-    my ($cls, $self) = @_;
-    confess 'Expected a HASH' unless ref $self eq 'HASH';
-    bless $self, $cls 
+    my ($cls, %self) = @_;
+    bless +{%self}, $cls 
   }
-
   sub list    { $_[0]->{list} }
   sub always  { $_[0]->{always} }
   sub whenset { $_[0]->{whenset} }
   sub bool    { $_[0]->{bool} }
+}
+
+{ package
+  IRC::Toolkit::_ISextban;
+  use Carp 'confess';
+  use strictures 1;
+  sub new {
+    my ($cls, %self) = @_;
+    bless +{%self}, $cls
+  }
+  sub prefix { $_[0]->{prefix} }
+  sub flags  { $_[0]->{flags}  }
 }
 
 { package
@@ -203,10 +218,20 @@ sub parse_isupport {
     my ($self) = @_;
     return unless $self->{chanmodes};
     unless (blessed $self->{chanmodes}) {
-      $self->{chanmodes} = 
-        IRC::Toolkit::_ISchanmodes->new($self->{chanmodes})
+      return $self->{chanmodes} = 
+        IRC::Toolkit::_ISchanmodes->new(%{$self->{chanmodes}})
     }
     $self->{chanmodes}
+  }
+
+  sub extban {
+    my ($self) = @_;
+    return unless $self->{extban};
+    unless (blessed $self->{extban}) {
+      return $self->{extban} =
+        IRC::Toolkit::_ISextban->new(%{$self->{extban}})
+    }
+    $self->{extban}
   }
 
   ## Everything else is bool / int / str we can't parse

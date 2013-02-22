@@ -7,7 +7,7 @@ BEGIN { use_ok( 'IRC::Toolkit::ISupport' ) }
 my @lines = (
    ':eris.oppresses.us 005 meh CHANLIMIT=#&:25 CHANNELLEN=50 ' .
    'CHANMODES=eIqdb,k,l,cimnpstCMRS AWAYLEN=160 KNOCK ELIST=CTU SAFELIST ' .
-   'EXCEPTS=e INVEX=I :are supported by this server',
+   'EXCEPTS=e INVEX=I EXTBAN=$,gnp :are supported by this server',
 
    ':eris.oppresses.us 005 meh CALLERID CASEMAPPING=rfc1459 DEAF=D ' .
    'KICKLEN=160 MODES=4 NICKLEN=30 PREFIX=(ohv)@%+ STATUSMSG=@%+ ' .
@@ -85,6 +85,17 @@ is_deeply( $isup->elist,
 );
 ok( $isup->elist('C'), 'elist() OBJ ok' );
 ok( !$isup->elist('M'), 'elist ne compare' );
+
+# extban()
+is_deeply( $isup->extban,
+  +{ prefix => '$', flags => [ split '', 'gnp' ] },
+  'extban() HASH ok'
+);
+cmp_ok( $isup->extban->prefix, 'eq', '$', 'extban->prefix() ok' );
+is_deeply( $isup->extban->flags,
+  [ split '', 'gnp' ],
+  'extban->flags() ok'
+);
 
 # maxlist()
 is_deeply( $isup->maxlist,
