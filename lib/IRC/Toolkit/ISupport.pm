@@ -84,6 +84,18 @@ my $parse = +{
     +{ map {; $_ => 1 } split '', $val }
   },
 
+  targmax => sub {
+    my ($val) = @_;
+    my @chunks = split /,/, $val;
+    my $ref = {};
+    TARGTYPE: for my $chunk (@chunks) {
+      my ($type, $lim) = split /:/, $chunk, 2;
+      next TARGTYPE unless defined $type;
+      $ref->{ lc $type } = $lim;
+    }
+    $ref
+  },
+
 };
 
 
@@ -213,6 +225,12 @@ sub parse_isupport {
     my ($self, $val) = @_;
     return ($self->{statusmsg} // {}) unless defined $val;
     $self->{statusmsg}->{$val}
+  }
+
+  sub targmax {
+    my ($self, $val) = @_;
+    return ($self->{targmax} // {}) unless defined $val;
+    $self->{targmax}->{$val}
   }
 
   ## Everything else is bool / int / str we can't parse

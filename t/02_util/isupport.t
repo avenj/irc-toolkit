@@ -11,7 +11,8 @@ my @lines = (
 
    ':eris.oppresses.us 005 meh CALLERID CASEMAPPING=rfc1459 DEAF=D ' .
    'KICKLEN=160 MODES=4 NICKLEN=30 PREFIX=(ohv)@%+ STATUSMSG=@%+ ' .
-   'TOPICLEN=390 NETWORK=blackcobalt MAXLIST=bdeI:80 MAXTARGETS=10 ' .
+   'TOPICLEN=390 NETWORK=blackcobalt MAXLIST=bdeI:80 ' .
+   'TARGMAX=NAMES:1,LIST:1,KICK:1,WHOIS:1,PRIVMSG:4,NOTICE:4,ACCEPT:,MONITOR: '.
    'CHANTYPES=#& :are supported by this server',
 );
 
@@ -100,6 +101,11 @@ is_deeply( $isup->statusmsg,
 );
 ok( $isup->statusmsg('@'), 'statusmsg() OBJ ok' );
 ok( !$isup->statusmsg('!'), 'statusmsg ne compare' );
+
+# targmax()
+cmp_ok( $isup->targmax('names'), '==', 1, 'targmax(names) == 1' );
+cmp_ok( $isup->targmax('privmsg'), '==', 4, 'targmax(privmsg) == 4' );
+ok( !$isup->targmax('accept'), 'targmax for unlimited returns false' );
 
 ### Feeding objs
 use IRC::Message::Object 'ircmsg';
