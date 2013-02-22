@@ -32,10 +32,10 @@ my $parse = +{
     my ($val) = @_;
     my ($list, $always, $whenset, $bool) = split /,/, $val;
     +{
-      list    => [ split '', $list ],
-      always  => [ split '', $always ],
-      whenset => [ split '', $whenset ],
-      bool    => [ split '', $bool ],
+      list    => [ split '', ( $list    // '' ) ],
+      always  => [ split '', ( $always  // '' ) ],
+      whenset => [ split '', ( $whenset // '' ) ],
+      bool    => [ split '', ( $bool    // '' ) ],
     }
   },
 
@@ -72,7 +72,7 @@ my $parse = +{
       return +{}
     }
 
-    my $ref;
+    my $ref = {};
     for my $mode (@modes) {
       $ref->{$mode} = shift @pfxs
     }
@@ -105,7 +105,7 @@ sub _isupport_hash {
   }
 
   for my $param (keys %split) {
-    if (defined $parse->{$param}) {
+    if (defined $parse->{$param} && defined $split{$param}) {
       $cur{$param} = $parse->{$param}->($split{$param})
     } else {
       $cur{$param} = $split{$param} 
