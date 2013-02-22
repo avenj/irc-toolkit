@@ -68,6 +68,8 @@ L<IRC::Toolkit::Colors>; Color/format interpolation in strings
 
 L<IRC::Toolkit::CTCP>; CTCP quoting and extraction tools
 
+L<IRC::Toolkit::ISupport>; ISUPPORT (numeric 005) parser
+
 L<IRC::Toolkit::Masks>; Hostmask parsing and matching tools
 
 L<IRC::Toolkit::Modes>; Mode-line parsing tools
