@@ -337,26 +337,14 @@ status prefixes.
 If given a status prefix, returns boolean true if the prefix is listed in
 STATUSMSG.
 
-=head1 MISSING
+=head3 targmax
 
-... typically because I'm not sure if there's authoritative documentation or
-where it might be found ...
+Given a target type (as of this writing charybdis specifies 
+'names', 'list', 'kick', 'whois', 'privmsg', 'notice', 'accept', 'monitor'), 
+returns the TARGMAX definition for that type, if present.
 
-=over
-
-=item *
-
-ELIST
-
-=item *
-
-EXTBAN
-
-=item *
-
-TARGMAX
-
-=back
+Returns undef if the specified TARGMAX key is nonexistant or has no limit
+defined.
 
 =head1 AUTHOR
 
