@@ -1,31 +1,40 @@
 package IRC::Toolkit::Modes;
-
+use 5.10.1;
 use Carp;
 use strictures 1;
 
 use Exporter 'import';
 our @EXPORT = qw/
+  mode_array_to_str
   mode_to_array
   mode_to_hash
 /;
 
 
-=pod
-
-=for Pod::Coverage mode_array_to_str mode_hash_to_str
-
-=cut
-
 sub mode_array_to_str {
-  my ($self, $array, $maxmodes) = @_;
-  ## FIXME
-  die "Unimplemented"
-}
+  my ($array) = @_;
+  confess "Expected an ARRAY but got $array" 
+    unless ref $array eq 'ARRAY';
+  my @items = @$array;
 
-sub mode_hash_to_str {
-  my ($self, $hash, $maxmodes) = @_;
-  ## FIXME
-  die "Unimplemented"
+  my $mstr;
+  my $curflag = my $pstr = '';
+  while (my $cset = shift @items) {
+    my ($flag, $mode, $param) = @$cset;
+    confess "Appear to have been given an invalid mode array"
+      unless defined $flag and defined $mode;
+
+    if ($flag eq $curflag) {
+      $mstr   .= $mode;
+    } else {
+      $mstr   .= $flag . $mode;
+      $curflag = $flag
+    }
+    $pstr     .= " $param" if defined $param;
+  }
+
+  $mstr .= $pstr if length $pstr;
+  $mstr
 }
 
 sub mode_to_array {
@@ -125,6 +134,8 @@ IRC::Toolkit::Modes - IRC mode parsing utilities
 
 Utility functions for parsing IRC mode strings.
 
+Also see L<IRC::Mode::Set> for an object-oriented approach to modes.
+
 =head2 mode_to_array
 
   my $array = mode_to_array(
@@ -170,6 +181,11 @@ For example:
 (If the mode string contains (space-delimited) parameters, they are given
 precedence ahead of the optional 'params' ARRAY.)
 
+=head2 mode_array_to_str
+
+Takes an ARRAY such as that produced by L</mode_to_array> and returns an IRC
+mode string.
+
 =head2 mode_to_hash
 
 Takes the same parameters as L</mode_to_array> -- this is just a way to
@@ -201,9 +217,7 @@ parameters, e.g.:
   }
 
 This is a 'lossy' approach that won't deal well with multiple conflicting mode
-changes in a single line; it is useful for internal mode examination, but
-L</mode_to_array> should generally be preferred for IRC-directed mode
-handling.
+changes in a single line; L</mode_to_array> should generally be preferred.
 
 =head1 AUTHOR
 

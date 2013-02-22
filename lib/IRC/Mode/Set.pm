@@ -84,23 +84,7 @@ has mode_string => (
 
 sub _build_mode_string {
   my ($self) = @_;
-
-  my ($pstr, $mstr);
-  my $curflag = '';
-
-  for my $cset (@{ $self->mode_array }) {
-    my ($flag, $mode, $param) = @$cset;
-    if ($flag eq $curflag) {
-      $mstr   .= $mode;
-    } else {
-      $mstr   .= $flag . $mode;
-      $curflag = $flag;
-    }
-    $pstr     .= " $param" if defined $param;
-  }
-
-  $mstr .= $pstr if length $pstr;
-  $mstr
+  mode_array_to_str( $self->mode_array )
 }
 
 
