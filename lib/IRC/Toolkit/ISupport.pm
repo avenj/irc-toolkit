@@ -291,6 +291,13 @@ prefixes.
 If given a channel prefix, returns boolean true if the channel prefix is
 allowed per CHANTYPES.
 
+=head3 elist
+
+Without any arguments, returns a HASH whose keys are the supported ELIST
+tokens.
+
+With a token specified, returns boolean true if the token is enabled.
+
 =head3 maxlist
 
 Without any arguments, returns a HASH mapping list-type modes (see
