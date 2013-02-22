@@ -29,8 +29,8 @@ is_deeply( $array,
 ) or diag explain $array;
 
 
-cmp_ok( mode_array_to_str($array), 'eq', $mstr,
-  'mode_array_to_str ok'
+cmp_ok( array_to_mode($array), 'eq', $mstr,
+  'array_to_mode ok'
 );
 
 

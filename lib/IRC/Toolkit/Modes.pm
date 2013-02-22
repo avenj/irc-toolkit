@@ -5,13 +5,13 @@ use strictures 1;
 
 use Exporter 'import';
 our @EXPORT = qw/
-  mode_array_to_str
+  array_to_mode
   mode_to_array
   mode_to_hash
 /;
 
 
-sub mode_array_to_str {
+sub array_to_mode {
   my ($array) = @_;
   confess "Expected an ARRAY but got $array" 
     unless ref $array eq 'ARRAY';
@@ -181,7 +181,7 @@ For example:
 (If the mode string contains (space-delimited) parameters, they are given
 precedence ahead of the optional 'params' ARRAY.)
 
-=head2 mode_array_to_str
+=head2 array_to_mode
 
 Takes an ARRAY such as that produced by L</mode_to_array> and returns an IRC
 mode string.

@@ -84,7 +84,7 @@ has mode_string => (
 
 sub _build_mode_string {
   my ($self) = @_;
-  mode_array_to_str( $self->mode_array )
+  array_to_mode( $self->mode_array )
 }
 
 
