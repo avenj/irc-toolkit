@@ -14,10 +14,8 @@ my $parse = +{
 
   chanlimit => sub {
     my ($val) = @_;
-    my @chunks = split /,/, $val;
-
     my $ref = {};
-    for my $chunk (@chunks) {
+    for my $chunk (split /,/, $val) {
       my ($prefixed, $num) = split /:/, $chunk;
       my @prefixes = split '', $prefixed;
       for my $pfx (@prefixes) {
@@ -46,10 +44,8 @@ my $parse = +{
 
   maxlist => sub {
     my ($val) = @_;
-    my @chunks = split /,/, $val;
-
     my $ref = {};
-    for my $chunk (@chunks) {
+    for my $chunk (split /,/, $val) {
       my ($modes, $num) = split /:/, $chunk;
       my @splitm = split '', $modes;
       for my $mode (@splitm) {
@@ -86,11 +82,10 @@ my $parse = +{
 
   targmax => sub {
     my ($val) = @_;
-    my @chunks = split /,/, $val;
     my $ref = {};
-    TARGTYPE: for my $chunk (@chunks) {
+    TARGTYPE: for my $chunk (split /,/, $val) {
       my ($type, $lim) = split /:/, $chunk, 2;
-      next TARGTYPE unless defined $type;
+      next TARGTYPE unless defined $lim;
       $ref->{ lc $type } = $lim;
     }
     $ref
