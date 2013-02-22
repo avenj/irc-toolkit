@@ -242,9 +242,9 @@ sub parse_isupport {
   sub AUTOLOAD {
     my ($self, $val) = @_;
     my $subname = (split /::/, $AUTOLOAD)[-1];
-    return if index($subname, 'DESTROY') == 0;
     $self->{$subname}
   }
+  sub DESTROY {}
 
 }
 
