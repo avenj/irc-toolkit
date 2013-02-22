@@ -117,7 +117,7 @@ sub _isupport_hash {
 
 sub _isupport_hash_to_obj {
   my ($isupport_hash) = @_;
-  IRC::Toolkit::ISupport::Obj->new($isupport_hash)
+  IRC::Toolkit::ISupport::Obj->__new($isupport_hash)
 }
 
 sub parse_isupport {
@@ -168,24 +168,11 @@ sub parse_isupport {
   use strictures 1;
   use Scalar::Util 'blessed';
 
-  sub new {
+  sub __new {
     my ($cls, $self) = @_;
     confess "Expected a HASH from _isupport_hash"
       unless ref $self eq 'HASH';
     bless $self, $cls
-  }
-
-  sub add {
-    my ($self, @items) = @_;
-    my %cur = %$self;
-    for my $item (@items) {
-      confess "Expected HASH or ISupport::Obj, got $item"
-        unless blessed $item
-        or ref $item eq 'HASH';
-
-      @cur{keys %$item} = values %$item;
-    }
-    (ref $self || $self)->new(\%cur)
   }
 
   sub chanlimit {
