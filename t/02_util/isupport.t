@@ -6,7 +6,7 @@ BEGIN { use_ok( 'IRC::Toolkit::ISupport' ) }
 ### Feeding raw lines
 my @lines = (
    ':eris.oppresses.us 005 meh CHANLIMIT=#&:25 CHANNELLEN=50 ' .
-   'CHANMODES=eIqdb,k,l,cimnpstCMRS AWAYLEN=160 KNOCK ELIST=CMNTU SAFELIST ' .
+   'CHANMODES=eIqdb,k,l,cimnpstCMRS AWAYLEN=160 KNOCK ELIST=CTU SAFELIST ' .
    'EXCEPTS=e INVEX=I :are supported by this server',
 
    ':eris.oppresses.us 005 meh CALLERID CASEMAPPING=rfc1459 DEAF=D ' .

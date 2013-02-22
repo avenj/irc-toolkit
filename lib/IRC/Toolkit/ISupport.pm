@@ -10,6 +10,11 @@ use IRC::Message::Object 'ircmsg';
 use Exporter 'import';
 our @EXPORT = 'parse_isupport';
 
+my $parse_simple_flags = sub {
+  my ($val) = @_;
+  +{ map {; $_ => 1 } split '', $val }
+};
+
 my $parse = +{
 
   chanlimit => sub {
@@ -22,7 +27,6 @@ my $parse = +{
         $ref->{$pfx} = $num
       }
     }
-
     $ref
   },
 
@@ -37,10 +41,9 @@ my $parse = +{
     }
   },
 
-  chantypes => sub {
-    my ($val) = @_;
-    +{  map {; $_ => 1 } split '', $val }
-  },
+  chantypes => $parse_simple_flags,
+
+  elist     => $parse_simple_flags,
 
   maxlist => sub {
     my ($val) = @_;
@@ -52,7 +55,6 @@ my $parse = +{
         $ref->{$mode} = $num
       }
     }
-
     $ref
   },
 
@@ -75,10 +77,7 @@ my $parse = +{
     $ref
   },
 
-  statusmsg => sub {
-    my ($val) = @_;
-    +{ map {; $_ => 1 } split '', $val }
-  },
+  statusmsg => $parse_simple_flags,
 
   targmax => sub {
     my ($val) = @_;
@@ -175,17 +174,29 @@ sub parse_isupport {
   use strictures 1;
   use Scalar::Util 'blessed';
 
+  { no strict 'refs';
+    for my $acc (qw/ 
+      chanlimit
+      chantypes
+      elist
+      maxlist
+      prefix
+      statusmsg
+      targmax
+    / ) {
+      *{ __PACKAGE__ .'::'. $acc } = sub {
+          my ($ins, $val) = @_;
+          return ($ins->{$acc} // {}) unless defined $val;
+          $ins->{$acc}->{$val}
+      };
+    }
+  }
+
   sub __new {
     my ($cls, $self) = @_;
     confess "Expected a HASH from _isupport_hash"
       unless ref $self eq 'HASH';
     bless $self, $cls
-  }
-
-  sub chanlimit {
-    my ($self, $val) = @_;
-    return ($self->{chanlimit} // {}) unless defined $val;
-    $self->{chanlimit}->{$val}
   }
 
   sub chanmodes {
@@ -196,36 +207,6 @@ sub parse_isupport {
         IRC::Toolkit::_ISchanmodes->new($self->{chanmodes})
     }
     $self->{chanmodes}
-  }
-
-  sub chantypes {
-    my ($self, $val) = @_;
-    return ($self->{chantypes} // {}) unless defined $val;
-    $self->{chantypes}->{$val}
-  }
-
-  sub maxlist {
-    my ($self, $val) = @_;
-    return ($self->{maxlist} // {}) unless defined $val;
-    $self->{maxlist}->{$val}
-  }
-
-  sub prefix {
-    my ($self, $val) = @_;
-    return ($self->{prefix} // {}) unless defined $val;
-    $self->{prefix}->{$val}
-  }
-
-  sub statusmsg {
-    my ($self, $val) = @_;
-    return ($self->{statusmsg} // {}) unless defined $val;
-    $self->{statusmsg}->{$val}
-  }
-
-  sub targmax {
-    my ($self, $val) = @_;
-    return ($self->{targmax} // {}) unless defined $val;
-    $self->{targmax}->{$val}
   }
 
   ## Everything else is bool / int / str we can't parse
