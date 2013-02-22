@@ -33,6 +33,11 @@ cmp_ok( array_to_mode($array), 'eq', $mstr,
   'array_to_mode ok'
 );
 
+cmp_ok( array_to_mode( mode_to_array('+a-z') ),
+  'eq', '+a-z',
+  'array_to_mode (no params) ok'
+);
+
 
 my $mhash;
 ok( $mhash = mode_to_hash(  '+ot-k+l',
