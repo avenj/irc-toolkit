@@ -1,5 +1,4 @@
 package IRC::Toolkit::Case;
-
 use strictures 1;
 
 use Exporter 'import';

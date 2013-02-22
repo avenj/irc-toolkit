@@ -12,7 +12,7 @@ our @EXPORT = 'parse_isupport';
 
 my $parse_simple_flags = sub {
   my ($val) = @_;
-  +{ map {; $_ => 1 } split '', $val }
+  +{ map {; $_ => 1 } split '', ( $val // '' ) }
 };
 
 my $parse = +{
@@ -48,7 +48,10 @@ my $parse = +{
   extban    => sub {
     my ($val) = @_;
     my ($prefix, $flags) = split /,/, $val;
-    +{ prefix => $prefix, flags => [ split '', $flags ] }
+    +{ 
+      prefix => $prefix, 
+      flags  => [ split '', ( $flags // '' ) ] 
+    }
   },
 
   maxlist => sub {
