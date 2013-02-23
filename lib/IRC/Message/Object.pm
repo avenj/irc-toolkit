@@ -98,7 +98,8 @@ sub BUILDARGS {
   if (not defined $params{command}) {
     if (defined $params{raw_line}) {
       ## Try to create self from raw_line instead:
-      my $filt = $class->__build_filter($params{colonify});
+      my $filt = $params{filter} ?
+        $params{filter} : $class->__build_filter($params{colonify});
       my $refs = $filt->get( [$params{raw_line}] );
       %params = %{ $refs->[0] } if @$refs;
     } else {
@@ -240,8 +241,8 @@ Shortcut for C<< IRC::Message::Object->new >>
 
 =head3 raw_line
 
-The raw IRC line. This will be generated via L<POE::Filter::IRCv3> if we
-weren't constructed with one.
+The raw IRC line. The line is generated via the current 
+L</filter> if the message object wasn't constructed with one.
 
 predicate: C<has_raw_line>
 
