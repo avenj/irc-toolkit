@@ -283,6 +283,9 @@ B<param_on_set> can be specified (as a string or an ARRAY of modes) to
 indicate modes that are expected to take a parameter only when set. Defaults
 to 'l'
 
+See L<IRC::Toolkit::ISupport> for an easy way to retrieve these values from a
+parsed ISUPPORT (005) numeric.
+
 =head2 clone
 
 Clone the instanced Mode::Set.

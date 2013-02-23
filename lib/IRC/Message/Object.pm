@@ -82,7 +82,7 @@ has tags => (
     or confess "'tags =>' not a HASH: $_[0]"
   },
   predicate => 'has_tags',
-  default   => sub {  {}  },
+  default   => sub { +{} },
 );
 
 =pod
@@ -175,8 +175,6 @@ sub truncate {
 
   (ref $self)->new(raw_line => $new)
 }
-
-
 
 no warnings 'void';
 q{
