@@ -106,6 +106,7 @@ sub split_mode_set {
   @new
 }
 
+
 sub clone {
   my ($self) = @_;
   (ref $self)->new(mode_array => dclone($self->mode_array))
@@ -130,6 +131,21 @@ sub clone_from_params {
     mode_array => dclone(\@match),
   )
 }
+
+=pod
+
+=for Pod::Coverage new_from_(mode|params)
+
+=cut
+
+## FIXME deprecated, remove Soon
+sub new_from_mode {
+  confess "new_from_mode() is deprecated; use clone_from_mode"
+}
+sub new_from_params {
+  confess "new_from_params() is deprecated; use clone_from_params"
+}
+
 
 sub modes_as_objects {
   my ($self) = @_;
