@@ -313,8 +313,8 @@ IRCv3.2 message tags as a specification-compliant string.
 
 =head3 truncate
 
-Truncate the raw line to 510 characters, excluding message tags (per the
-specification)
+Truncates the raw line to 510 characters, excluding message tags (per the
+specification), and returns a new L<IRC::Message::Object>.
 
 =head1 AUTHOR
 
