@@ -7,6 +7,7 @@ my @modules = qw/
   Case
   Colors
   CTCP
+  ISupport
   Masks
   Modes
   Parser
@@ -41,7 +42,7 @@ IRC::Toolkit - Useful IRC objects and utilities
 =head1 SYNOPSIS
 
   ## Import the most commonly used Tookit:: modules
-  ##  (Case, Colors, CTCP, Masks, Modes, and Parser)
+  ##  (Case, Colors, CTCP, ISupport, Masks, Modes, Parser)
   use IRC::Toolkit;
 
   ## Import specific modules:
