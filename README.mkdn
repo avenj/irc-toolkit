@@ -42,6 +42,9 @@ documentation, below.
 
 [IRC::Toolkit::TS6](http://search.cpan.org/perldoc?IRC::Toolkit::TS6); Produce TS6 IDs
 
+[IRC::Toolkit::Role::CaseMap](http://search.cpan.org/perldoc?IRC::Toolkit::Role::CaseMap); A Role for classes that track IRC casemapping
+settings
+
 # SEE ALSO
 
 [IRC::Utils](http://search.cpan.org/perldoc?IRC::Utils)
