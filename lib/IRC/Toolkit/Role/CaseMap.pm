@@ -80,7 +80,7 @@ Returns the IRC-lowercased string.
 
 Returns the IRC-uppercased string.
 
-=head2 equals
+=head2 equal
 
 Expects two strings; returns true if they are equal per the current B<casemap>
 rules. Returns empty list if the strings do not match.
