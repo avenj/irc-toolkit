@@ -76,6 +76,7 @@ sub _build_params {
   $arr
 }
 
+sub as_string { $_[0]->mode_string }
 has mode_string => (
   lazy      => 1,
   is        => 'ro',
@@ -325,6 +326,11 @@ L</mode_array>.
 =head2 mode_string
 
 Returns the string representing the mode change.
+
+=head2 as_string
+
+B<as_string> is an alias for B<mode_string> to retain compatibility with
+L<IRC::Mode::Single>.
 
 =head2 params
 
