@@ -3,6 +3,8 @@ package IRC::Toolkit;
 use Carp;
 use strictures 1;
 
+## Core bits can be added to this list ...
+## ... but removing modules will break stuff downstream
 my @modules = qw/
   Case
   Colors
@@ -78,6 +80,9 @@ L<IRC::Toolkit::Modes>; Mode-line parsing tools
 L<IRC::Toolkit::Parser>; Functional interface to L<POE::Filter::IRCv3>
 
 L<IRC::Toolkit::TS6>; Produce TS6 IDs
+
+L<IRC::Toolkit::Role::CaseMap>; A Role for classes that track IRC casemapping
+settings
 
 =head1 SEE ALSO
 

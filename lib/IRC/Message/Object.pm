@@ -16,7 +16,6 @@ sub ircmsg {
 
 has colonify => (
   is        => 'ro',
-  lazy      => 1,
   default   => sub { 1 },
 );
 
