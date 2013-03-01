@@ -167,6 +167,7 @@ sub parse_isupport {
     my ($cls, %self) = @_;
     bless +{%self}, $cls 
   }
+
   sub list    { $_[0]->{list} }
   sub always  { $_[0]->{always} }
   sub whenset { $_[0]->{whenset} }
@@ -190,8 +191,14 @@ sub parse_isupport {
     my ($cls, %self) = @_;
     bless +{%self}, $cls
   }
+
   sub prefix { $_[0]->{prefix} }
   sub flags  { $_[0]->{flags}  }
+
+  sub as_string {
+    my ($self) = @_;
+    join ',', $self->prefix, join '', @{ $self->flags }
+  }
 }
 
 { package
@@ -320,7 +327,7 @@ You can retrieve ARRAYs containing lists of modes belonging to each set:
   my $whenset = $isupport->chanmodes->whenset;
   my $boolean = $isupport->chanmodes->bool;
 
-Or the full string representation:
+Or retrieve the full string representation via B<as_string>:
 
   my $chanmodes = $isupport->chanmodes->as_string;
 
@@ -341,11 +348,13 @@ With a token specified, returns boolean true if the token is enabled.
 
 =head3 extban
 
-Returns an object with two methods:
+Returns an object with the following methods:
 
 B<prefix> returns the extended ban prefix character.
 
 B<flags> returns the supported extended ban flags as an ARRAY of flags.
+
+B<as_string> returns the string representation of the EXTBAN= declaration.
 
 =head3 maxlist
 

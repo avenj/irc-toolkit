@@ -100,6 +100,9 @@ is_deeply( $isup->extban->flags,
   [ split '', 'gnp' ],
   'extban->flags() ok'
 );
+cmp_ok( $isup->extban->as_string, 'eq', '$,gnp',
+  'extban->as_string() ok'
+);
 
 # maxlist()
 is_deeply( $isup->maxlist,
