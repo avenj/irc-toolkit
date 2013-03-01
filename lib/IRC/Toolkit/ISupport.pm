@@ -171,6 +171,15 @@ sub parse_isupport {
   sub always  { $_[0]->{always} }
   sub whenset { $_[0]->{whenset} }
   sub bool    { $_[0]->{bool} }
+
+  sub as_string {
+    my ($self) = @_;
+    join ',', map { join '', @$_ }
+      $self->list,
+      $self->always,
+      $self->whenset,
+      $self->bool
+  }
 }
 
 { package
@@ -310,6 +319,10 @@ You can retrieve ARRAYs containing lists of modes belonging to each set:
   my $always  = $isupport->chanmodes->always;
   my $whenset = $isupport->chanmodes->whenset;
   my $boolean = $isupport->chanmodes->bool;
+
+Or the full string representation:
+
+  my $chanmodes = $isupport->chanmodes->as_string;
 
 =head3 chantypes
 

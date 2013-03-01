@@ -69,6 +69,10 @@ is_deeply( $isup->chanmodes->bool,
   [ split '', 'cimnpstCMRS' ],
   'chanmodes->bool() ok'
 );
+cmp_ok( $isup->chanmodes->as_string, 'eq',
+  'eIqdb,k,l,cimnpstCMRS',
+  'chanmodes->as_string() ok'
+);
 
 # chantypes()
 is_deeply( $isup->chantypes,
