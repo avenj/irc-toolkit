@@ -89,6 +89,9 @@ C<strict-rfc1459>, or C<ascii>:
   'rfc1459'         a-z{}|^  -->  A-Z[]\~   (default)
   'strict-rfc1459'  a-z{}|   -->  A-Z[]\
 
+If you're building a class that tracks an IRC casemapping and manipulates
+strings accordingly, you may also want to see L<IRC::Toolkit::Role::CaseMap>.
+
 =head2 lc_irc
 
 Takes a string and an optional casemap.

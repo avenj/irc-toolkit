@@ -101,7 +101,6 @@ my $parse = +{
 
 };
 
-
 sub _isupport_hash {
   my ($obj) = @_;
   my %cur;
@@ -209,6 +208,7 @@ sub parse_isupport {
   use Scalar::Util 'blessed';
 
   { no strict 'refs';
+    ## We have parsers for these that generate HASHes:
     for my $acc (qw/ 
       chanlimit
       chantypes
@@ -233,6 +233,7 @@ sub parse_isupport {
     bless $self, $cls
   }
 
+  ## These are special:
   sub chanmodes {
     my ($self) = @_;
     return unless $self->{chanmodes};
