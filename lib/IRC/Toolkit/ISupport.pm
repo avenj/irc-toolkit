@@ -285,6 +285,11 @@ IRC::Toolkit::ISupport - IRC ISUPPORT parser
   ## Get the PREFIX= char for mode 'o'
   my $prefix_for_o = $isupport->prefix('o');
 
+  ## Find out if we have WHOX support
+  if ( $isupport->whox ) {
+    . . . 
+  }
+
   ## ... etc ...
 
 =head1 DESCRIPTION
