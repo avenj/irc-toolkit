@@ -229,7 +229,7 @@ our %Numeric = (
    '438' => 'ERR_NICKTOOFAST',       # hybrid
    '439' => 'ERR_TARGETTOOFAST',     # ircu
 
-   '440' => 'ERR_SERCVICESDOWN',     # Bahamut, Unreal
+   '440' => 'ERR_SERVICESDOWN',     # Bahamut, Unreal
    '441' => 'ERR_USERNOTINCHANNEL',  # RFC1459
    '442' => 'ERR_NOTONCHANNEL',      # RFC1459
    '443' => 'ERR_USERONCHANNEL',     # RFC1459
