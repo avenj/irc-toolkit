@@ -1,14 +1,17 @@
 package IRC::Toolkit::Numerics;
 use strictures 1;
-
+use Carp 'confess';
 use List::Objects::WithUtils 'hash';
 
+use Module::Runtime 'use_module';
 
 use Exporter 'import';
 our @EXPORT = qw/
   name_from_numeric
   numeric_from_name
 /;
+
+use namespace::clean -except => 'import';
 
 our %Numeric = (
    '001' => 'RPL_WELCOME',
@@ -335,11 +338,61 @@ our %Numeric = (
 
 our %Name = reverse %Numeric;
 
+
+## Functional interface.
 sub name_from_numeric { $Numeric{$_[0]} }
 sub numeric_from_name { $Name{$_[0]} }
 
+## OO interface.
+sub new {
+  my ($cls, $type) = splice @_, 0, 2;
+
+  if ($type) {
+    return use_module('IRC::Toolkit::Numeric::'.$type)->new(@_)
+  }
+
+  bless +{ override_num => hash(), override_name => hash() }, $cls
+}
+
+sub get_name {
+  my ($self, $numeric) = @_;
+
+  if (ref $self) {
+    if (my $num = $self->{override_num}->get($numeric)) {
+      return $num
+    }
+  }
+  $Numeric{$_[0]}
+}
+
+sub get_numeric {
+  my ($self, $name) = @_;
+  if (ref $self) {
+    if (my $num = $self->{override_name}->get($name)) {
+      return $num
+    }
+  }
+  $Name{$_[0]}
+}
+
+sub associate_numeric {
+  my ($self, $numeric, $name) = @_;
+
+  confess "associate_numeric() should be called on a blessed instance"
+    unless ref $self;
+
+  confess "Expected a numeric and a label to map it to"
+    unless defined $numeric and defined $name;
+
+  $self->{override_num}->set($numeric => $name);
+  $self->{overriden_name}->set($name => $numeric);
+}
+
+## FIXME if we're blessed, check for overriden & merge before export
 sub export { hash(%Numeric) }
 sub export_by_name { hash(%Name) }
+
+
 
 1;
 
