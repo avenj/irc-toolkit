@@ -82,8 +82,11 @@ IRC::Toolkit::Masks - IRC mask-related utilities
 =head1 SYNOPSIS
 
   use IRC::Toolkit::Masks;
-
-  if ( matches_mask($mask, $host, $casemap) ) {
+  
+  my $mask = '*!avenj@*.cobaltirc.org';
+  my $full = 'avenj!avenj@eris.cobaltirc.org';
+  my $casemap = 'rfc1459';
+  if ( matches_mask($mask, $full, $casemap) ) {
     ...
   }
 
@@ -122,7 +125,7 @@ Returns just the nickname in scalar context.
 Mask-matching and normalization code derived from L<IRC::Utils>, 
 copyright Chris Williams, HINRIK et al.
 
-Jon Portnoy L<avenj@cobaltirc.org>
+Jon Portnoy <avenj@cobaltirc.org>
 
 =cut
 

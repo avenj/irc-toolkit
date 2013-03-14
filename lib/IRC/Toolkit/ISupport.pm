@@ -257,7 +257,7 @@ sub parse_isupport {
   ## Everything else is bool / int / str we can't parse
   our $AUTOLOAD;
   sub AUTOLOAD {
-    my ($self, $val) = @_;
+    my ($self) = @_;
     my $subname = (split /::/, $AUTOLOAD)[-1];
     $self->{$subname}
   }
@@ -277,7 +277,7 @@ IRC::Toolkit::ISupport - IRC ISUPPORT parser
 =head1 SYNOPSIS
 
   use IRC::Toolkit::ISupport;
-  my $isupport = parse_isupport(@lines);
+  my $isupport = parse_isupport(@raw_lines);
 
   ## Get the MODES= value
   my $maxmodes = $isupport->modes;
@@ -287,7 +287,7 @@ IRC::Toolkit::ISupport - IRC ISUPPORT parser
 
   ## Find out if we have WHOX support
   if ( $isupport->whox ) {
-    . . . 
+    ... 
   }
 
   ## ... etc ...

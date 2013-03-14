@@ -240,7 +240,7 @@ IRC::Mode::Set - A set of parsed IRC mode changes
   ## Construct a new set of changes from an ARRAY
   ## (such as produced by IRC::Toolkit::Modes):
   my $from_array = IRC::Mode::Set->new(
-    mode_array => $array,
+    mode_array => $mode_array,
   );
 
   ## Get an IRC-appropriate string back out:
@@ -248,7 +248,7 @@ IRC::Mode::Set - A set of parsed IRC mode changes
 
   ## Split a Set into multiple Sets with a max of $count items each
   ## (defaults to 4 changes per set if none specified)
-  my @sets = $from_array->split_mode_set($count);
+  my @sets = $from_array->split_mode_set( 3 );
   
   ## Create a new Set containing matching items from this Set:
   my $modes_match = $from_array->clone_from_mode('v');

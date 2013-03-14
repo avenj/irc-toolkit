@@ -127,6 +127,7 @@ IRC::Toolkit::Modes - IRC mode parsing utilities
 =head1 SYNOPSIS
 
   use IRC::Toolkit::Modes;
+  my $mode_string = '+o-o avenj Joah';
   my $array = mode_to_array( $mode_string );
   my $hash  = mode_to_hash( $mode_string );
 

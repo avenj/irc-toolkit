@@ -39,8 +39,8 @@ IRC::Toolkit::Parser - Functional-style IRC filter interface
 
   use IRC::Toolkit::Parser;
 
+  my $raw_irc_line = ':avenj PRIVMSG #channel :things';
   my $ref = irc_ref_from_line( $raw_irc_line );
-
   my $raw_line = irc_line_from_ref( $ref, colonify => 1 );
 
 =head1 DESCRIPTION
