@@ -351,28 +351,28 @@ sub new {
     return use_module('IRC::Toolkit::Numeric::'.$type)->new(@_)
   }
 
-  bless +{ override_num => hash(), override_name => hash() }, $cls
+  bless +{ over_num => hash(), over_name => hash() }, $cls
 }
 
-sub get_name {
+sub get_name_for {
   my ($self, $numeric) = @_;
 
   if (ref $self) {
-    if (my $num = $self->{override_num}->get($numeric)) {
+    if (my $num = $self->{over_num}->get($numeric)) {
       return $num
     }
   }
-  $Numeric{$_[0]}
+  $Numeric{$numeric}
 }
 
-sub get_numeric {
+sub get_numeric_for {
   my ($self, $name) = @_;
   if (ref $self) {
-    if (my $num = $self->{override_name}->get($name)) {
+    if (my $num = $self->{over_name}->get($name)) {
       return $num
     }
   }
-  $Name{$_[0]}
+  $Name{$name}
 }
 
 sub associate_numeric {
@@ -384,15 +384,31 @@ sub associate_numeric {
   confess "Expected a numeric and a label to map it to"
     unless defined $numeric and defined $name;
 
-  $self->{override_num}->set($numeric => $name);
-  $self->{overriden_name}->set($name => $numeric);
+  $self->{over_num}->set($numeric => $name);
+  $self->{over_name}->set($name => $numeric);
 }
 
-## FIXME if we're blessed, check for overriden & merge before export
-sub export { hash(%Numeric) }
-sub export_by_name { hash(%Name) }
+sub export {
+  if (ref $_[0] && !$_[0]->{over_num}->is_empty) {
+    my ($self) = @_;
+    my %orig = %Numeric;
+    my $override = $self->{over_num};
+    @orig{ $override->keys->all } = $override->values->all;
+    return hash(%orig)
+  }
+  hash(%Numeric)
+}
 
-
+sub export_by_name {
+  if (ref $_[0] && !$_[0]->{over_name}->is_empty) {
+    my $self = $_[0];
+    my %orig = %Name;
+    my $override = $self->{over_name};
+    @orig{ $override->keys->all } = $override->values->all;
+    return hash(%orig)
+  }
+  hash(%Name)
+}
 
 1;
 
@@ -406,8 +422,17 @@ IRC::Toolkit::Numerics - Modern IRC numeric responses
 
   use IRC::Toolkit::Numerics;
 
+  ## Functional interface returns defaults:
   my $rpl = name_from_numeric( '001' );                 # 'RPL_WELCOME'
   my $num = numeric_from_name( 'RPL_USERSDONTMATCH' );  # '502'
+
+  ## OO interface allows (re)mapping numerics:
+  my $numerics = IRC::Toolkit::Numerics->new;
+
+  $numerics->get_name_for( '001' );
+  $numerics->get_numeric_for( 'RPL_WELCOME' );
+
+  $numerics->associate_numeric( '486' => 'ERR_HTMDISABLED' );
 
 =head1 DESCRIPTION
 
@@ -423,21 +448,57 @@ prevalent across large networks.
 
 In cases where that turns out not to be true, please send patches ;-)
 
-=head2 name_from_numeric
+=head2 Functional interface
+
+=head3 name_from_numeric
 
 Given a numeric, B<name_from_numeric> returns its proper RPL name.
 
-=head2 numeric_from_name
+=head3 numeric_from_name
 
 Given a RPL name, B<numeric_from_name> returns its assigned command numeric.
 
-=head2 export
+=head2 Object interface
+
+=head3 new
+
+  my $numerics = IRC::Toolkit::Numerics->new;
+
+Construct a new instance.
+
+=head3 associate_numeric
+
+  ## A hybrid7 484 (overrides ratbox):
+  $numerics->associate_numeric( '484' => 'ERR_RESTRICTED' );
+
+Add or remap a numeric.
+
+=head3 get_name_for
+
+  ## RPL_WELCOME:
+  my $name = $numerics->get_name_for('001');
+  ## ERR_CHANNELISFULL:
+  $name = $numerics->get_name_for(471);
+
+Retrieve the RPL/ERR label for a supplied numeric (or boolean false).
+
+=head3 get_numeric_for
+
+  ## 471:
+  my $thisnum = $numerics->get_numeric_for('ERR_CHANNELISFULL');
+
+Retrieve the numeric for a supplied RPL/ERR label (or boolean false).
+
+=head3 export
 
   my $hash = IRC::Toolkit::Numerics->export;
 
 Exports a L<List::Objects::WithUtils::Hash> mapping numerics to RPL/ERR names.
 
-=head2 export_by_name
+If called on a blessed instance (rather than as a class method), numerics
+remapped via L</associate_numeric> are included in the exported hash.
+
+=head3 export_by_name
 
 Like L</export>, but returns the reversed hash (mapping RPL/ERR names to
 numerics).
