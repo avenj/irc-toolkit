@@ -10,13 +10,6 @@ our @EXPORT = qw/
   numeric_from_name
 /;
 
-
-## FIXME need tool to diff against ratbox/chary
-##  rfc2812 numerics may still be conflicting
-## FIXME check historical info for new numerics
-## FIXME test should make sure reversed list has same key count
-##  (to ensure no RPL dupes)
-
 our %Numeric = (
    '001' => 'RPL_WELCOME',
    '002' => 'RPL_YOURHOST',          # RFC2812
@@ -229,7 +222,7 @@ our %Numeric = (
    '438' => 'ERR_NICKTOOFAST',       # hybrid
    '439' => 'ERR_TARGETTOOFAST',     # ircu
 
-   '440' => 'ERR_SERVICESDOWN',     # Bahamut, Unreal
+   '440' => 'ERR_SERVICESDOWN',      # Bahamut, Unreal
    '441' => 'ERR_USERNOTINCHANNEL',  # RFC1459
    '442' => 'ERR_NOTONCHANNEL',      # RFC1459
    '443' => 'ERR_USERONCHANNEL',     # RFC1459
@@ -323,7 +316,7 @@ our %Numeric = (
 
    '720' => 'RPL_OMOTDSTART',        # hybrid
    '721' => 'RPL_OMOTD',             # hybrid
-   '722' => 'RPL_ENDOFMOTD',         # hybrid
+   '722' => 'RPL_ENDOFOMOTD',         # hybrid
    '723' => 'ERR_NOPRIVS',           # hybrid
    '724' => 'RPL_TESTMASK',          # hybrid
    '725' => 'RPL_TESTLINE',          # hybrid
