@@ -14,6 +14,8 @@ our @EXPORT = qw/
 ## FIXME need tool to diff against ratbox/chary
 ##  rfc2812 numerics may still be conflicting
 ## FIXME check historical info for new numerics
+## FIXME test should make sure reversed list has same key count
+##  (to ensure no RPL dupes)
 
 our %Numeric = (
    '001' => 'RPL_WELCOME',
@@ -21,13 +23,13 @@ our %Numeric = (
    '003' => 'RPL_CREATED',           # RFC2812
    '004' => 'RPL_MYINFO',            # RFC2812
    '005' => 'RPL_ISUPPORT',          # draft-brocklesby-irc-isupport-03
-   '008' => 'RPL_SNOMASK',           # Undernet
-   '009' => 'RPL_STATMEMTOT',        # Undernet
-   '010' => 'RPL_STATMEM',           # Undernet
+   '008' => 'RPL_SNOMASK',           # ircu
+   '009' => 'RPL_STATMEMTOT',        # ircu
+   '010' => 'RPL_STATMEM',           # ircu
    '014' => 'RPL_YOURCOOKIE',        # IRCnet
-   '015' => 'RPL_MAP',               # Undernet
-   '016' => 'RPL_MAPMORE',           # Undernet
-   '017' => 'RPL_MAPEND',            # Undernet
+   '015' => 'RPL_MAP',               # ircu
+   '016' => 'RPL_MAPMORE',           # ircu
+   '017' => 'RPL_MAPEND',            # ircu
    '020' => 'RPL_CONNECTING',        # IRCnet
    '042' => 'RPL_YOURID',            # IRCnet
    '043' => 'RPL_SAVENICK',          # IRCnet
@@ -41,10 +43,10 @@ our %Numeric = (
    '204' => 'RPL_TRACEOPERATOR',     # RFC1459
    '205' => 'RPL_TRACEUSER',         # RFC1459
    '206' => 'RPL_TRACESERVER',       # RFC1459
-   '207' => 'RPL_TRACESERVICE',      # RFC2812
+   '207' => 'RPL_TRACECAPTURED',     # hybrid (RFC2812 TRACESERVICE)
    '208' => 'RPL_TRACENEWTYPE',      # RFC1459
    '209' => 'RPL_TRACECLASS',        # RFC2812
-   '210' => 'RPL_STATS',             # aircd
+   '210' => 'RPL_STATS',             # aircd (single stats reply)
    '211' => 'RPL_STATSLINKINFO',     # RFC1459
    '212' => 'RPL_STATSCOMMANDS',     # RFC1459
    '213' => 'RPL_STATSCLINE',        # RFC1459
@@ -55,10 +57,15 @@ our %Numeric = (
    '218' => 'RPL_STATSYLINE',        # RFC1459
    '219' => 'RPL_ENDOFSTATS',        # RFC1459
 
-   '220' => 'RPL_STATSPLINE',        # hybrid/ratbox/chary
+   '220' => 'RPL_STATSPLINE',        # hybrid
    '221' => 'RPL_UMODEIS',           # RFC1459
-   '224' => 'RPL_STATSFLINE',        # hybrid/ratbox/chary
-   '225' => 'RPL_STATSDLINE',        # hybrid/ratbox/chary
+   '222' => 'RPL_SQLINE_NICK',       # DALnet
+   '223' => 'RPL_STATSGLINE',        # Unreal
+   '224' => 'RPL_STATSFLINE',        # hybrid
+   '225' => 'RPL_STATSDLINE',        # hybrid
+   '226' => 'RPL_STATSALINE',        # hybrid
+   '227' => 'RPL_STATSVLINE',        # Unreal
+   '228' => 'RPL_STATSCCOUNT',       # hybrid
 
    '231' => 'RPL_SERVICEINFO',       # RFC1459
    '233' => 'RPL_SERVICE',           # RFC1459
@@ -70,12 +77,12 @@ our %Numeric = (
    '242' => 'RPL_STATSUPTIME',       # RFC1459
    '243' => 'RPL_STATSOLINE',        # RFC1459
    '244' => 'RPL_STATSHLINE',        # RFC1459
-   '245' => 'RPL_STATSSLINE',        # Bahamut, IRCnet, Hybrid
-   '247' => 'RPL_STATSXLINE',        # hybrid/ratbox/chary
-   '248' => 'RPL_STATSULINE',        # hybrid/ratbox/chary
-   '249' => 'RPL_STATSDEBUG',        # ratbox(?)/chary
+   '245' => 'RPL_STATSSLINE',        # Bahamut, IRCnet, hybrid
+   '247' => 'RPL_STATSXLINE',        # hybrid
+   '248' => 'RPL_STATSULINE',        # hybrid
+   '249' => 'RPL_STATSDEBUG',        # hybrid
 
-   '250' => 'RPL_STATSCONN',         # ircu, Unreal
+   '250' => 'RPL_STATSCONN',         # ircu, Unreal, hybrid
    '251' => 'RPL_LUSERCLIENT',       # RFC1459
    '252' => 'RPL_LUSEROP',           # RFC1459
    '253' => 'RPL_LUSERUNKNOWN',      # RFC1459
@@ -87,10 +94,10 @@ our %Numeric = (
    '259' => 'RPL_ADMINEMAIL',        # RFC1459
 
    '261' => 'RPL_TRACELOG',          # RFC1459
-   '262' => 'RPL_TRACEEND',          # RFC2812
-   '263' => 'RPL_TRYAGAIN',          # RFC2812
-   '265' => 'RPL_LOCALUSERS',        # aircd, Bahamut, Hybrid
-   '266' => 'RPL_GLOBALUSERS',       # aircd, Bahamut, Hybrid
+   '262' => 'RPL_ENDOFTRACE',        # hybrid
+   '263' => 'RPL_LOAD2HI',           # hybrid
+   '265' => 'RPL_LOCALUSERS',        # aircd, Bahamut, hybrid
+   '266' => 'RPL_GLOBALUSERS',       # aircd, Bahamut, hybrid
    '267' => 'RPL_START_NETSTAT',     # aircd
    '268' => 'RPL_NETSTAT',           # aircd
    '269' => 'RPL_END_NETSTAT',       # aircd
@@ -98,19 +105,21 @@ our %Numeric = (
    '270' => 'RPL_PRIVS',             # ircu
    '271' => 'RPL_SILELIST',          # ircu
    '272' => 'RPL_ENDOFSILELIST',     # ircu
+   '275' => 'RPL_WHOISSSL',          # oftc-hybrid
    '276' => 'RPL_WHOISCERTFP',       # oftc-hybrid
 
-   '281' => 'RPL_ACCEPTLIST',        # hybrid/ratbox/chary
-   '282' => 'RPL_ENDOFACCEPT',       # hybrid/ratbox/chary
+   '280' => 'RPL_GLIST',             # ircu
+   '281' => 'RPL_ACCEPTLIST',        # ratbox/chary
+   '282' => 'RPL_ENDOFACCEPT',       # ratbox/chary
 
    '300' => 'RPL_NONE',              # RFC1459
    '301' => 'RPL_AWAY',              # RFC1459
    '302' => 'RPL_USERHOST',          # RFC1459
    '303' => 'RPL_ISON',              # RFC1459
-   '304' => 'RPL_TEXT',              # ratbox/chary
+   '304' => 'RPL_TEXT',              # hybrid
    '305' => 'RPL_UNAWAY',            # RFC1459
    '306' => 'RPL_NOWAWAY',           # RFC1459
-   '307' => 'RPL_WHOISREGNICK',      # Bahamut, Unreal, Plexus
+   '307' => 'RPL_WHOISNICKSERVREG',  # An issue of contention.
    '308' => 'RPL_WHOISADMIN',        # hybrid
 
    '310' => 'RPL_WHOISMODES',        # Plexus
@@ -152,7 +161,6 @@ our %Numeric = (
    '352' => 'RPL_WHOREPLY',          # RFC1459
    '353' => 'RPL_NAMREPLY',          # RFC1459
    '354' => 'RPL_WHOSPCRPL',         # ircu
-   '355' => 'RPL_NAMREPLY_',         # QuakeNet
 
    '360' => 'RPL_WHOWASREAL',        # ratbox/chary
    '361' => 'RPL_KILLDONE',          # RFC1459
@@ -171,21 +179,21 @@ our %Numeric = (
    '374' => 'RPL_ENDOFINFO',         # RFC1459
    '375' => 'RPL_MOTDSTART',         # RFC1459
    '376' => 'RPL_ENDOFMOTD',         # RFC1459
-   '378' => 'RPL_WHOISHOST',         # ?
+   '378' => 'RPL_WHOISHOST',         # charybdis
 
    '381' => 'RPL_YOUREOPER',         # RFC1459
    '382' => 'RPL_REHASHING',         # RFC1459
    '383' => 'RPL_YOURESERVICE',      # RFC2812
    '384' => 'RPL_MYPORTIS',          # RFC1459
-   '385' => 'RPL_NOTOPERANYMORE',    # AustHex, Hybrid, Unreal
-   '386' => 'RPL_RSACHALLENGE',      # ?
+   '385' => 'RPL_NOTOPERANYMORE',    # AustHex, hybrid, Unreal
+   '386' => 'RPL_RSACHALLENGE',      # ratbox
 
    '391' => 'RPL_TIME',              # RFC1459
    '392' => 'RPL_USERSSTART',        # RFC1459
    '393' => 'RPL_USERS',             # RFC1459
    '394' => 'RPL_ENDOFUSERS',        # RFC1459
    '395' => 'RPL_NOUSERS',           # RFC1459
-   '396' => 'RPL_HOSTHIDDEN',        # Undernet
+   '396' => 'RPL_HOSTHIDDEN',        # ircu
 
    '401' => 'ERR_NOSUCHNICK',        # RFC1459
    '402' => 'ERR_NOSUCHSERVER',      # RFC1459
@@ -197,13 +205,13 @@ our %Numeric = (
    '408' => 'ERR_NOSUCHSERVICE',     # RFC2812
    '409' => 'ERR_NOORIGIN',          # RFC1459
 
-   '410' => 'ERR_INVALIDCAPCMD',     # ratbox
+   '410' => 'ERR_INVALIDCAPCMD',     # hybrid
    '411' => 'ERR_NORECIPIENT',       # RFC1459
    '412' => 'ERR_NOTEXTTOSEND',      # RFC1459
    '413' => 'ERR_NOTOPLEVEL',        # RFC1459
    '414' => 'ERR_WILDTOPLEVEL',      # RFC1459
    '415' => 'ERR_BADMASK',           # RFC2812
-   '416' => 'ERR_TOOMANYMATCHES',    # ?
+   '416' => 'ERR_TOOMANYMATCHES',    # ratbox
 
    '421' => 'ERR_UNKNOWNCOMMAND',    # RFC1459
    '422' => 'ERR_NOMOTD',            # RFC1459
@@ -217,7 +225,7 @@ our %Numeric = (
    '432' => 'ERR_ERRONEUSNICKNAME',  # RFC1459
    '433' => 'ERR_NICKNAMEINUSE',     # RFC1459
    '436' => 'ERR_NICKCOLLISION',     # RFC1459
-   '437' => 'ERR_UNAVAILRESOURCE',   # ?
+   '437' => 'ERR_UNAVAILRESOURCE',   # hybrid
    '438' => 'ERR_NICKTOOFAST',       # hybrid
    '439' => 'ERR_TARGETTOOFAST',     # ircu
 
@@ -229,7 +237,7 @@ our %Numeric = (
    '445' => 'ERR_SUMMONDISABLED',    # RFC1459
    '446' => 'ERR_USERSDISABLED',     # RFC1459
    '447' => 'ERR_NONICKCHANGE',      # Unreal
-   '449' => 'ERR_NOTIMPLEMENTED',    # Undernet
+   '449' => 'ERR_NOTIMPLEMENTED',    # ircu
 
    '451' => 'ERR_NOTREGISTERED',     # RFC1459
    '455' => 'ERR_HOSTILENAME',       # Unreal
@@ -248,24 +256,25 @@ our %Numeric = (
    '467' => 'ERR_KEYSET',            # RFC1459
    '469' => 'ERR_LINKSET',           # Unreal
 
-   '470' => 'ERR_LINKCHANNEL',       # ?
+   '470' => 'ERR_LINKCHANNEL',       # charybdis
    '471' => 'ERR_CHANNELISFULL',     # RFC1459
    '472' => 'ERR_UNKNOWNMODE',       # RFC1459
    '473' => 'ERR_INVITEONLYCHAN',    # RFC1459
    '474' => 'ERR_BANNEDFROMCHAN',    # RFC1459
    '475' => 'ERR_BADCHANNELKEY',     # RFC1459
    '476' => 'ERR_BADCHANMASK',       # RFC2812
-   '477' => 'ERR_NEEDREGGEDNICK',    # ?  was ERR_NOCHANMODES
+   '477' => 'ERR_NEEDREGGEDNICK',    # ratbox (REGONLYCHAN in hyb7)
    '478' => 'ERR_BANLISTFULL',       # ircu
-   '479' => 'ERR_BADCHANNAME',       # ?
+   '479' => 'ERR_BADCHANNAME',       # hybrid
 
+   '480' => 'ERR_SSLONLYCHAN',       # ratbox
    '481' => 'ERR_NOPRIVILEGES',      # RFC1459
    '482' => 'ERR_CHANOPRIVSNEEDED',  # RFC1459
    '483' => 'ERR_CANTKILLSERVER',    # RFC1459
-   '484' => 'ERR_ISCHANSERVICE',     # ?  was ERR_RESTRICTED
-   '485' => 'ERR_BANNEDNICK',        # ?  was ERR_UNIQOPPRIVSNEEDED
+   '484' => 'ERR_ISCHANSERVICE',     # ratbox (ERR_RESTRICTED in hyb7)
+   '485' => 'ERR_BANNEDNICK',        # ratbox
    '488' => 'ERR_TSLESSCHAN',        # IRCnet
-   '489' => 'ERR_VOICENEEDED',       # ?
+   '489' => 'ERR_VOICENEEDED',       # ircu
 
    '491' => 'ERR_NOOPERHOST',        # RFC1459
    '492' => 'ERR_NOSERVICEHOST',     # RFC1459
@@ -279,17 +288,56 @@ our %Numeric = (
    '501' => 'ERR_UMODEUNKNOWNFLAG',  # RFC1459
    '502' => 'ERR_USERSDONTMATCH',    # RFC1459
    '503' => 'ERR_GHOSTEDCLIENT',     # hybrid
-   '504' => 'ERR_USERNOTONSERV',     # ?
+   '504' => 'ERR_USERNOTONSERV',     # hybrid
 
-   '513' => 'ERR_WRONGPONG',         # ?
+   '513' => 'ERR_WRONGPONG',         # hybrid
    '517' => 'ERR_DISABLED',          # ircu
+   '518' => 'ERR_LONGMASK',          # ircu
 
-   '524' => 'ERR_HELPNOTFOUND',      # ?
+   '521' => 'ERR_LISTSYNTAX',        # hybrid
+   '522' => 'ERR_WHOSYNTAX',         # hybrid
+   '523' => 'ERR_WHOLIMITEXCEEDED',  # hybrid
+   '524' => 'ERR_HELPNOTFOUND',      # hybrid
 
    '670' => 'RPL_STARTTLS',          # ircv3 tls-3.1
    '671' => 'RPL_WHOISSECURE',       # Unreal
 
    '691' => 'ERR_STARTTLS',          # ircv3 tls-3.2
+
+   '702' => 'RPL_MODLIST',           # hybrid
+   '703' => 'RPL_ENDOFMODLIST',      # hybrid
+   '704' => 'RPL_HELPSTART',         # hybrid
+   '705' => 'RPL_HELPTXT',           # hybrid
+   '706' => 'RPL_ENDOFHELP',         # hybrid
+   '707' => 'ERR_TARGCHANGE',        # ratbox
+
+   '710' => 'RPL_KNOCK',             # hybrid
+   '711' => 'RPL_KNOCKDLVR',         # hybrid
+   '712' => 'ERR_TOOMANYKNOCK',      # hybrid
+   '713' => 'ERR_CHANOPEN',          # hybrid
+   '714' => 'ERR_KNOCKONCHAN',       # hybrid
+   '715' => 'ERR_KNOCKDISABLED',     # hybrid
+   '716' => 'RPL_TARGUMODEG',        # hybrid
+   '717' => 'RPL_TARGNOTIFY',        # hybrid
+   '718' => 'RPL_UMODEGMSG',         # hybrid
+
+   '720' => 'RPL_OMOTDSTART',        # hybrid
+   '721' => 'RPL_OMOTD',             # hybrid
+   '722' => 'RPL_ENDOFMOTD',         # hybrid
+   '723' => 'ERR_NOPRIVS',           # hybrid
+   '724' => 'RPL_TESTMASK',          # hybrid
+   '725' => 'RPL_TESTLINE',          # hybrid
+   '726' => 'RPL_NOTESTLINE',        # hybrid
+   '727' => 'RPL_TESTMASKGECOS',     # ratbox
+
+   '730' => 'RPL_MONONLINE',         # ircv3 monitor ext
+   '731' => 'RPL_MONOFFLINE',        # ircv3 monitor ext
+   '732' => 'RPL_MONLIST',           # ircv3 monitor ext
+   '733' => 'RPL_ENDOFMONLIST',      # ircv3 monitor ext
+   '734' => 'ERR_MONLISTFULL',       # ircv3 monitor ext
+
+   '740' => 'RPL_RSACHALLENGE2',      # ratbox
+   '741' => 'RPL_ENDOFRSACHALLENGE2', # ratbox
 );
 
 our %Name = reverse %Numeric;
@@ -320,10 +368,14 @@ IRC::Toolkit::Numeric - Modern IRC numeric responses
 A pair of functions for translating IRC numerics into their "RPL" or "ERR" 
 name and back again.
 
-The included list attempts to be as complete as possible. In cases where there
-is conflict (typically between RFC2812, ircu, and hybrid/ratbox derivatives),
-modern B<ratbox> labels are preferred (ratbox derivatives being the most
-prevalent across large networks).
+The included list attempts to be as complete as possible. 
+
+In cases where there is a conflict 
+(typically between RFC2812, ircu, and hybrid/ratbox derivatives),
+modern B<ratbox> labels are preferred, ratbox derivatives being the most
+prevalent across large networks.
+
+In cases where that turns out not to be true, please send patches ;-)
 
 =head2 name_from_numeric
 
