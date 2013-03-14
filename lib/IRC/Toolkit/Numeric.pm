@@ -11,6 +11,10 @@ our @EXPORT = qw/
 /;
 
 
+## FIXME need tool to diff against ratbox/chary
+##  rfc2812 numerics may still be conflicting
+## FIXME check historical info for new numerics
+
 our %Numeric = (
    '001' => 'RPL_WELCOME',
    '002' => 'RPL_YOURHOST',          # RFC2812
@@ -167,14 +171,14 @@ our %Numeric = (
    '374' => 'RPL_ENDOFINFO',         # RFC1459
    '375' => 'RPL_MOTDSTART',         # RFC1459
    '376' => 'RPL_ENDOFMOTD',         # RFC1459
-
-FIXME, # FIXME left off here
+   '378' => 'RPL_WHOISHOST',         # ?
 
    '381' => 'RPL_YOUREOPER',         # RFC1459
    '382' => 'RPL_REHASHING',         # RFC1459
    '383' => 'RPL_YOURESERVICE',      # RFC2812
    '384' => 'RPL_MYPORTIS',          # RFC1459
    '385' => 'RPL_NOTOPERANYMORE',    # AustHex, Hybrid, Unreal
+   '386' => 'RPL_RSACHALLENGE',      # ?
 
    '391' => 'RPL_TIME',              # RFC1459
    '392' => 'RPL_USERSSTART',        # RFC1459
@@ -193,11 +197,13 @@ FIXME, # FIXME left off here
    '408' => 'ERR_NOSUCHSERVICE',     # RFC2812
    '409' => 'ERR_NOORIGIN',          # RFC1459
 
+   '410' => 'ERR_INVALIDCAPCMD',     # ratbox
    '411' => 'ERR_NORECIPIENT',       # RFC1459
    '412' => 'ERR_NOTEXTTOSEND',      # RFC1459
    '413' => 'ERR_NOTOPLEVEL',        # RFC1459
    '414' => 'ERR_WILDTOPLEVEL',      # RFC1459
    '415' => 'ERR_BADMASK',           # RFC2812
+   '416' => 'ERR_TOOMANYMATCHES',    # ?
 
    '421' => 'ERR_UNKNOWNCOMMAND',    # RFC1459
    '422' => 'ERR_NOMOTD',            # RFC1459
@@ -211,6 +217,8 @@ FIXME, # FIXME left off here
    '432' => 'ERR_ERRONEUSNICKNAME',  # RFC1459
    '433' => 'ERR_NICKNAMEINUSE',     # RFC1459
    '436' => 'ERR_NICKCOLLISION',     # RFC1459
+   '437' => 'ERR_UNAVAILRESOURCE',   # ?
+   '438' => 'ERR_NICKTOOFAST',       # hybrid
    '439' => 'ERR_TARGETTOOFAST',     # ircu
 
    '440' => 'ERR_SERCVICESDOWN',     # Bahamut, Unreal
@@ -225,6 +233,9 @@ FIXME, # FIXME left off here
 
    '451' => 'ERR_NOTREGISTERED',     # RFC1459
    '455' => 'ERR_HOSTILENAME',       # Unreal
+   '456' => 'ERR_ACCEPTFULL',        # hybrid
+   '457' => 'ERR_ACCEPTEXIST',       # hybrid
+   '458' => 'ERR_ACCEPTNOT',         # hybrid
    '459' => 'ERR_NOHIDING',          # Unreal
 
    '460' => 'ERR_NOTFORHALFOPS',     # Unreal
@@ -237,26 +248,29 @@ FIXME, # FIXME left off here
    '467' => 'ERR_KEYSET',            # RFC1459
    '469' => 'ERR_LINKSET',           # Unreal
 
+   '470' => 'ERR_LINKCHANNEL',       # ?
    '471' => 'ERR_CHANNELISFULL',     # RFC1459
    '472' => 'ERR_UNKNOWNMODE',       # RFC1459
    '473' => 'ERR_INVITEONLYCHAN',    # RFC1459
    '474' => 'ERR_BANNEDFROMCHAN',    # RFC1459
    '475' => 'ERR_BADCHANNELKEY',     # RFC1459
    '476' => 'ERR_BADCHANMASK',       # RFC2812
-   '477' => 'ERR_NOCHANMODES',       # RFC2812
-   '478' => 'ERR_BANLISTFULL',       # RFC2812
+   '477' => 'ERR_NEEDREGGEDNICK',    # ?  was ERR_NOCHANMODES
+   '478' => 'ERR_BANLISTFULL',       # ircu
+   '479' => 'ERR_BADCHANNAME',       # ?
 
    '481' => 'ERR_NOPRIVILEGES',      # RFC1459
    '482' => 'ERR_CHANOPRIVSNEEDED',  # RFC1459
    '483' => 'ERR_CANTKILLSERVER',    # RFC1459
-   '484' => 'ERR_RESTRICTED',        # RFC2812
-   '485' => 'ERR_UNIQOPPRIVSNEEDED', # RFC2812
+   '484' => 'ERR_ISCHANSERVICE',     # ?  was ERR_RESTRICTED
+   '485' => 'ERR_BANNEDNICK',        # ?  was ERR_UNIQOPPRIVSNEEDED
    '488' => 'ERR_TSLESSCHAN',        # IRCnet
+   '489' => 'ERR_VOICENEEDED',       # ?
 
    '491' => 'ERR_NOOPERHOST',        # RFC1459
    '492' => 'ERR_NOSERVICEHOST',     # RFC1459
    '493' => 'ERR_NOFEATURE',         # ircu
-   '494' => 'ERR_BADFEATURE',        # ircu
+   '494' => 'ERR_OWNMODE',           # Bahamut
    '495' => 'ERR_BADLOGTYPE',        # ircu
    '496' => 'ERR_BADLOGSYS',         # ircu
    '497' => 'ERR_BADLOGVALUE',       # ircu
@@ -264,7 +278,18 @@ FIXME, # FIXME left off here
 
    '501' => 'ERR_UMODEUNKNOWNFLAG',  # RFC1459
    '502' => 'ERR_USERSDONTMATCH',    # RFC1459
-   '503' => 'ERR_GHOSTEDCLIENT',     # Hybrid
+   '503' => 'ERR_GHOSTEDCLIENT',     # hybrid
+   '504' => 'ERR_USERNOTONSERV',     # ?
+
+   '513' => 'ERR_WRONGPONG',         # ?
+   '517' => 'ERR_DISABLED',          # ircu
+
+   '524' => 'ERR_HELPNOTFOUND',      # ?
+
+   '670' => 'RPL_STARTTLS',          # ircv3 tls-3.1
+   '671' => 'RPL_WHOISSECURE',       # Unreal
+
+   '691' => 'ERR_STARTTLS',          # ircv3 tls-3.2
 );
 
 our %Name = reverse %Numeric;
@@ -294,6 +319,11 @@ IRC::Toolkit::Numeric - Modern IRC numeric responses
 
 A pair of functions for translating IRC numerics into their "RPL" or "ERR" 
 name and back again.
+
+The included list attempts to be as complete as possible. In cases where there
+is conflict (typically between RFC2812, ircu, and hybrid/ratbox derivatives),
+modern B<ratbox> labels are preferred (ratbox derivatives being the most
+prevalent across large networks).
 
 =head2 name_from_numeric
 
