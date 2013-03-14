@@ -57,6 +57,9 @@ our %Numeric = (
    '243' => 'RPL_STATSOLINE',        # RFC1459
    '244' => 'RPL_STATSHLINE',        # RFC1459
    '245' => 'RPL_STATSSLINE',        # Bahamut, IRCnet, Hybrid
+   '247' => 'RPL_STATSXLINE',        # hybrid/ratbox/chary
+   '248' => 'RPL_STATSULINE',        # hybrid/ratbox/chary
+   '249' => 'RPL_STATSDEBUG',        # ratbox(?)/chary
 
    '250' => 'RPL_STATSCONN',         # ircu, Unreal
    '251' => 'RPL_LUSERCLIENT',       # RFC1459
@@ -81,14 +84,20 @@ our %Numeric = (
    '270' => 'RPL_PRIVS',             # ircu
    '271' => 'RPL_SILELIST',          # ircu
    '272' => 'RPL_ENDOFSILELIST',     # ircu
+   '276' => 'RPL_WHOISCERTFP',       # oftc-hybrid
+
+   '281' => 'RPL_ACCEPTLIST',        # hybrid/ratbox/chary
+   '282' => 'RPL_ENDOFACCEPT',       # hybrid/ratbox/chary
 
    '300' => 'RPL_NONE',              # RFC1459
    '301' => 'RPL_AWAY',              # RFC1459
    '302' => 'RPL_USERHOST',          # RFC1459
    '303' => 'RPL_ISON',              # RFC1459
+   '304' => 'RPL_TEXT',              # ratbox/chary
    '305' => 'RPL_UNAWAY',            # RFC1459
    '306' => 'RPL_NOWAWAY',           # RFC1459
    '307' => 'RPL_WHOISREGNICK',      # Bahamut, Unreal, Plexus
+   '308' => 'RPL_WHOISADMIN',        # hybrid
 
    '310' => 'RPL_WHOISMODES',        # Plexus
    '311' => 'RPL_WHOISUSER',         # RFC1459
@@ -96,6 +105,7 @@ our %Numeric = (
    '313' => 'RPL_WHOISOPERATOR',     # RFC1459
    '314' => 'RPL_WHOWASUSER',        # RFC1459
    '315' => 'RPL_ENDOFWHO',          # RFC1459
+   '316' => 'RPL_WHOISCHANOP',       # reserved in rb/chary
    '317' => 'RPL_WHOISIDLE',         # RFC1459
    '318' => 'RPL_ENDOFWHOIS',        # RFC1459
    '319' => 'RPL_WHOISCHANNELS',     # RFC1459
@@ -104,14 +114,15 @@ our %Numeric = (
    '322' => 'RPL_LIST',              # RFC1459
    '323' => 'RPL_LISTEND',           # RFC1459
    '324' => 'RPL_CHANNELMODEIS',     # RFC1459
-   '325' => 'RPL_UNIQOPIS',          # RFC2812
-   '328' => 'RPL_CHANNEL_URL',       # Bahamut, AustHex
+   '325' => 'RPL_CHANNELMLOCK',      # sorircd 1.3
+   '328' => 'RPL_CHANNELURL',        # ratbox/chary
    '329' => 'RPL_CREATIONTIME',      # Bahamut
 
-   '330' => 'RPL_WHOISACCOUNT',      # ircu
+   '330' => 'RPL_WHOISLOGGEDIN',     # ratbox/chary
    '331' => 'RPL_NOTOPIC',           # RFC1459
    '332' => 'RPL_TOPIC',             # RFC1459
    '333' => 'RPL_TOPICWHOTIME',      # ircu
+   '337' => 'RPL_WHOISTEXT',         # ratbox/chary
    '338' => 'RPL_WHOISACTUALLY',     # Bahamut, ircu
 
    '340' => 'RPL_USERIP',            # ircu
@@ -129,6 +140,7 @@ our %Numeric = (
    '354' => 'RPL_WHOSPCRPL',         # ircu
    '355' => 'RPL_NAMREPLY_',         # QuakeNet
 
+   '360' => 'RPL_WHOWASREAL',        # ratbox/chary
    '361' => 'RPL_KILLDONE',          # RFC1459
    '362' => 'RPL_CLOSING',           # RFC1459
    '363' => 'RPL_CLOSEEND',          # RFC1459
@@ -145,6 +157,8 @@ our %Numeric = (
    '374' => 'RPL_ENDOFINFO',         # RFC1459
    '375' => 'RPL_MOTDSTART',         # RFC1459
    '376' => 'RPL_ENDOFMOTD',         # RFC1459
+
+FIXME, # FIXME left off here
 
    '381' => 'RPL_YOUREOPER',         # RFC1459
    '382' => 'RPL_REHASHING',         # RFC1459
@@ -278,7 +292,9 @@ Given a RPL name, B<numeric_from_name> returns its assigned command numeric.
 
 =head1 AUTHOR
 
-Jon Portnoy <avenj@cobaltirc.org> based on the L<AnyEvent::IRC> list and
-review of the B<charybdis> C<include/numeric.h> header.
+Jon Portnoy <avenj@cobaltirc.org>, based on the L<AnyEvent::IRC> list present
+in L<IRC::Utils> and review of the B<charybdis> C<include/numeric.h> header.
+
+Requested by <matthew@alphachat.org>
 
 =cut
