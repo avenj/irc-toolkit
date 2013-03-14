@@ -268,7 +268,7 @@ sub numeric_from_name { $Name{$_[0]} }
 
 =head1 NAME
 
-IRC::Toolkit::Numeric - IRC numeric responses
+IRC::Toolkit::Numeric - Modern IRC numeric responses
 
 =head2 SYNOPSIS
 
