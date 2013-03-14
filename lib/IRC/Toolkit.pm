@@ -52,6 +52,7 @@ IRC::Toolkit - Useful IRC objects and utilities
     CTCP
     Masks
     Modes
+    Numerics
   /;
 
 =head1 DESCRIPTION
@@ -76,6 +77,8 @@ L<IRC::Toolkit::ISupport>; ISUPPORT (numeric 005) parser
 L<IRC::Toolkit::Masks>; Hostmask parsing and matching tools
 
 L<IRC::Toolkit::Modes>; Mode-line parsing tools
+
+L<IRC::Toolkit::Numerics>; IRC numerics translation to/from RPL or ERR names
 
 L<IRC::Toolkit::Parser>; Functional interface to L<POE::Filter::IRCv3>
 
