@@ -1,4 +1,4 @@
-package IRC::Toolkit::Numeric;
+package IRC::Toolkit::Numerics;
 use strictures 1;
 
 use List::Objects::WithUtils 'hash';
@@ -347,11 +347,11 @@ sub export_by_name { hash(%Name) }
 
 =head1 NAME
 
-IRC::Toolkit::Numeric - Modern IRC numeric responses
+IRC::Toolkit::Numerics - Modern IRC numeric responses
 
 =head2 SYNOPSIS
 
-  use IRC::Toolkit::Numeric;
+  use IRC::Toolkit::Numerics;
 
   my $rpl = name_from_numeric( '001' );                 # 'RPL_WELCOME'
   my $num = numeric_from_name( 'RPL_USERSDONTMATCH' );  # '502'
@@ -380,7 +380,7 @@ Given a RPL name, B<numeric_from_name> returns its assigned command numeric.
 
 =head2 export
 
-  my $hash = IRC::Toolkit::Numeric->export;
+  my $hash = IRC::Toolkit::Numerics->export;
 
 Exports a L<List::Objects::WithUtils::Hash> mapping numerics to RPL/ERR names.
 
