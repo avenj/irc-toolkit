@@ -444,9 +444,11 @@ numerics).
 
 =head1 AUTHOR
 
-Jon Portnoy <avenj@cobaltirc.org>, based on the L<AnyEvent::IRC> list present
-in L<IRC::Utils> and review of the B<charybdis> C<include/numeric.h> header.
+Jon Portnoy <avenj@cobaltirc.org>
 
-Requested by <matthew@alphachat.org>
+Based on the L<AnyEvent::IRC> list present
+in L<IRC::Utils> and the C<numerics.h> definitions from hybrid-7.2.3,
+oftc-hybrid-1.6.7, and ratbox-trunk, plus helpful suggestions from
+<matthew@alphachat.org>.
 
 =cut
