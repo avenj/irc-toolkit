@@ -1,6 +1,16 @@
 package IRC::Toolkit::Numeric;
 use strictures 1;
 
+use List::Objects::WithUtils 'hash';
+
+
+use Exporter 'import';
+our @EXPORT = qw/
+  name_from_numeric
+  numeric_from_name
+/;
+
+
 our %Numeric = (
    '001' => 'RPL_WELCOME',
    '002' => 'RPL_YOURHOST',          # RFC2812
@@ -262,6 +272,9 @@ our %Name = reverse %Numeric;
 sub name_from_numeric { $Numeric{$_[0]} }
 sub numeric_from_name { $Name{$_[0]} }
 
+sub export { hash(%Numeric) }
+sub export_by_name { hash(%Name) }
+
 1;
 
 =pod
@@ -279,8 +292,8 @@ IRC::Toolkit::Numeric - Modern IRC numeric responses
 
 =head1 DESCRIPTION
 
-A pair of functions for translating IRC numerics into their "RPL" name and
-back again.
+A pair of functions for translating IRC numerics into their "RPL" or "ERR" 
+name and back again.
 
 =head2 name_from_numeric
 
@@ -289,6 +302,17 @@ Given a numeric, B<name_from_numeric> returns its proper RPL name.
 =head2 numeric_from_name
 
 Given a RPL name, B<numeric_from_name> returns its assigned command numeric.
+
+=head2 export
+
+  my $hash = IRC::Toolkit::Numeric->export;
+
+Exports a L<List::Objects::WithUtils::Hash> mapping numerics to RPL/ERR names.
+
+=head2 export_by_name
+
+Like L</export>, but returns the reversed hash (mapping RPL/ERR names to
+numerics).
 
 =head1 AUTHOR
 
