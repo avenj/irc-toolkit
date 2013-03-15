@@ -364,7 +364,11 @@ Returns an object with the following methods:
 B<prefix> returns the extended ban prefix character.
 
 B<flags> returns the supported extended ban flags as an
-L<List::Objects::WithUtils::Array> of flags.
+L<List::Objects::WithUtils::Array> of flags:
+
+  if ($isupp->extban->flags->grep(sub { $_[0] eq 'a' })->has_any) {
+    ...
+  }
 
 B<as_string> returns the string representation of the EXTBAN= declaration.
 
