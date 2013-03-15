@@ -39,8 +39,18 @@ cmp_ok( $nobj->get_name_for(471), 'eq', 'ERR_CHANNELISFULL',
   'get_name_for() ok'
 );
 
+# Should also work as a class method:
+cmp_ok( IRC::Toolkit::Numerics->get_name_for(471), 'eq', 'ERR_CHANNELISFULL',
+  'get_name_for() as class method ok'
+);
+
 cmp_ok( $nobj->get_numeric_for('ERR_CHANNELISFULL'), '==', 471,
   'get_numeric_for() ok'
+);
+
+cmp_ok( IRC::Toolkit::Numerics->get_numeric_for('ERR_CHANNELISFULL'),
+  '==', 471,
+  'get_numeric_for() as class method ok'
 );
 
 cmp_ok( $nobj->get_name_for(484), 'ne', 'ERR_RESTRICTED',

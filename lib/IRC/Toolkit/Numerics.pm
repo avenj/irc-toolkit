@@ -507,9 +507,11 @@ numerics).
 
 Jon Portnoy <avenj@cobaltirc.org>
 
-Based on the L<AnyEvent::IRC> list present
+Default numerics list is based on the L<AnyEvent::IRC> list present
 in L<IRC::Utils> and the C<numerics.h> definitions from hybrid-7.2.3,
-oftc-hybrid-1.6.7, and ratbox-trunk, plus helpful suggestions from
-<matthew@alphachat.org>.
+oftc-hybrid-1.6.7, and ratbox-trunk.
+
+Interface is based on L<IRC::Utils>
+and helpful suggestions from <matthew@alphachat.org>
 
 =cut
