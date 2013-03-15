@@ -7,7 +7,6 @@ use Scalar::Util 'blessed';
 
 use IRC::Message::Object 'ircmsg';
 
-## FIXME convert all ref-type retvals to List::Objects
 use List::Objects::WithUtils;
 
 use Exporter 'import';
