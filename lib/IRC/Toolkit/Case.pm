@@ -8,6 +8,9 @@ our @EXPORT = qw/
   eq_irc
 /;
 
+## The prototypes are unfortunate, but I pulled these out of an old
+## and very large bot project ... and was too scared to remove them.
+
 sub lc_irc ($;$) {
   my ($string, $casemap) = @_;
   $casemap = lc( $casemap // 'rfc1459' );

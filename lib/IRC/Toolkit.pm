@@ -55,6 +55,9 @@ IRC::Toolkit - Useful IRC objects and utilities
     Numerics
   /;
 
+  ## ... or individually:
+  use IRC::Toolkit::Numerics;
+
 =head1 DESCRIPTION
 
 A collection of useful IRC-related utilities. See their respective

@@ -319,7 +319,7 @@ our %Numeric = (
 
    '720' => 'RPL_OMOTDSTART',        # hybrid
    '721' => 'RPL_OMOTD',             # hybrid
-   '722' => 'RPL_ENDOFOMOTD',         # hybrid
+   '722' => 'RPL_ENDOFOMOTD',        # hybrid
    '723' => 'ERR_NOPRIVS',           # hybrid
    '724' => 'RPL_TESTMASK',          # hybrid
    '725' => 'RPL_TESTLINE',          # hybrid
