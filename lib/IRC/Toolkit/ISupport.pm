@@ -176,7 +176,7 @@ sub parse_isupport {
 
   sub as_string {
     my ($self) = @_;
-    join ',', map { join '', @$_ }
+    join ',', map {; join '', @$_ }
       $self->list,
       $self->always,
       $self->whenset,
@@ -268,6 +268,10 @@ sub parse_isupport {
 }
 
 
+print
+  qq[<Gilded> "BREAKING: NH MAN HEARS ABOUT CLIMATE CHANGE, ],
+  qq[CLEARS FIVE HUNDRED ACRES FOR COCA PLANTATION"\n]
+unless caller;
 1;
 
 =pod

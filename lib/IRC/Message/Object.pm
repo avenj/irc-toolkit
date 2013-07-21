@@ -93,7 +93,7 @@ sub BUILDARGS {
   my $class = shift;
   my %params = @_ > 1 ? @_ : (raw_line => $_[0]) ;
 
-  if (not defined $params{command}) {
+  if (! defined $params{command}) {
     if (defined $params{raw_line}) {
       ## Try to create self from raw_line instead:
       my $filt = $params{filter} ?
