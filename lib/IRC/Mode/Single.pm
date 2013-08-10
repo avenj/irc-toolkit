@@ -1,6 +1,5 @@
 package IRC::Mode::Single;
 
-use 5.10.1;
 use strictures 1;
 use Carp;
 

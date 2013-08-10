@@ -13,7 +13,7 @@ our @EXPORT = qw/
 
 sub lc_irc ($;$) {
   my ($string, $casemap) = @_;
-  $casemap = lc( $casemap // 'rfc1459' );
+  $casemap = lc( $casemap || 'rfc1459' );
 
   CASE: {
     if ($casemap eq 'strict-rfc1459') {
@@ -34,7 +34,7 @@ sub lc_irc ($;$) {
 
 sub uc_irc ($;$) {
   my ($string, $casemap) = @_;
-  $casemap = lc( $casemap // 'rfc1459' );
+  $casemap = lc( $casemap || 'rfc1459' );
 
   CASE: {
     if ($casemap eq 'strict-rfc1459') {

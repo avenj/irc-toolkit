@@ -21,8 +21,8 @@ sub import {
   my $pkg = caller;
   my @failed;
   for my $mod (@load) {
-    my $c = "package $pkg; use IRC::Toolkit::$mod";
-    eval $c;
+    my $ld = "package $pkg; use IRC::Toolkit::$mod";
+    eval $ld;
     if ($@) {
       warn $@;
       push @failed, $mod

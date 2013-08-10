@@ -1,16 +1,15 @@
 package IRC::Mode::Set;
 
-use 5.10.1;
 use strictures 1;
 use Carp;
-
-use Moo;
 
 use IRC::Mode::Single;
 use IRC::Toolkit::Modes;
 
 use Scalar::Util 'blessed';
 use Storable 'dclone';
+
+use Moo;
 
 my $str_to_arr = sub {
   ref $_[0] eq 'ARRAY' ? $_[0]
@@ -170,7 +169,7 @@ sub next {
   my ($self, %param) = @_;
   my $cur = $self->_iter;
   $self->_iter($cur+1);
-  my $item = $self->mode_array->[$cur] // return;
+  my $item = $self->mode_array->[$cur] || return;
   $param{as_object} ?
     IRC::Mode::Single->new(@$item)
     : $item

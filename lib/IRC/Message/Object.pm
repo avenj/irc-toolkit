@@ -173,12 +173,11 @@ sub truncate {
   (ref $self)->new(raw_line => $new)
 }
 
-no warnings 'void';
-q{
- <rnowak> fine, be rude like that
- <Perihelion> SORRY I WAS DISCUSSING THE ABILITY TO PUT
-  AN IRCD ON A ROOMBA
-};
+print
+  qq[<rnowak> fine, be rude like that\n],
+  qq[<Perihelion> SORRY I WAS DISCUSSING THE ABILITY TO],
+  qq[ PUT AN IRCD ON A ROOMBA\n]
+unless caller; 1;
 
 =pod
 
