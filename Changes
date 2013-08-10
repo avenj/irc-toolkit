@@ -1,5 +1,11 @@
 # Changes for IRC::Toolkit
 
+0.084001 2013-08-10
+
+  - Minor cleanups & optimizations
+
+  - Fix 'Changes' to be in line with CPAN::Changes::Spec
+
 0.084000 2013-03-15
 
   - ISupport array-type retvals are now List::Objects::WithUtils::Arrays
