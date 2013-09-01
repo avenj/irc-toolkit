@@ -4,11 +4,9 @@ use strict; use warnings FATAL => 'all';
 BEGIN { use_ok('IRC::State::Channel') }
 
 # Chan obj, no casemap normalization.
-my $chan = isa_ok,
-  IRC::State::Channel->new(
-    name => '#foo',
-  ),
-  'IRC::State::Channel';
+my $chan = new_ok 'IRC::State::Channel' => [
+  name => '#foo',
+];
 
 # users->push/count
 cmp_ok $chan->users->count, '==', 0,
