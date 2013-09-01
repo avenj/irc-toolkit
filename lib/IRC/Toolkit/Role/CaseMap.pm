@@ -29,8 +29,7 @@ sub equal {
   confess "equal() expects two values"
     unless defined $one and defined $two;
   my $cmap = $self->casemap;
-  return 1 if uc_irc($one, $cmap) eq uc_irc($two, $cmap);
-  return
+  uc_irc($one, $cmap) eq uc_irc($two, $cmap) ? 1 : ()
 }
 
 1;
