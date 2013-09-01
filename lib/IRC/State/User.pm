@@ -2,21 +2,28 @@ package IRC::State::User;
 use strictures 1;
 use Carp;
 
-# FIXME types
-# FIXME casemapping?
+use IRC::Toolkit::Case;
+use IRC::Toolkit::Masks;
 
-use Moo;
+use List::Objects::WithUtils;
+
+use List::Objects::Types -all;
+use Types::Standard -all;
+
+use Moo; use MooX::late;
 use namespace::clean;
 
 has nickname => (
   required => 1,
   is       => 'ro',
+  isa      => Str,
   writer   => 'set_nickname',
   trigger  => 1,
 );
 
 has realname => (
   is       => 'ro',
+  isa      => Str,
   writer   => 'set_realname',
   default  => sub { '' },
 );
@@ -24,6 +31,7 @@ has realname => (
 has username => (
   required => 1,
   is       => 'ro',
+  isa      => Str,
   writer   => 'set_username',
   trigger  => 1,
 );
@@ -31,6 +39,7 @@ has username => (
 has hostname => (
   required => 1,
   is       => 'ro',
+  isa      => Str,
   writer   => 'set_hostname',
   trigger  => 1,
 );
@@ -39,6 +48,7 @@ has full_mask => (
   # Rebuilt by nickname/realname/hostname triggers as-needed
   lazy      => 1,
   is        => 'ro',
+  isa       => Str,
   writer    => '_set_full_mask',
   predicate => '_has_full_mask',
   builder   => '_build_full_mask',
@@ -46,7 +56,14 @@ has full_mask => (
 );
 
 has channels => (
-  # FIXME
+  # FIXME trigger to map to ->casemap if we have one?
+  lazy      => 1,
+  is        => 'ro',
+  isa       => ArrayObj,
+  coerce    => 1,
+  writer    => '_set_channels',
+  predicate => '_has_channels',
+  default   => sub { array },
 );
 
 sub _build_full_mask {
@@ -67,7 +84,8 @@ sub BUILDARGS {
   my ($class, %params) = @_;
 
   if (my $mask = delete $params{full_mask}) {
-    # FIXME parse $mask, return hash
+    my @parsed = parse_user($mask);
+    $params{$_} = shift @parsed for qw/nickname username hostname/;
   }
 
   \%params
