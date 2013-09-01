@@ -45,10 +45,7 @@ cmp_ok $user->hostname, 'eq', 'quux.com',
 cmp_ok $user->full_mask, 'eq', 'Foo!Bar@quux.com',
   'full_mask after set_hostname ok';
 
-# channels, no casemap normalization
-# FIXME
-
-# channels, with casemap normalization
+# channels
 # FIXME
 
 # constructors
@@ -65,15 +62,13 @@ cmp_ok $user->full_mask, 'eq', 'Foo!Bar@quux.com',
 }
 
 {
-  my $frommask = IRC::State::User->new(from_mask => 'foo!bar@quux.org');
-  cmp_ok $frommask->nickname, 'eq', 'foo',
-    '->from_mask->nickname ok';
-  cmp_ok $frommask->username, 'eq', 'bar',
-    '->from_mask->username ok';
-  cmp_ok $frommask->hostname, 'eq', 'quux.org',
-    '->from_mask->hostname ok';
-  cmp_ok $frommask->realname, 'eq', '',
-    'default realname ok';
+  my $fullmask = IRC::State::User->new(full_mask => 'foo!bar@quux.org');
+  cmp_ok $fullmask->nickname, 'eq', 'foo',
+    'new(full_mask)->nickname ok';
+  cmp_ok $fullmask->username, 'eq', 'bar',
+    'new(full_mask)->username ok';
+  cmp_ok $fullmask->hostname, 'eq', 'quux.org',
+    'new(full_mask)->hostname ok';
 }
 
 done_testing;
