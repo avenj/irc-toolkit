@@ -1,6 +1,8 @@
 package IRC::Toolkit::Case;
 use strictures 1;
 
+use Carp 'carp';
+
 use Exporter 'import';
 our @EXPORT = qw/
   lc_irc
@@ -16,7 +18,12 @@ sub lc_irc ($;$) {
   $casemap = lc( $casemap || 'rfc1459' );
 
   CASE: {
-    if ($casemap eq 'strict-rfc1459') {
+    if ($casemap eq 'rfc1459') {
+      $string =~ tr/A-Z[]\\~/a-z{}|^/;
+      last CASE
+    }
+
+    if ($casemap eq 'strict-rfc1459' || $casemap eq 'strict') {
       $string =~ tr/A-Z[]\\/a-z{}|/;
       last CASE
     }
@@ -26,7 +33,9 @@ sub lc_irc ($;$) {
       last CASE
     }
 
-    $string =~ tr/A-Z[]\\~/a-z{}|^/
+    carp "Unknown CASEMAP $casemap, defaulted to rfc1459";
+    $casemap = 'rfc1459';
+    redo CASE
   }
 
   $string
@@ -37,6 +46,11 @@ sub uc_irc ($;$) {
   $casemap = lc( $casemap || 'rfc1459' );
 
   CASE: {
+    if ($casemap eq 'rfc1459') {
+      $string =~ tr/a-z{}|^/A-Z[]\\~/;
+      last CASE
+    }
+
     if ($casemap eq 'strict-rfc1459') {
       $string =~ tr/a-z{}|/A-Z[]\\/;
       last CASE
@@ -47,7 +61,9 @@ sub uc_irc ($;$) {
       last CASE
     }
 
-    $string =~ tr/a-z{}|^/A-Z[]\\~/
+    carp "Unknown CASEMAP $casemap, defaulted to rfc1459";
+    $casemap = 'rfc1459';
+    redo CASE
   }
 
   $string
