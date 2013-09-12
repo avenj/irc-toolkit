@@ -8,7 +8,7 @@ use IRC::Message::Object 'ircmsg';
 
 use List::Objects::WithUtils;
 
-use Exporter 'import';
+use parent 'Exporter::Tiny';
 our @EXPORT = 'parse_isupport';
 
 my $parse_simple_flags = sub {

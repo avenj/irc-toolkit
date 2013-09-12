@@ -3,7 +3,7 @@ use strictures 1;
 
 use Carp 'carp';
 
-use Exporter 'import';
+use parent 'Exporter::Tiny';
 our @EXPORT = qw/
   lc_irc
   uc_irc

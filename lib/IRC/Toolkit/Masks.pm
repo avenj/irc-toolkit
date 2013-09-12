@@ -3,7 +3,7 @@ package IRC::Toolkit::Masks;
 use Carp;
 use strictures 1;
 
-use Exporter 'import';
+use parent 'Exporter::Tiny';
 our @EXPORT = qw/
   matches_mask
   normalize_mask

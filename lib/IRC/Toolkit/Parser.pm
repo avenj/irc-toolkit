@@ -3,7 +3,7 @@ package IRC::Toolkit::Parser;
 use Carp;
 use strictures 1;
 
-use Exporter 'import';
+use parent 'Exporter::Tiny';
 our @EXPORT = qw/
   irc_ref_from_line
   irc_line_from_ref
