@@ -3,7 +3,7 @@ package IRC::Toolkit::CTCP;
 use strictures 1;
 use Carp 'confess';
 
-use Exporter 'import';
+use parent 'Exporter::Tiny';
 our @EXPORT = qw/
   ctcp_quote
   ctcp_unquote

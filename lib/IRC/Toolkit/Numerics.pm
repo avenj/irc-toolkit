@@ -5,7 +5,7 @@ use List::Objects::WithUtils 'hash';
 
 use Module::Runtime 'use_module';
 
-use Exporter 'import';
+use parent 'Exporter::Tiny';
 our @EXPORT = qw/
   name_from_numeric
   numeric_from_name

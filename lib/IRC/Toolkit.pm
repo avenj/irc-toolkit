@@ -63,6 +63,9 @@ IRC::Toolkit - Useful IRC objects and utilities
 A collection of useful IRC-related utilities. See their respective
 documentation, below.
 
+Modules that export functions use L<Exporter::Tiny>, which is quite flexible;
+see the L<Exporter::Tiny> docs for details.
+
 L<IRC::Message::Object>; objects representing incoming or outgoing IRC events
 
 L<IRC::Mode::Single>; objects representing a single mode change

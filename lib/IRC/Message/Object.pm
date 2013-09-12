@@ -6,13 +6,14 @@ use Moo;
 
 use POE::Filter::IRCv3;
 
-use Exporter 'import';
+use parent 'Exporter::Tiny';
 our @EXPORT_OK = 'ircmsg';
+
+use namespace::clean;
 
 sub ircmsg {
   __PACKAGE__->new(@_)
 }
-
 
 has colonify => (
   is        => 'ro',
@@ -227,9 +228,13 @@ accessors with automatic parsing magic.
 
 =head3 ircmsg
 
-Create a new B<IRC::Message::Object>
+Create a new B<IRC::Message::Object>; 
+shortcut for C<< IRC::Message::Object->new >>.
 
-Shortcut for C<< IRC::Message::Object->new >>
+This module uses L<Exporter::Tiny>, so you can rename the exported constructor
+if you like:
+
+  use IRC::Message::Object ircmsg => { -as => 'irc_ev' };
 
 =head2 Attributes and Methods
 
