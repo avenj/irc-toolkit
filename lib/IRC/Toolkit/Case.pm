@@ -75,6 +75,72 @@ sub eq_irc ($$;$) {
   1
 }
 
+{ package
+    IRC::Toolkit::Case::MappedString;
+  use strictures 1;
+  use overload
+    bool     => 'length',
+    eq       => '_eq',
+    ne       => '_ne',
+    gt       => '_gt',
+    lt       => '_lt',
+    ge       => '_ge',
+    le       => '_le',
+    '""'     => 'as_string',
+    fallback => 1;
+
+  ## FIXME add regex ops, ge, double-check
+  ## FIXME tests for same
+
+  sub STR  () { 0 }
+  sub CMAP () { 1 }
+
+  sub new {
+    my ($class, $cmap, $str) = @_;
+    unless (defined $str) {
+      $str  = $cmap;
+      $cmap = 'rfc1459';
+    }
+    bless [ $str, $cmap ], $class
+  }
+
+  sub as_string { $_[0]->[STR] }
+  sub casemap { $_[0]->[CMAP] }
+  sub length  { length $_[0]->[STR] }
+
+  sub _eq {
+    my ($self) = @_;
+    IRC::Toolkit::Case::eq_irc( $_[1], @$self )
+  }
+
+  sub _ne {
+    my ($self) = @_;
+    ! IRC::Toolkit::Case::eq_irc( $_[1], @$self )
+  }
+
+  sub _gt {
+    return _lt( @_[0,1] ) if $_[2];
+    my ($self) = @_;
+    IRC::Toolkit::Case::uc_irc( @$self )
+      gt IRC::Toolkit::Case::uc_irc( $_[1] )
+  }
+
+  sub _lt {
+    return _gt( @_[0,1] ) if $_[2];
+    my ($self) = @_;
+    IRC::Toolkit::Case::uc_irc( @$self )
+      lt IRC::Toolkit::Case::uc_irc( $_[1] )
+  }
+
+  sub _ge {
+
+  }
+
+  sub _le {
+
+  }
+}
+
 
 1;
 
