@@ -108,6 +108,9 @@ C<strict-rfc1459>, or C<ascii>:
   'rfc1459'         a-z{}|^  -->  A-Z[]\~   (default)
   'strict-rfc1459'  a-z{}|   -->  A-Z[]\
 
+If told to convert/compare an unknown casemap, these functions will warn and
+default to RFC1459 rules.
+
 If you're building a class that tracks an IRC casemapping and manipulates
 strings accordingly, you may also want to see L<IRC::Toolkit::Role::CaseMap>.
 
