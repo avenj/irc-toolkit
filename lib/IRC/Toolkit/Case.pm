@@ -1,6 +1,6 @@
 package IRC::Toolkit::Case;
 use strictures 1;
-
+no warnings 'once';
 use Carp 'carp';
 
 use parent 'Exporter::Tiny';
@@ -9,8 +9,15 @@ our @EXPORT = qw/
   uc_irc
   eq_irc
 
+  rfc1459
+
   irc_str
 /;
+
+
+use Sub::Infix;
+*rfc1459 = &infix(sub { eq_irc( $_[0], $_[1], 'rfc1459' ) });
+
 
 ## The prototypes are unfortunate, but I pulled these out of an old
 ## and very large bot project ... and was too scared to remove them.
@@ -139,6 +146,19 @@ Takes a pair of strings and an optional casemap.
 
 Returns boolean true if the strings are equal 
 (per the rules specified by the given casemap).
+
+=head2 irc_str
+
+  my $str = irc_str( strict => 'Nick^[Abc]' );
+  if ( $str eq 'nick^{abc}' ) {
+    # true
+  }
+
+Takes a casemap and string; if only one argument is provided, it is taken to
+be the string and a C<rfc1459> casemap is assumed.
+
+Produces overloaded objects that can be stringified or compared; string comparison
+operators use the specified casemap.
 
 =head1 AUTHOR
 

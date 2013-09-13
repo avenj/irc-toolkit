@@ -9,6 +9,7 @@ use overload
   lt       => '_lt',
   ge       => '_ge',
   le       => '_le',
+  cmp      => '_cmp',
   '""'     => 'as_string',
   fallback => 1;
 
@@ -38,33 +39,34 @@ sub _ne {
   ! eq_irc( $_[1], $self->[STR], $self->[CMAP] )
 }
 
+sub _cmp {
+  my ($self) = @_;
+  uc_irc( $self->[STR], $self->[CMAP] ) cmp uc_irc( $_[1], $self->[CMAP] )
+}
+
 sub _gt {
   return _lt( @_[0,1] ) if $_[2];
   my ($self) = @_;
-  uc_irc( @$self ) gt uc_irc( $_[1], $self->[CMAP] )
+  uc_irc( $self->[STR], $self->[CMAP] ) gt uc_irc( $_[1], $self->[CMAP] )
 }
 
 sub _lt {
   return _gt( @_[0,1] ) if $_[2];
   my ($self) = @_;
-  uc_irc( @$self ) lt uc_irc( $_[1], $self->[CMAP] )
+  uc_irc( $self->[STR], $self->[CMAP] ) lt uc_irc( $_[1], $self->[CMAP] )
 }
 
 sub _ge {
   return _le( @_[0,1] ) if $_[2];
   my ($self) = @_;
-  uc_irc( @$self ) ge uc_irc( $_[1], $self->[CMAP] )
+  uc_irc( $self->[STR], $self->[CMAP] ) ge uc_irc( $_[1], $self->[CMAP] )
 }
 
 sub _le {
   return _ge( @_[0,1] ) if $_[2];
   my ($self) = @_;
-  uc_irc( @$self ) le uc_irc( $_[1], $self->[CMAP] )
+  uc_irc( $self->[STR], $self->[CMAP] ) le uc_irc( $_[1], $self->[CMAP] )
 }
 
 
 1;
-
-=pod
-
-=cut

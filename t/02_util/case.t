@@ -1,7 +1,7 @@
 use Test::More;
 use strict; use warnings FATAL => 'all';
 
-use_ok( 'IRC::Toolkit::Case' );
+use IRC::Toolkit::Case;
 
 is lc_irc('ABC[]', 'ascii'), 'abc[]', 'ascii lc ok';
 is uc_irc('abc[]', 'ascii'), 'ABC[]', 'ascii uc ok';
@@ -14,14 +14,25 @@ is uc_irc('nick^{abc}', 'strict-rfc1459'), 'NICK^[ABC]',
 is lc_irc('Nick~[A\bc]'), 'nick^{a|bc}', 'rfc1459 lc ok';
 is uc_irc('Nick^{a|bc}'), 'NICK~[A\BC]', 'rfc1459 uc ok';
 
+## infix operator
+ok 'Nick~[A\bc]' |rfc1459| 'nick^{a|bc}',
+  'infix compare ok';
+ok not( 'foo' |rfc1459| 'bar' ), 'negative infix compare ok';
+
+## overloaded objs
 
 my $mapped = irc_str( strict => 'Nick^[Abc]' );
-ok $mapped eq 'nick^{abc}', 'strict-rfc1459 mapped string ok';
+ok $mapped eq 'nick^{abc}', 'strict-rfc1459 eq ok';
+ok $mapped ne 'nick~{abc}', 'strict-rfc1459 ne ok';
 
 $mapped = irc_str( 'Nick~[A\bc]' );
-ok $mapped eq 'nick^{a|bc}', 'default mapped string ok';
+ok $mapped eq 'nick^{a|bc}', 'default eq ok';
+ok $mapped ne 'foo', 'default ne ok';
 
 $mapped = irc_str( ascii => 'Abc[]' );
-ok $mapped eq 'ABC[]', 'ascii mapped string ok';
+ok $mapped eq 'ABC[]', 'ascii eq ok';
+ok $mapped ne 'ABC{}', 'ascii ne ok';
+
+# FIXME test other comparison operators
 
 done_testing;
