@@ -29,6 +29,16 @@ sub as_string { $_[0]->[STR] }
 sub casemap { $_[0]->[CMAP] }
 sub length  { length $_[0]->[STR] }
 
+sub as_upper {
+  my ($self) = @_;
+  uc_irc( $self->[STR], $self->[CMAP] )
+}
+
+sub as_lower {
+  my ($self) = @_;
+  lc_irc( $self->[STR], $self->[CMAP] )
+}
+
 sub _eq {
   my ($self) = @_;
   eq_irc( $_[1], $self->[STR], $self->[CMAP] )
