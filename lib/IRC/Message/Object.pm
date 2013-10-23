@@ -1,19 +1,22 @@
 package IRC::Message::Object;
-
 use strictures 1;
 use Carp;
-use Moo;
+
+use List::Objects::WithUtils;
+use List::Objects::Types -all;
+use Types::Standard -all;
 
 use POE::Filter::IRCv3;
 
-use parent 'Exporter::Tiny';
+use Moo;
+use MooX::late;
+
+extends 'Exporter::Tiny';
 our @EXPORT_OK = 'ircmsg';
 
 use namespace::clean;
 
-sub ircmsg {
-  __PACKAGE__->new(@_)
-}
+sub ircmsg { __PACKAGE__->new(@_) }
 
 has colonify => (
   is        => 'ro',
@@ -29,6 +32,7 @@ has command => (
 
 has filter => (
   is       => 'rw',
+  isa      => HasMethods[qw/get put/],
   lazy     => 1,
   builder  => '__build_filter',
 );
@@ -49,12 +53,10 @@ has prefix => (
 has params => (
   is        => 'ro',
   lazy      => 1,
-  isa       => sub {
-    ref $_[0] eq 'ARRAY' 
-    or confess "'params =>' not an ARRAY: $_[0]"
-  },
+  isa       => ArrayObj,
+  coerce    => 1,
   predicate => 'has_params',
-  default   => sub { [] },
+  default   => sub { array },
 );
 
 has raw_line => (
@@ -74,14 +76,12 @@ has raw_line => (
 );
 
 has tags => (
-  is        => 'ro',
   lazy      => 1,
-  isa       => sub {
-    ref $_[0] eq 'HASH'
-    or confess "'tags =>' not a HASH: $_[0]"
-  },
+  is        => 'ro',
+  isa       => HashObj,
+  coerce    => 1,
   predicate => 'has_tags',
-  default   => sub { +{} },
+  default   => sub { hash },
 );
 
 =pod
@@ -111,7 +111,7 @@ sub BUILDARGS {
 
 sub get_tag {
   my ($self, $tag) = @_;
-  return unless $self->has_tags and keys %{ $self->tags };
+  return unless $self->has_tags;
   ## A tag might have an undef value ...
   ## ... see has_tag
   $self->tags->{$tag}
@@ -119,35 +119,40 @@ sub get_tag {
 
 sub has_tag {
   my ($self, $tag) = @_;
-  return unless $self->has_tags and keys %{ $self->tags };
+  return unless $self->has_tags;
   exists $self->tags->{$tag}
 }
 
 sub tags_as_array {
   my ($self) = @_;
-  return [] unless $self->has_tags and keys %{ $self->tags };
+  return array() unless $self->has_tags;
 
-  my $tag_array = [];
-  while (my ($thistag, $thisval) = each %{ $self->tags }) {
-    push @$tag_array,
+  my @tag_array;
+  for ($self->tags->kv->all) {
+    my ($thistag, $thisval) = @$_;
+    push @tag_array,
       defined $thisval ? join '=', $thistag, $thisval
         : $thistag
-  }
+  };
 
-  $tag_array
+  array(@tag_array)
 }
 
 sub tags_as_string {
   my ($self) = @_;
-  return unless $self->has_tags and keys %{ $self->tags };
+  return unless $self->has_tags;
 
   my $str;
-  my @tags = %{ $self->tags };
-  while (my ($thistag, $thisval) = splice @tags, 0, 2) {
-    $str .= ( $thistag . 
-      ( defined $thisval ? '='.$thisval : '' ) .
-      ( @tags ? ';' : '' )
-    );
+  my $kv = $self->tags->kv;
+
+  TAG: {
+    my $nxt = $kv->shift || last TAG;
+    my ($thistag, $thisval) = @$nxt;
+    $str .= $thistag . ( defined $thisval ? '='.$thisval : '' );
+    if ($kv->has_any) {
+      $str .= ';';
+      redo TAG
+    }
   }
 
   $str
@@ -258,9 +263,10 @@ predicate: C<has_command>
 
 =head3 params
 
-ARRAY of parameters.
+A L<List::Objects::WithUtils::Array> containing the parameters attached to the
+message.
 
-predicate: C<has_command>
+predicate: C<has_params>
 
 =head3 prefix
 
@@ -270,8 +276,8 @@ predicate: C<has_prefix>
 
 =head3 colonify
 
-Set to a boolean false value at construction time to instruct
-L<POE::Filter::IRCv3> not to always prefix the last argument with a colon.
+Passed through to L<POE::Filter::IRCv3/"colonify">; see the
+L<POE::Filter::IRCv3> documentation for details.
 
 Defaults to true.
 
@@ -301,11 +307,12 @@ Returns true if there are tags present.
 
 =head3 tags
 
-IRCv3.2 message tags, as a HASH of key-value pairs.
+IRCv3.2 message tags, as a L<List::Objects::WithUtils::Hash> of key-value pairs.
 
 =head3 tags_as_array
 
-IRCv3.2 message tags, as an ARRAY of tags in the form of 'key=value'
+IRCv3.2 message tags, as a L<List::Objects::WithUtils::Array> of tags in the
+form of 'key=value'
 
 =head3 tags_as_string
 
