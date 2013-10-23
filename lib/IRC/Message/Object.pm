@@ -128,12 +128,12 @@ sub tags_as_array {
   return array() unless $self->has_tags;
 
   my @tag_array;
-  $self->tags->kv->map(sub {
+  for ($self->tags->kv->all) {
     my ($thistag, $thisval) = @$_;
     push @tag_array,
       defined $thisval ? join '=', $thistag, $thisval
         : $thistag
-  });
+  };
 
   array(@tag_array)
 }
@@ -144,13 +144,15 @@ sub tags_as_string {
 
   my $str;
   my $kv = $self->tags->kv;
-  while ($kv->has_any) {
-    my $nxt = $kv->shift;
+
+  TAG: {
+    my $nxt = $kv->shift || last TAG;
     my ($thistag, $thisval) = @$nxt;
-    $str .= ( $thistag .
-      ( defined $thisval ? '='.$thisval : '' ) .
-      ( $kv->has_any ? ';' : '' )
-    );
+    $str .= $thistag . ( defined $thisval ? '='.$thisval : '' );
+    if ($kv->has_any) {
+      $str .= ';';
+      redo TAG
+    }
   }
 
   $str
