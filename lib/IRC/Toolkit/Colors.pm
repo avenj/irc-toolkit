@@ -86,6 +86,12 @@ IRC::Toolkit::Colors - IRC color code utilities
 
   my $str = color('red', "red text") ." other text";
 
+  if (has_color($str)) {
+    # ...
+  }
+
+  my $stripped = strip_color($str);
+
 =head1 DESCRIPTION
 
 IRC utilities for adding color/formatting codes to a string.
@@ -124,6 +130,14 @@ Valid color codes are:
   pink
   gray
   light_gray
+
+=head2 has_color
+
+Returns true if the given string contains color or formatting codes.
+
+=head2 strip_color
+
+Strips all color and formatting codes from the string.
 
 =head1 AUTHOR
 
