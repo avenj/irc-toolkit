@@ -74,7 +74,7 @@ L<IRC::Mode::Set>; objects representing a set of mode changes
 
 L<IRC::Toolkit::Case>; RFC-compliant case folding tools
 
-L<IRC::Toolkit::Colors>; Color/format interpolation in strings
+L<IRC::Toolkit::Colors>; Color/format code interpolation & removal
 
 L<IRC::Toolkit::CTCP>; CTCP quoting and extraction tools
 

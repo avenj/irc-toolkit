@@ -193,7 +193,7 @@ Jon Portnoy <avenj@cobaltirc.org>
 Code derived from L<Net::IRC> and L<POE::Filter::IRC::Compat>, 
 copyright BinGOs, HINRIK, fimm, Abigail et al
 
-Licensed under the same terms as L<POE::Filter::IRC::Compat> and Perl itself.
+Licensed under the same terms as Perl.
 
 =cut
 

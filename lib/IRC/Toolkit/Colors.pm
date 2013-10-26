@@ -48,8 +48,7 @@ sub color {
     carp "Invalid format $fmt passed to color()";
     return $str || $COLORS{NORMAL}
   }
-  return $slct . $str . $COLORS{NORMAL} if $str;
-  return $slct
+  $str ? join('', $slct, $str, $COLORS{NORMAL}) : $slct
 }
 
 sub has_color {
@@ -142,5 +141,10 @@ Strips all color and formatting codes from the string.
 =head1 AUTHOR
 
 Jon Portnoy <avenj@cobaltirc.org>
+
+Much of this code is primarily derived from L<IRC::Utils>, authored by HINRIK &
+BINGOS.
+
+Licensed under the same terms as Perl.
 
 =cut

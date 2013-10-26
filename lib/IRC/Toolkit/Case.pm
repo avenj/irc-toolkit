@@ -181,4 +181,6 @@ Jon Portnoy <avenj@cobaltirc.org>
 
 Inspired by L<IRC::Utils>, copyright Chris Williams, Hinrik et al
 
+Licensed under the same terms as Perl.
+
 =cut
