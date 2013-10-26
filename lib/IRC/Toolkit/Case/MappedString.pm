@@ -14,6 +14,12 @@ use overload
   '""'     => 'as_string',
   fallback => 1;
 
+=pod
+
+=for Pod::Coverage STR CMAP
+
+=cut
+
 sub STR  () { 0 }
 sub CMAP () { 1 }
 
@@ -27,8 +33,8 @@ sub new {
 }
 
 sub as_string { $_[0]->[STR] }
-sub casemap { $_[0]->[CMAP] }
-sub length  { length $_[0]->[STR] }
+sub casemap   { $_[0]->[CMAP] }
+sub length    { length $_[0]->[STR] }
 
 sub as_upper {
   my ($self) = @_;
@@ -115,6 +121,10 @@ Creates a new string object.
 
 Expects a casemap and string; if given a single argument, it is taken to be
 the string and the casemap defaults to C<RFC1459>.
+
+=head2 as_string
+
+Returns the raw string.
 
 =head2 as_upper
 
