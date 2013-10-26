@@ -35,4 +35,11 @@ ok $mapped ne 'ABC{}', 'ascii ne ok';
 
 # FIXME test other comparison operators
 
+ok $mapped->casemap eq 'ascii', 'casemap() ok';
+ok $mapped->length  == 5,       'length() ok';
+ok $mapped->as_upper eq 'ABC[]', 'as_upper() ok';
+isa_ok $mapped->as_upper, ref $mapped;
+ok $mapped->as_lower eq 'abc[]', 'as_lower() ok';
+isa_ok $mapped->as_lower, ref $mapped;
+
 done_testing;
