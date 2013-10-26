@@ -110,6 +110,11 @@ IRC::Toolkit::Case - IRC case-folding utilities
     ...
   }
 
+  # Or use the '|rfc1459|' operator if using RFC1459 rules:
+  if ($first |rfc1459| $second) {
+
+  }
+
 =head1 DESCRIPTION
 
 IRC case-folding utilities.
@@ -127,6 +132,15 @@ default to RFC1459 rules.
 
 If you're building a class that tracks an IRC casemapping and manipulates
 strings accordingly, you may also want to see L<IRC::Toolkit::Role::CaseMap>.
+
+=head2 rfc1459 operator
+
+The infix operator C<|rfc1459|> is provided as a convenience for string
+comparison using RFC1459 rules:
+
+  if ($first |rfc1459| $second) { ... }
+  # Same as:
+  if (eq_irc($first, $second)) { ... }
 
 =head2 lc_irc
 
@@ -157,8 +171,9 @@ Returns boolean true if the strings are equal
 Takes a casemap and string; if only one argument is provided, it is taken to
 be the string and a C<rfc1459> casemap is assumed.
 
-Produces overloaded objects that can be stringified or compared; string comparison
-operators use the specified casemap.
+Produces overloaded objects (see L<IRC::Toolkit::Case::MappedString>) that can
+be stringified or compared; string comparison operators use the specified
+casemap.
 
 =head1 AUTHOR
 
