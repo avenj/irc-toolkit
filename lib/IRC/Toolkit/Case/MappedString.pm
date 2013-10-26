@@ -1,6 +1,7 @@
 package IRC::Toolkit::Case::MappedString;
 use strictures 1;
 use IRC::Toolkit::Case;
+use Scalar::Util 'blessed';
 use overload
   bool     => 'length',
   eq       => '_eq',
@@ -31,12 +32,18 @@ sub length  { length $_[0]->[STR] }
 
 sub as_upper {
   my ($self) = @_;
-  uc_irc( $self->[STR], $self->[CMAP] )
+  blessed($self)->new( 
+    $self->[CMAP],
+    uc_irc( $self->[STR], $self->[CMAP] )
+  )
 }
 
 sub as_lower {
   my ($self) = @_;
-  lc_irc( $self->[STR], $self->[CMAP] )
+  blessed($self)->new(
+    $self->[CMAP],
+    lc_irc( $self->[STR], $self->[CMAP] )
+  )
 }
 
 sub _eq {
@@ -80,3 +87,55 @@ sub _le {
 
 
 1;
+
+=pod
+
+=head1 NAME
+
+IRC::Toolkit::Case::MappedString - Strings with casemaps attached
+
+=head1 SYNOPSIS
+
+  use IRC::Toolkit::Case;
+  my $str = irc_str( strict => 'Nick^[Abc]' );
+  if ($str eq 'nick^{abc}') {
+    # true
+  }
+
+=head1 DESCRIPTION
+
+These overloaded objects represent IRC strings with a specific IRC casemap
+attached (such as nick/channel names).
+
+See L<IRC::Toolkit::Case> for more details on IRC casemapping peculiarities.
+
+=head2 new
+
+Creates a new string object.
+
+Expects a casemap and string; if given a single argument, it is taken to be
+the string and the casemap defaults to C<RFC1459>.
+
+=head2 as_upper
+
+Returns a new string object containing the uppercased (per specified rules)
+string.
+
+=head2 as_lower
+
+Returns a new string object containing the lowercased (per specified rules)
+string.
+
+=head2 casemap
+
+Returns the currently-configured casemap setting.
+
+=head2 length
+
+Returns the string's length.
+
+=head1 AUTHOR
+
+Jon Portnoy <avenj@cobaltirc.org>
+
+=cut
