@@ -4,7 +4,11 @@ use Carp;
 use strictures 1;
 
 use parent 'Exporter::Tiny';
-our @EXPORT = 'color';
+our @EXPORT = qw/
+  color
+  has_color
+  strip_color
+/;
 
 our %COLORS = (
   NORMAL      => "\x0f",
@@ -47,6 +51,28 @@ sub color {
   return $slct . $str . $COLORS{NORMAL} if $str;
   return $slct
 }
+
+sub has_color {
+  my ($str) = @_;
+  $str =~ /[\x02\x03\x04\x1B\x1f\x16\x1d\x11\x06]/ ? 1 : ()
+}
+
+sub strip_color {
+  my ($str) = @_;
+  # Borrowed from IRC::Utils;
+  # mIRC:
+  $str =~ s/\x03(?:,\d{1,2}|\d{1,2}(?:,\d{1,2})?)?//g;
+  # RGB:
+  $str =~ s/\x04[0-9a-fA-F]{0,6}//ig;
+  # ECMA-48:
+  $str =~ s/\x1B\[.*?[\x00-\x1F\x40-\x7E]//g;
+  # Formatting codes:
+  $str =~ s/[\x02\x1f\x16\x1d\x11\x06]//g;
+  # Cancellation code:
+  $str =~ s/\x0f//g;
+  $str
+}
+
 
 1;
 
