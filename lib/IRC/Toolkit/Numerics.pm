@@ -325,6 +325,8 @@ our %Numeric = (
    '725' => 'RPL_TESTLINE',          # hybrid
    '726' => 'RPL_NOTESTLINE',        # hybrid
    '727' => 'RPL_TESTMASKGECOS',     # ratbox
+   '728' => 'RPL_QUIETLIST',         # charybdis
+   '729' => 'RPL_ENDOFQUIETLIST',    # charybdis
 
    '730' => 'RPL_MONONLINE',         # ircv3 monitor ext
    '731' => 'RPL_MONOFFLINE',        # ircv3 monitor ext

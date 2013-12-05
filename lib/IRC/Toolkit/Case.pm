@@ -136,7 +136,7 @@ strings accordingly, you may also want to see L<IRC::Toolkit::Role::CaseMap>.
 =head2 rfc1459 operator
 
 The infix operator C<|rfc1459|> is provided as a convenience for string
-comparison using RFC1459 rules:
+comparison (using RFC1459 rules):
 
   if ($first |rfc1459| $second) { ... }
   # Same as:

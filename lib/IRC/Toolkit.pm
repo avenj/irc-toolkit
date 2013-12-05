@@ -47,7 +47,7 @@ IRC::Toolkit - Useful IRC objects and utilities
   ##  (Case, Colors, CTCP, ISupport, Masks, Modes, Parser)
   use IRC::Toolkit;
 
-  ## Import specific modules:
+  ## Import a list of modules:
   use IRC::Toolkit qw/
     CTCP
     Masks
@@ -66,11 +66,11 @@ documentation, below.
 Modules that export functions use L<Exporter::Tiny>, which is quite flexible;
 see the L<Exporter::Tiny> docs for details.
 
-L<IRC::Message::Object>; objects representing incoming or outgoing IRC events
+L<IRC::Message::Object>; Objects representing incoming or outgoing IRC events
 
-L<IRC::Mode::Single>; objects representing a single mode change
+L<IRC::Mode::Single>; Objects representing a single mode change
 
-L<IRC::Mode::Set>; objects representing a set of mode changes
+L<IRC::Mode::Set>; Objects representing a set of mode changes
 
 L<IRC::Toolkit::Case>; RFC-compliant case folding tools
 
@@ -88,7 +88,7 @@ L<IRC::Toolkit::Numerics>; IRC numerics translation to/from RPL or ERR names
 
 L<IRC::Toolkit::Parser>; Functional interface to L<POE::Filter::IRCv3>
 
-L<IRC::Toolkit::TS6>; Produce TS6 IDs
+L<IRC::Toolkit::TS6>; Produce sequential TS6 IDs
 
 L<IRC::Toolkit::Role::CaseMap>; A Role for classes that track IRC casemapping
 settings
