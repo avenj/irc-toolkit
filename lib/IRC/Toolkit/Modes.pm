@@ -1,7 +1,9 @@
 package IRC::Toolkit::Modes;
-
-use Carp;
 use strictures 1;
+use Carp;
+
+use Scalar::Util 'reftype';
+
 
 use parent 'Exporter::Tiny';
 our @EXPORT = qw/
@@ -14,7 +16,7 @@ our @EXPORT = qw/
 sub array_to_mode {
   my ($array) = @_;
   confess "Expected an ARRAY but got $array" 
-    unless ref $array eq 'ARRAY';
+    unless reftype $array eq 'ARRAY';
   my @items = @$array;
 
   my $mstr;
@@ -63,7 +65,7 @@ sub mode_to_array {
 
   for (qw/ param_always param_set params /) {
     confess "$_ should be an ARRAY"
-      unless ref $args{$_} eq 'ARRAY';
+      unless reftype $args{$_} eq 'ARRAY';
   }
 
   my @parsed;
