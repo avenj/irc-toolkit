@@ -192,8 +192,8 @@ For example:
     [ '-', 't' ],
   ],
 
-(If the mode string contains (space-delimited) parameters, they are given
-precedence ahead of the optional 'params' ARRAY.)
+If the mode string contains (space-delimited) parameters, they are given
+precedence ahead of the optional 'params' ARRAY.
 
 Instead of manually specifying C<param_always> and C<param_set>, you can pass
 in the B<chanmodes> object provided by L<IRC::Toolkit::ISupport>:
@@ -203,6 +203,14 @@ in the B<chanmodes> object provided by L<IRC::Toolkit::ISupport>:
     params => [ 'key', 10 ],
     isupport_chanmodes => $isupport->chanmodes,
   );
+
+C<isupport_chanmodes> will override C<param_always> / C<param_set> -- if
+that's not acceptable, you can select individual sets:
+
+  my $array = mode_to_array( '+klX-t',
+    params => [ 'key', 10, 'foo' ],
+    param_always => $isupport->chanmodes->always,
+    param_set    => [ 'lX' ],
 
 =head2 array_to_mode
 
