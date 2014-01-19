@@ -2,7 +2,7 @@ package IRC::Toolkit::Modes;
 use strictures 1;
 use Carp;
 
-use Scalar::Util 'reftype';
+use Scalar::Util 'blessed', 'reftype';
 
 
 use parent 'Exporter::Tiny';
@@ -15,6 +15,9 @@ our @EXPORT = qw/
 
 sub array_to_mode {
   my ($array) = @_;
+  if (blessed $array && $array->isa('IRC::Mode::Set')) {
+    $array = $array->mode_array
+  }
   confess "Expected an ARRAY but got $array" 
     unless reftype $array eq 'ARRAY';
   my @items = @$array;

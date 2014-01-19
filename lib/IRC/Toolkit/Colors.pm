@@ -1,7 +1,6 @@
 package IRC::Toolkit::Colors;
-
-use Carp;
 use strictures 1;
+use Carp;
 
 use parent 'Exporter::Tiny';
 our @EXPORT = qw/
