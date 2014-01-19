@@ -75,8 +75,6 @@ cmp_ok( $isup->chanmodes->as_string, 'eq',
   'chanmodes->as_string() ok'
 );
 
-## FIXME should be able to feed chanmodes->always/whenset to mode_to_array
-
 # chantypes()
 is_deeply( $isup->chantypes,
   +{ '#' => 1, '&' => 1 },
