@@ -45,7 +45,7 @@ sub ctcp_unquote {
     $line =~ s/\cP([nr0\cP])/$dequote{$1}/g;
   }
 
-  substr($line, rindex($line, "\001"), 1, '\\a')
+  substr $line, rindex($line, "\001"), 1, '\\a' 
     if ($line =~ tr/\001//) % 2 != 0;
   return unless $line =~ tr/\001//;
 

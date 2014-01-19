@@ -20,12 +20,8 @@ sub import {
   my $pkg = caller;
   my @failed;
   for my $mod (@load) {
-    my $ld = "package $pkg; use IRC::Toolkit::$mod";
-    eval $ld;
-    if ($@) {
-      warn $@;
-      push @failed, $mod
-    }
+    my $ld = "package $pkg; use IRC::Toolkit::$mod; 1;";
+    eval $ld and not $@ or warn "$@\n" and push @failed, $mod;
   }
   confess "Failed to import ".join ' ', @failed if @failed;
   1
