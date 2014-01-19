@@ -4,7 +4,6 @@ use Carp;
 
 use Scalar::Util 'blessed', 'reftype';
 
-
 use parent 'Exporter::Tiny';
 our @EXPORT = qw/
   array_to_mode

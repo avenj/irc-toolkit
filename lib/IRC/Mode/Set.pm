@@ -1,5 +1,4 @@
 package IRC::Mode::Set;
-
 use strictures 1;
 use Carp;
 
@@ -12,81 +11,70 @@ use Storable 'dclone';
 use Moo;
 
 my $str_to_arr = sub {
-  ref $_[0] eq 'ARRAY' ? $_[0]
-    : [ split //, $_[0] ]
+  ref $_[0] eq 'ARRAY' ? $_[0] : [ split //, $_[0] ]
 };
 
 has param_always => (
   lazy    => 1,
   is      => 'ro',
   coerce  => $str_to_arr,
-  default => sub {
-    [ split //, 'bkohv' ]
-  }
+  builder => sub { [ split //, 'bkohv' ] },
 );
 
 has param_on_set => (
   lazy    => 1,
   is      => 'ro',
   coerce  => $str_to_arr,
-  default => sub {
-    [ 'l' ]
-  }
+  builder => sub { [ 'l' ] },
 );
 
 has mode_array => (
   lazy      => 1,
   is        => 'ro',
   predicate => 'has_mode_array',
-  builder   => '_build_mode_array',
+  builder   => sub {
+    my ($self) = @_;
+    mode_to_array( $self->mode_string,
+      param_always => $self->param_always,
+      param_set    => $self->param_on_set,
+      (
+        $self->has_params ? (params => $self->params)
+         : ()
+      ),
+    );
+  },
 );
-
-sub _build_mode_array {
-  my ($self) = @_;
-  mode_to_array( $self->mode_string,
-    param_always => $self->param_always,
-    param_set    => $self->param_on_set,
-    (
-      $self->has_params ? (params => $self->params)
-       : ()
-    ),
-  );
-}
 
 has params => (
   lazy      => 1,
   is        => 'ro',
   predicate => 'has_params',
-  builder   => '_build_params',
   coerce    => sub {
-    ref $_[0] eq 'ARRAY' ? $_[0]
-      : [ split ' ', $_[0] ]
+    ref $_[0] eq 'ARRAY' ? $_[0] : [ split ' ', $_[0] ]
+  },
+  builder => sub {
+    my ($self) = @_;
+    my $arr;
+    for my $cset (@{ $self->mode_array }) {
+      push @$arr, $cset->[2]
+        if defined $cset->[2]
+    }
+    $arr
   },
 );
 
-sub _build_params {
-  my ($self) = @_;
-
-  my $arr;
-  for my $cset (@{ $self->mode_array }) {
-    push @$arr, $cset->[2]
-      if defined $cset->[2]
-  }
-  $arr
-}
 
 sub as_string { $_[0]->mode_string }
+
 has mode_string => (
   lazy      => 1,
   is        => 'ro',
   predicate => 'has_mode_string',
-  builder   => '_build_mode_string',
+  builder   => sub {
+    my ($self) = @_;
+    array_to_mode $self->mode_array
+  },
 );
-
-sub _build_mode_string {
-  my ($self) = @_;
-  array_to_mode( $self->mode_array )
-}
 
 
 sub split_mode_set {
@@ -162,7 +150,7 @@ sub modes_as_objects {
 has '_iter' => (
   lazy    => 1,
   is      => 'rw',
-  default => sub { 0 },
+  builder => sub { 0 },
 );
 
 sub next {
