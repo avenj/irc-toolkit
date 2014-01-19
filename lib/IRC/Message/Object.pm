@@ -86,7 +86,7 @@ has tags => (
 
 =pod
 
-=for Pod::Coverage BUILDARGS
+=for Pod::Coverage BUILDARGS has_\w+
 
 =cut
 

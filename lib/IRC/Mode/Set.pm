@@ -120,20 +120,6 @@ sub clone_from_params {
   )
 }
 
-=pod
-
-=for Pod::Coverage new_from_(mode|params)
-
-=cut
-
-## FIXME deprecated, remove Soon
-sub new_from_mode {
-  confess "new_from_mode() is deprecated; use clone_from_mode"
-}
-sub new_from_params {
-  confess "new_from_params() is deprecated; use clone_from_params"
-}
-
 
 sub modes_as_objects {
   my ($self) = @_;
@@ -146,6 +132,7 @@ sub modes_as_objects {
 
   @new
 }
+
 
 has '_iter' => (
   lazy    => 1,
@@ -171,7 +158,7 @@ sub reset {
 
 =pod
 
-=for Pod::Coverage BUILD
+=for Pod::Coverage BUILD has_\w+
 
 =cut
 
@@ -305,6 +292,8 @@ This is a data structure in the form of:
 
 Also see L<IRC::Toolkit::Modes/mode_to_array>
 
+Predicate: B<has_mode_array>
+
 =head2 modes_as_objects
 
 Returns a list of L<IRC::Mode::Single> objects constructed from our current
@@ -314,6 +303,8 @@ L</mode_array>.
 
 Returns the string representing the mode change.
 
+Predicate: B<has_mode_string>
+
 =head2 as_string
 
 B<as_string> is an alias for B<mode_string> to retain compatibility with
@@ -322,6 +313,8 @@ L<IRC::Mode::Single>.
 =head2 params
 
 Retrieve only the parameters to the mode change (as an ARRAY)
+
+Predicate: B<has_params>
 
 =head2 next
 
