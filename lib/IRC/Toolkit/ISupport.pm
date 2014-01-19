@@ -256,6 +256,7 @@ sub parse_isupport {
   }
 
   ## Everything else is bool / int / str we can't parse
+  ##  FIXME override can() ?
   our $AUTOLOAD;
   sub AUTOLOAD {
     my ($self) = @_;

@@ -1,7 +1,6 @@
 package IRC::Toolkit;
-
-use Carp;
 use strictures 1;
+use Carp;
 
 ## Core bits can be added to this list ...
 ## ... but removing modules will break stuff downstream

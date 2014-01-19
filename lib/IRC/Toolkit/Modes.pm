@@ -55,6 +55,13 @@ sub mode_to_array {
     unless defined $modestr;
 
   my %args = @_;
+  if (my $isup = $args{isupport_chanmodes}) {
+    confess 
+    "isupport_chanmodes specified but not an ISupport chanmodes() obj: $isup"
+      unless blessed $isup and $isup->can('always') and $isup->can('whenset');
+    $args{param_always} = $isup->always->unbless;
+    $args{param_set}    = $isup->whenset->unbless;
+  }
   $args{param_always} ||= [ split //, 'bkohv' ];
   $args{param_set}    ||= ( $args{param_on_set} || [ 'l' ] );
   $args{params}       ||= [ ];
@@ -187,6 +194,15 @@ For example:
 
 (If the mode string contains (space-delimited) parameters, they are given
 precedence ahead of the optional 'params' ARRAY.)
+
+Instead of manually specifying C<param_always> and C<param_set>, you can pass
+in the B<chanmodes> object provided by L<IRC::Toolkit::ISupport>:
+
+  my $isupport = parse_isupport(@isupport_lines);
+  my $array = mode_to_array( '+kl-t',
+    params => [ 'key', 10 ],
+    isupport_chanmodes => $isupport->chanmodes,
+  );
 
 =head2 array_to_mode
 
