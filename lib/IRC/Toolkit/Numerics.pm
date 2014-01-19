@@ -176,6 +176,7 @@ our %Numeric = (
    '375' => 'RPL_MOTDSTART',         # RFC1459
    '376' => 'RPL_ENDOFMOTD',         # RFC1459
    '378' => 'RPL_WHOISHOST',         # charybdis
+   '379' => 'RPL_WHOISMODES',        # hybrid-8.1.12
 
    '381' => 'RPL_YOUREOPER',         # RFC1459
    '382' => 'RPL_REHASHING',         # RFC1459
