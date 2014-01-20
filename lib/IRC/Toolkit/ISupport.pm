@@ -260,9 +260,25 @@ sub parse_isupport {
   our $AUTOLOAD;
   sub AUTOLOAD {
     my ($self) = @_;
-    my $subname = (split /::/, $AUTOLOAD)[-1];
-    $self->{$subname}
+    my $method = (split /::/, $AUTOLOAD)[-1];
+    $self->{$method}
   }
+
+  sub can {
+    my ($self, $method) = @_;
+    if (my $sub = $self->SUPER::can($method)) {
+      return $sub
+    }
+    return unless exists $self->{$method};
+    sub {
+      my ($this) = @_;
+      if (my $sub = $self->SUPER::can($method)) {
+        goto $sub
+      }
+      $AUTOLOAD = $method; goto &AUTOLOAD
+    }
+  }
+
   sub DESTROY {}
 
 }
