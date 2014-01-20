@@ -255,8 +255,7 @@ sub parse_isupport {
     $self->{extban}
   }
 
-  ## Everything else is bool / int / str we can't parse
-  ##  FIXME override can() ?
+  ## Everything else is bool / int / str we can't parse:
   our $AUTOLOAD;
   sub AUTOLOAD {
     my ($self) = @_;
