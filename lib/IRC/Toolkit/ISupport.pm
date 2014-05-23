@@ -91,7 +91,7 @@ my $parse = +{
 
   targmax => sub {
     my ($val) = @_;
-    my $ref = {};
+    my $ref = +{};
     TARGTYPE: for my $chunk (split /,/, $val) {
       my ($type, $lim) = split /:/, $chunk, 2;
       next TARGTYPE unless defined $lim;

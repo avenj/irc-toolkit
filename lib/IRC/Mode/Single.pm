@@ -31,15 +31,11 @@ sub param { $_[0]->[PARAM] }
 
 sub as_string {
   my ($self) = @_;
-  my $str = $self->[FLAG] . $self->[MODE];
-  $str .= " ".$self->[PARAM] if defined $self->[PARAM];
-  $str
+  $self->[FLAG] . $self->[MODE]
+    . (defined $self->[PARAM] ? ' '.$self->[PARAM] : '')
 }
 
-sub export {
-  my ($self) = @_;
-  [ @$self ]
-}
+sub export { [ @{$_[0]} ] }
 
 1;
 
