@@ -272,7 +272,7 @@ sub parse_isupport {
     return unless exists $self->{$method};
     sub {
       my ($this) = @_;
-      if (my $sub = $self->SUPER::can($method)) {
+      if (my $sub = $this->SUPER::can($method)) {
         goto $sub
       }
       $AUTOLOAD = $method; goto &AUTOLOAD
