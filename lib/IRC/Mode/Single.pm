@@ -1,4 +1,5 @@
 package IRC::Mode::Single;
+
 use strictures 1;
 use Carp;
 

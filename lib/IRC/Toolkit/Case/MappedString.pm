@@ -1,4 +1,5 @@
 package IRC::Toolkit::Case::MappedString;
+
 use strictures 1;
 use IRC::Toolkit::Case;
 use Scalar::Util 'blessed';

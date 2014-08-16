@@ -1,4 +1,5 @@
 package IRC::Toolkit::TS6;
+
 use strictures 1;
 use Carp;
 

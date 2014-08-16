@@ -1,4 +1,5 @@
 package IRC::Toolkit::Numerics;
+
 use strictures 1;
 use Carp 'confess';
 use List::Objects::WithUtils 'hash';

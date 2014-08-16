@@ -1,4 +1,5 @@
 package IRC::Toolkit::ISupport;
+
 use Carp 'confess';
 use strictures 1;
 

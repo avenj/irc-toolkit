@@ -1,4 +1,5 @@
 package IRC::Message::Object;
+
 use strictures 1;
 use Carp;
 

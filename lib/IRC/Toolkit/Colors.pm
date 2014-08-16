@@ -1,4 +1,5 @@
 package IRC::Toolkit::Colors;
+
 use strictures 1;
 use Carp;
 
