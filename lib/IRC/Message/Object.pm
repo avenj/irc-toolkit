@@ -9,14 +9,12 @@ use Types::Standard -all;
 
 use POE::Filter::IRCv3;
 
-use Moo; use MooX::late;
-
-extends 'Exporter::Tiny';
+sub ircmsg { __PACKAGE__->new(@_) }
 our @EXPORT = our @EXPORT_OK = 'ircmsg';
 
-use namespace::clean;
 
-sub ircmsg { __PACKAGE__->new(@_) }
+use Moo; use MooX::late;
+extends 'Exporter::Tiny';
 
 has colonify => (
   is        => 'ro',
@@ -82,12 +80,6 @@ has tags => (
   predicate => 'has_tags',
   default   => sub { hash },
 );
-
-=pod
-
-=for Pod::Coverage BUILDARGS TO_JSON has_\w+
-
-=cut
 
 sub BUILDARGS {
   my $class = shift;
@@ -195,6 +187,8 @@ print
 unless caller; 1;
 
 =pod
+
+=for Pod::Coverage BUILDARGS TO_JSON has_\w+
 
 =head1 NAME
 
