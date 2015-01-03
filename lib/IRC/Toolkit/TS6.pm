@@ -4,11 +4,8 @@ use strictures 1;
 use Carp;
 
 use parent 'Exporter::Tiny';
-our @EXPORT = 'ts6_id';
-
-sub ts6_id {
-  __PACKAGE__->new(@_)
-}
+sub ts6_id { __PACKAGE__->new(@_) }
+our @EXPORT = our @EXPORT_OK = 'ts6_id';
 
 use overload
   bool => sub { 1 },
@@ -21,16 +18,9 @@ use overload
 
 =cut
 
-sub new {
-  my ($class, $start) = @_;
-  my $self = [ split '', $start || 'A'x6 ];
-  bless $self, $class
-}
+sub new { bless [ split '', $_[1] || 'A'x6 ], $_[0] }
 
-sub as_string {
-  my ($self) = @_;
-  join '', @$self
-}
+sub as_string { join '', @{ $_[0] } }
 
 sub next {
   my ($self) = @_;
