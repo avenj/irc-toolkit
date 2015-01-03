@@ -5,10 +5,8 @@ use Carp;
 
 use IRC::Toolkit::Case;
 
+
 use Role::Tiny;
-
-use namespace::clean;
-
 requires 'casemap';
 
 sub lower {

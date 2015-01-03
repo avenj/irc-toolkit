@@ -12,8 +12,6 @@ our @EXPORT = qw/
   numeric_from_name
 /;
 
-use namespace::clean -except => 'import';
-
 our %Numeric = (
    '001' => 'RPL_WELCOME',
    '002' => 'RPL_YOURHOST',          # RFC2812

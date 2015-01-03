@@ -6,8 +6,6 @@ use Carp;
 use parent 'Exporter::Tiny';
 our @EXPORT = 'ts6_id';
 
-use namespace::clean;
-
 sub ts6_id {
   __PACKAGE__->new(@_)
 }
