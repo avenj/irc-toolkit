@@ -9,11 +9,10 @@ use Types::Standard -all;
 
 use POE::Filter::IRCv3;
 
-use Moo;
-use MooX::late;
+use Moo; use MooX::late;
 
 extends 'Exporter::Tiny';
-our @EXPORT_OK = 'ircmsg';
+our @EXPORT = our @EXPORT_OK = 'ircmsg';
 
 use namespace::clean;
 
@@ -86,7 +85,7 @@ has tags => (
 
 =pod
 
-=for Pod::Coverage BUILDARGS has_\w+
+=for Pod::Coverage BUILDARGS TO_JSON has_\w+
 
 =cut
 
@@ -177,6 +176,16 @@ sub truncate {
   }
 
   (ref $self)->new(raw_line => $new)
+}
+
+sub TO_JSON {
+  my ($self) = @_;
+  +{
+    command => $self->command,
+    prefix  => $self->prefix,
+    params  => $self->params,
+    ( $self->has_tags ? (tags => $self->tags) : () ),
+  }
 }
 
 print
