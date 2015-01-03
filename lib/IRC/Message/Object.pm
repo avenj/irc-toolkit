@@ -27,7 +27,6 @@ has colonify => (
 has command => (
   required  => 1,
   is        => 'ro',
-  predicate => 'has_command',
 );
 
 
@@ -259,8 +258,6 @@ Note that if the C<command> is set at construction time,
 no case-folding takes place.
 However, specifying a C<raw_line> at construction feeds 
 L<POE::Filter::IRCv3>, which will uppercase commands.
-
-predicate: C<has_command>
 
 =head3 params
 
