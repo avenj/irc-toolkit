@@ -28,7 +28,10 @@ sub import {
   1
 }
 
-1;
+print
+ qq[<Gilded> #otw also known as the "Welcome To Every Watchlist Channel"\n],
+ qq[<Capn_Refsmmat> #otw: On The Watchlist\n]
+unless caller; 1;
 
 
 =pod
