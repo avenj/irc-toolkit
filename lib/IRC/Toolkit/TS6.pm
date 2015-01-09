@@ -8,8 +8,9 @@ sub ts6_id { __PACKAGE__->new(@_) }
 our @EXPORT = our @EXPORT_OK = 'ts6_id';
 
 use overload
-  bool => sub { 1 },
-  '""' => 'as_string',
+  bool  => sub { 1 },
+  '&{}' => sub { my $s = shift; sub { $s->next } },
+  '""'  => 'as_string',
   fallback => 1;
 
 =pod
@@ -72,7 +73,12 @@ The exported B<ts6_id> function will instance a new ID object. B<ts6_id>
 optionally takes a start-point as a string (defaults to 'AAAAAA' similar to
 C<ratbox>).
 
-The object stringifies to the current ID.
+The object is overloaded in two ways; it stringifies to the current ID, and
+calling it as a C<CODE> ref is the same as calling L</next>:
+
+  my $idgen = ts6_id;
+  my $current = "$idgen";  # 'AAAAAA'
+  my $next = $idgen->();   # 'AAAAAB'
 
 =head2 as_string
 
@@ -83,7 +89,6 @@ The C<as_string> method explicitly stringifies the current ID.
 The C<next> will increment the current ID and return the ID as a string.
 
 If no more IDs are available, B<next> will croak.
-
 
 =head1 AUTHOR
 

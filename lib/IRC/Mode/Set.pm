@@ -185,7 +185,7 @@ IRC::Mode::Set - A set of parsed IRC mode changes
     mode_string => '+o-o+v avenj Joah Gilded',
 
     ## Optionally specify modes that take parameters (always or when set)
-    ## defaults, should vaguely match ISUPPORT CHANMODES parameters:
+    ## Defaults:
     param_always => 'bkohv',
     param_on_set => 'l',
   );

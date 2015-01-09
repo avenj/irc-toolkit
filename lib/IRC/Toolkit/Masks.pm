@@ -50,7 +50,7 @@ sub normalize_mask {
 
   ## Split user/host portions and do some clean up.
   $piece        =~ s/!//g if defined $piece;
-  @mask[1 .. 2] = split( /@/, $piece, 2) if defined $piece;
+  @mask[1 .. 2] = split /@/, $piece, 2 if defined $piece;
   $mask[2]      =~ s/@//g if defined $mask[2];
   for ( 1 .. 2 ) {
     $mask[$_] = '*' unless defined $mask[$_]
