@@ -1,5 +1,13 @@
 Revision history for Perl module IRC::Toolkit
 
+0.090001 2015-01-10
+
+  - IRC::Toolkit::TS6; add CODE overload that calls ->next
+
+  - Minor optimizations & cleanups
+
+  - Drop namespace::clean dependency
+
 0.089001 2015-01-03
 
   - IRC::Message::Object;
