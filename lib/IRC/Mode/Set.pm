@@ -97,7 +97,7 @@ sub split_mode_set {
 
 sub clone {
   my ($self) = @_;
-  (ref $self)->new(mode_array => dclone($self->mode_array))
+  (blessed $self)->new(mode_array => dclone($self->mode_array))
 }
 
 sub clone_from_mode {
