@@ -1,16 +1,18 @@
 package IRC::Toolkit::ISupport;
 
-use Carp 'confess';
 use strictures 1;
 
-use Scalar::Util 'blessed';
-
-use IRC::Message::Object 'ircmsg';
+use Carp          'confess';
+use Scalar::Util  'blessed';
 
 use List::Objects::WithUtils;
 
+use IRC::Message::Object 'ircmsg';
+
+
 use parent 'Exporter::Tiny';
 our @EXPORT = 'parse_isupport';
+
 
 my $parse_simple_flags = sub {
   my ($val) = @_;
@@ -24,8 +26,7 @@ my $parse = +{
     my $ref = {};
     for my $chunk (split /,/, $val) {
       my ($prefixed, $num) = split /:/, $chunk;
-      my @prefixes = split '', $prefixed;
-      for my $pfx (@prefixes) {
+      for my $pfx (split '', $prefixed) {
         $ref->{$pfx} = $num
       }
     }
@@ -81,7 +82,7 @@ my $parse = +{
       return +{}
     }
 
-    my $ref = {};
+    my $ref = +{};
     for my $mode (@modes) {
       $ref->{$mode} = shift @pfxs
     }
