@@ -81,8 +81,7 @@ sub uc_irc ($;$) {
 
 sub eq_irc ($$;$) {
   my ($first, $second, $casemap) = @_;
-  return unless uc_irc($first, $casemap) eq uc_irc($second, $casemap);
-  1
+  uc_irc($first, $casemap) eq uc_irc($second, $casemap);
 }
 
 sub irc_str {
