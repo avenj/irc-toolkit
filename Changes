@@ -1,5 +1,13 @@
 Revision history for Perl module IRC::Toolkit
 
+0.090002 2015-05-15
+
+  - Minor IRC::Message::Object & IRC::Toolkit::Case optimizations
+
+  - Require Moo-2+ and drop MooX::late dependency
+
+  - 'use strictures 2;' for saner fatal warnings behavior
+
 0.090001 2015-01-10
 
   - IRC::Toolkit::TS6; add CODE overload that calls ->next
