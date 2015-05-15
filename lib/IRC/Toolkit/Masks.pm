@@ -17,15 +17,13 @@ sub matches_mask {
   ## Imported from IRC::Utils:
   my ($mask, $nuh, $casemap) = @_;
   confess "Expected a mask, a string to match, and optional casemap"
-    unless defined $mask and length $mask
-    and    defined $nuh;
+    unless length $mask and defined $nuh;
 
   my $quoted = quotemeta uc_irc $mask, $casemap;
   $quoted =~ s/\\\*/[\x01-\xFF]{0,}/g;
   $quoted =~ s/\\\?/[\x01-\xFF]{1,1}/g;
 
-  $nuh = uc_irc $nuh, $casemap;
-  $nuh =~ /^$quoted$/ ? 1 : ()
+  uc_irc($nuh, $casemap) =~ /^$quoted$/ ? 1 : ()
 }
 
 sub normalize_mask {
