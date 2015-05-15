@@ -1,6 +1,6 @@
 package IRC::Toolkit::Case;
 
-use strictures 1;
+use strictures 2;
 no warnings 'once';
 use Carp 'carp';
 

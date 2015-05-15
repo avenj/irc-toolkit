@@ -1,6 +1,6 @@
 package IRC::Toolkit::ISupport;
 
-use strictures 1;
+use strictures 2;
 
 use Carp          'confess';
 use Scalar::Util  'blessed';
@@ -164,7 +164,7 @@ sub parse_isupport {
 { package
   IRC::Toolkit::_ISchanmodes;
   use Carp 'confess';
-  use strictures 1;
+  use strictures 2;
   sub new {
     my ($cls, %self) = @_;
     bless +{%self}, $cls 
@@ -188,7 +188,7 @@ sub parse_isupport {
 { package
   IRC::Toolkit::_ISextban;
   use Carp 'confess';
-  use strictures 1;
+  use strictures 2;
   sub new {
     my ($cls, %self) = @_;
     bless +{%self}, $cls
@@ -207,7 +207,7 @@ sub parse_isupport {
   IRC::Toolkit::ISupport::Obj;
 
   use Carp 'confess';
-  use strictures 1;
+  use strictures 2;
   use Scalar::Util 'blessed';
 
   { no strict 'refs';

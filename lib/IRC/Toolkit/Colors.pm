@@ -1,6 +1,6 @@
 package IRC::Toolkit::Colors;
 
-use strictures 1;
+use strictures 2;
 use Carp;
 
 use parent 'Exporter::Tiny';

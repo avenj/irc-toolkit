@@ -1,6 +1,6 @@
 package IRC::Toolkit::CTCP;
 
-use strictures 1;
+use strictures 2;
 use Carp 'confess';
 
 use parent 'Exporter::Tiny';

@@ -1,6 +1,6 @@
 package IRC::Toolkit::Role::CaseMap;
 
-use strictures 1;
+use strictures 2;
 use Carp;
 
 use IRC::Toolkit::Case;

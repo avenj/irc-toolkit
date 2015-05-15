@@ -1,6 +1,6 @@
 package IRC::Toolkit::Case::MappedString;
 
-use strictures 1;
+use strictures 2;
 use IRC::Toolkit::Case;
 use Scalar::Util 'blessed';
 use overload

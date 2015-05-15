@@ -1,6 +1,6 @@
 package IRC::Mode::Single;
 
-use strictures 1;
+use strictures 2;
 use Carp;
 
 =pod

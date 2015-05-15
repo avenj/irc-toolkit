@@ -1,7 +1,7 @@
 package IRC::Toolkit::Masks;
 
 use Carp;
-use strictures 1;
+use strictures 2;
 
 use parent 'Exporter::Tiny';
 our @EXPORT = qw/

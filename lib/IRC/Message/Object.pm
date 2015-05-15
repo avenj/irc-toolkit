@@ -1,6 +1,6 @@
 package IRC::Message::Object;
 
-use strictures 1;
+use strictures 2;
 use Carp;
 
 use List::Objects::WithUtils;
@@ -13,7 +13,7 @@ sub ircmsg { __PACKAGE__->new(@_) }
 our @EXPORT = our @EXPORT_OK = 'ircmsg';
 
 
-use Moo; use MooX::late;
+use Moo;
 extends 'Exporter::Tiny';
 
 has colonify => (

@@ -1,6 +1,6 @@
 package IRC::Toolkit::Numerics;
 
-use strictures 1;
+use strictures 2;
 use Carp 'confess';
 use List::Objects::WithUtils 'hash';
 
