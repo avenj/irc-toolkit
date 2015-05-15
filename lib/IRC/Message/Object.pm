@@ -35,8 +35,7 @@ has filter => (
 );
 
 sub __build_filter {
-  my $colonify = defined $_[1] ? $_[1] : 1;
-  POE::Filter::IRCv3->new(colonify => $colonify)
+  POE::Filter::IRCv3->new( colonify => (defined $_[1] ? $_[1] : 1) )
 }
 
 
@@ -62,13 +61,12 @@ has raw_line => (
   predicate => 'has_raw_line',
   default   => sub {
     my ($self) = @_;
-    my %hash;
-    for my $key (qw/prefix command params tags/) {
-      my $pred = "has_".$key;
-      $hash{$key} = $self->$key if $self->$pred;
+    my %opts;
+    for (qw/prefix command params tags/) {
+      my $pred = "has_".$_;
+      $opts{$_} = $self->$_ if $self->$pred;
     }
-    my $lines = $self->filter->put( [ \%hash ] );
-    $lines->[0]
+    $self->filter->put([ \%opts ])->[0]
   },
 );
 
@@ -116,7 +114,7 @@ sub has_tag {
 
 sub tags_as_array {
   my ($self) = @_;
-  return array() unless $self->has_tags;
+  return array unless $self->has_tags;
 
   my @tag_array;
   for ($self->tags->kv->all) {
@@ -126,7 +124,7 @@ sub tags_as_array {
         : $thistag
   };
 
-  array(@tag_array)
+  array @tag_array
 }
 
 sub tags_as_string {
