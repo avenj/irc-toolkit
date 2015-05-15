@@ -8,6 +8,10 @@ Revision history for Perl module IRC::Toolkit
 
   - 'use strictures 2;' for saner fatal warnings behavior
 
+  - Kill stale Test::Exception dependency
+
+  - Switch to cpanfile packaging
+
 0.090001 2015-01-10
 
   - IRC::Toolkit::TS6; add CODE overload that calls ->next
