@@ -43,18 +43,18 @@ sub normalize_mask {
   ## Push nick, if we have one, or * if we don't.
   if ( index($orig, '!') == -1 && index($orig, '@') > -1) {
     $piece = $orig;
-    push(@mask, '*');
+    push @mask, '*';
   } else {
     ($mask[0], $piece) = split /!/, $orig, 2;
   }
 
   ## Split user/host portions and do some clean up.
-  $piece        =~ s/!//g if defined $piece;
-  @mask[1 .. 2] = split /@/, $piece, 2 if defined $piece;
-  $mask[2]      =~ s/@//g if defined $mask[2];
-  for ( 1 .. 2 ) {
-    $mask[$_] = '*' unless defined $mask[$_]
+  if (defined $piece) {
+    $piece        =~ s/!//g;
+    @mask[1 .. 2] = split /@/, $piece, 2;
   }
+  $mask[2]      =~ s/@//g if defined $mask[2];
+  map {; $mask[$_] = '*' unless defined $mask[$_] } 1, 2;
 
   $mask[0] . '!' . $mask[1] . '@' . $mask[2]
 }
