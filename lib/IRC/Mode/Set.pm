@@ -19,7 +19,7 @@ has param_always => (
   lazy    => 1,
   is      => 'ro',
   coerce  => $str_to_arr,
-  builder => sub { [ split //, 'bkohv' ] },
+  builder => sub { [ qw/ b k o h v / ] },
 );
 
 has param_on_set => (
@@ -54,13 +54,7 @@ has params => (
     ref $_[0] eq 'ARRAY' ? $_[0] : [ split ' ', $_[0] ]
   },
   builder => sub {
-    my ($self) = @_;
-    my $arr;
-    for my $cset (@{ $self->mode_array }) {
-      push @$arr, $cset->[2]
-        if defined $cset->[2]
-    }
-    $arr
+    [ map {; defined $_->[2] ? $_->[2] : () } @{ $_[0]->mode_array } ]
   },
 );
 
@@ -71,10 +65,7 @@ has mode_string => (
   lazy      => 1,
   is        => 'ro',
   predicate => 'has_mode_string',
-  builder   => sub {
-    my ($self) = @_;
-    array_to_mode $self->mode_array
-  },
+  builder   => sub { array_to_mode $_[0]->mode_array },
 );
 
 
@@ -122,15 +113,7 @@ sub clone_from_params {
 
 
 sub modes_as_objects {
-  my ($self) = @_;
-
-  my @queue = @{ $self->mode_array };
-  my @new;
-  for my $item (@queue) {
-    push @new, IRC::Mode::Single->new(@$item)
-  }
-
-  @new
+  map {; IRC::Mode::Single->new(@$_) } @{ $_[0]->mode_array };
 }
 
 
