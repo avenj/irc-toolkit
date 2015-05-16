@@ -23,7 +23,7 @@ sub matches_mask {
   $quoted =~ s/\\\*/[\x01-\xFF]{0,}/g;
   $quoted =~ s/\\\?/[\x01-\xFF]{1,1}/g;
 
-  uc_irc($nuh, $casemap) =~ /^$quoted$/ ? 1 : ()
+  !! ( uc_irc($nuh, $casemap) =~ /^$quoted$/ )
 }
 
 sub normalize_mask {
@@ -51,7 +51,7 @@ sub normalize_mask {
     $piece        =~ s/!//g;
     @mask[1 .. 2] = split /@/, $piece, 2;
   }
-  $mask[2]      =~ s/@//g if defined $mask[2];
+  $mask[2] =~ s/@//g if defined $mask[2];
   map {; $mask[$_] = '*' unless defined $mask[$_] } 1, 2;
 
   $mask[0] . '!' . $mask[1] . '@' . $mask[2]
