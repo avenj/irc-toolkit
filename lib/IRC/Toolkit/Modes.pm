@@ -66,10 +66,8 @@ sub mode_to_array {
     unshift @{ $args{params} }, @params;
   }
 
-  for (qw/ param_always param_set params /) {
-    confess "$_ should be an ARRAY"
-      unless reftype $args{$_} eq 'ARRAY';
-  }
+  confess "$_ should be an ARRAY" unless reftype $args{$_} eq 'ARRAY'
+    for qw/ param_always param_set params /;
 
   my @parsed;
   my %param_always = map {; $_ => 1 } @{ $args{param_always} };
