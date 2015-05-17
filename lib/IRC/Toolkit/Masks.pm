@@ -53,7 +53,7 @@ sub normalize_mask {
 
   $mask[0] 
   . '!' . (defined $mask[1] ? $mask[1] : '*' )
-  . '@' . (length $mask[2] ? $mask[2] : '*' )
+  . '@' . (defined $mask[2] && length $mask[2] ? $mask[2] : '*' )
 }
 
 sub parse_user {
