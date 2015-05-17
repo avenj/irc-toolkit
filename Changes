@@ -1,5 +1,9 @@
 Revision history for Perl module IRC::Toolkit
 
+0.090003 2015-05-17
+
+  - Various cleanups & optimizations
+
 0.090002 2015-05-15
 
   - Minor IRC::Message::Object & IRC::Toolkit::Case optimizations
