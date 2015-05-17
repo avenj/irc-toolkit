@@ -25,8 +25,7 @@ sub irc_line_from_ref {
   my $ref = shift;
   confess "Expected a HASH and optional filter arguments"
     unless reftype $ref eq 'HASH';
-  $ref = +{%$ref} if blessed $ref;
-  $filter->new(@_)->put([$ref])->[0]
+  $filter->new(@_)->put([blessed $ref ? +{%$ref} : $ref])->[0]
 }
 
 =pod
