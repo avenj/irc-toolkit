@@ -52,8 +52,7 @@ sub color {
 }
 
 sub has_color {
-  my ($str) = @_;
-  $str =~ /[\x02\x03\x04\x1B\x1f\x16\x1d\x11\x06]/ ? 1 : ()
+  !! ( $_[0] =~ /[\x02\x03\x04\x1B\x1f\x16\x1d\x11\x06]/ )
 }
 
 sub strip_color {
