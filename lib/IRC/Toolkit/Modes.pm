@@ -19,23 +19,16 @@ sub array_to_mode {
     $array = $array->mode_array
   }
   confess "Expected an ARRAY but got $array" 
-    unless reftype $array eq 'ARRAY';
-  my @items = @$array;
+    unless ref $array and reftype $array eq 'ARRAY';
 
   my $mstr;
   my $curflag = my $pstr = '';
-  while (my $cset = shift @items) {
+  for my $cset (@$array) {
     my ($flag, $mode, $param) = @$cset;
     confess "Appear to have been given an invalid mode array"
       unless defined $flag and defined $mode;
-
-    if ($flag eq $curflag) {
-      $mstr   .= $mode;
-    } else {
-      $mstr   .= $flag . $mode;
-      $curflag = $flag
-    }
-    $pstr     .= " $param" if defined $param;
+    $mstr .= $flag eq $curflag ? $mode : ($curflag = $flag) . $mode ;
+    $pstr .= " $param" if defined $param;
   }
 
   $mstr .= $pstr if length $pstr;
