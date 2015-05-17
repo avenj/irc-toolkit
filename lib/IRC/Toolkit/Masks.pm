@@ -36,7 +36,7 @@ sub normalize_mask {
   $orig =~ s/\*{2,}/*/g;
 
   my ($piece, @mask);
-  ## Push nick, if we have one, or * if we don't.
+  ## nick, if we have one, or * if we don't.
   if ( index($orig, '!') == -1 && index($orig, '@') > -1) {
     $piece = $orig;
     push @mask, '*';
@@ -44,7 +44,7 @@ sub normalize_mask {
     ($mask[0], $piece) = split /!/, $orig, 2;
   }
 
-  ## Split user/host portions and do some clean up.
+  ## user/host portions
   if (defined $piece) {
     $piece      =~ s/!//g;
     @mask[1, 2] = split /@/, $piece, 2;
