@@ -24,6 +24,12 @@ cmp_ok
   'normalize_mask (nick-only) ok';
 
 cmp_ok
+  normalize_mask('avenj!@'),
+  'eq',
+  'avenj!*@*',
+  'normalize_mask (irregular nick-only) ok';
+
+cmp_ok
   normalize_mask('*@*'),
   'eq',
   '*!*@*',

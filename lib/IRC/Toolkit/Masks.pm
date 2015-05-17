@@ -52,7 +52,8 @@ sub normalize_mask {
   $mask[2] =~ s/@//g if defined $mask[2];
 
   $mask[0] 
-  . '!' . (defined $mask[1] ? $mask[1] : '*' )
+  # defined+length is annoying but elsewise we get fatal warnings on 5.10
+  . '!' . (defined $mask[1] && length $mask[1] ? $mask[1] : '*' )
   . '@' . (defined $mask[2] && length $mask[2] ? $mask[2] : '*' )
 }
 
