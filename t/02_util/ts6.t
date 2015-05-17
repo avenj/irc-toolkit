@@ -23,6 +23,6 @@ ok !@bad, 'unique IDs all appear to have correct length';
 
 my $dies = ts6_id( 'Z99999' );
 eval {; $dies->next };
-like $@, qr/Ran out of IDs after/, 'dies when IDs run dry';
+like $@, qr/Ran out of IDs/, 'dies when IDs run dry';
 
 done_testing;

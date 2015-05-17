@@ -39,11 +39,9 @@ sub next {
     }
   }
 
-  if ($self->[0] eq 'Z') {
-    croak "Ran out of IDs after ".$self->as_string
-  } else {
-    $self->[$pos]++
-  }
+  croak "Ran out of IDs!" if $self->[0] eq 'Z';
+
+  ++$self->[$pos];
 
   $self->as_string
 }
