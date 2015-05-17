@@ -12,21 +12,20 @@ requires 'casemap';
 sub lower {
   my ($self, $val) = @_;
   confess "lower() called without a value" unless defined $val;
-  lc_irc( $val, $self->casemap )
+  lc_irc $val, $self->casemap
 }
 
 sub upper {
   my ($self, $val) = @_;
   confess "upper() called without a value" unless defined $val;
-  uc_irc( $val, $self->casemap )
+  uc_irc $val, $self->casemap
 }
 
 sub equal {
-  confess 'equal() expects two values'
-    unless @_ == 3;
+  confess 'equal() expects two values' unless @_ == 3;
   my ($self, $one, $two) = @_;
   my $cmap = $self->casemap;
-  uc_irc($one, $cmap) eq uc_irc($two, $cmap) ? 1 : ()
+  !! ( uc_irc($one, $cmap) eq uc_irc($two, $cmap) )
 }
 
 1;
