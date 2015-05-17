@@ -49,10 +49,11 @@ sub normalize_mask {
     $piece      =~ s/!//g;
     @mask[1, 2] = split /@/, $piece, 2;
   }
+  $mask[2] =~ s/@//g if defined $mask[2];
 
   $mask[0] 
   . '!' . (defined $mask[1] ? $mask[1] : '*' )
-  . '@' . (defined $mask[2] ? ($mask[2] =~ s/@//g, $mask[2]) : '*' )
+  . '@' . (length $mask[2] ? $mask[2] : '*' )
 }
 
 sub parse_user {

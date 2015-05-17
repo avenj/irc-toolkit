@@ -33,6 +33,12 @@ cmp_ok
   normalize_mask('*avenj@*'),
   'eq',
   '*!*avenj@*',
+  'normalize_mask (username and wildcard host) ok';
+
+cmp_ok
+  normalize_mask('*avenj@'),
+  'eq',
+  '*!*avenj@*',
   'normalize_mask (username only) ok';
 
 cmp_ok
