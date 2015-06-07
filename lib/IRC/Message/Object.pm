@@ -17,8 +17,10 @@ use Moo;
 extends 'Exporter::Tiny';
 
 has colonify => (
+  lazy      => 1,
   is        => 'ro',
-  default   => sub { 1 },
+  predicate => 1,
+  default   => sub { 0 },
 );
 
 has command => (
@@ -28,21 +30,22 @@ has command => (
 
 
 has filter => (
-  is       => 'rw',
-  isa      => HasMethods[qw/get put/],
-  lazy     => 1,
-  builder  => '__build_filter',
+  is        => 'rw',
+  isa       => HasMethods[qw/get put/],
+  lazy      => 1,
+  predicate => 1,
+  builder   => '__build_filter',
 );
 
 sub __build_filter {
-  POE::Filter::IRCv3->new( colonify => (defined $_[1] ? $_[1] : 1) )
+  POE::Filter::IRCv3->new( colonify => (defined $_[1] ? $_[1] : 0) )
 }
 
 
 has prefix => (
   is        => 'ro',
   lazy      => 1,
-  predicate => 'has_prefix',
+  predicate => 1,
   default   => sub { '' },
 );
 
@@ -51,14 +54,14 @@ has params => (
   lazy      => 1,
   isa       => ArrayObj,
   coerce    => 1,
-  predicate => 'has_params',
+  predicate => 1,
   default   => sub { array },
 );
 
 has raw_line => (
   is        => 'ro',
   lazy      => 1,
-  predicate => 'has_raw_line',
+  predicate => 1,
   default   => sub {
     my ($self) = @_;
     my %opts;
@@ -285,7 +288,7 @@ Defaults to true.
 Can be used to change the L<POE::Filter> used to transform a raw line into a
 HASH and vice-versa.
 
-Defaults to a L<POE::Filter::IRCv3> instance.
+Defaults to a L<POE::Filter::IRCv3> instance with C<< colonify => 0 >> set.
 
 =head3 get_tag
 
