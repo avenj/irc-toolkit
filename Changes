@@ -1,5 +1,13 @@
 Revision history for Perl module IRC::Toolkit
 
+0.091001 2015-06-07
+
+  - IRC::Message::Object now defaults to using a 'colonify => 0' filter
+
+  - IRC::Message::Object provides has_colonify / has_filter predicates
+
+  - normalize_mask fixes regarding irregular nick-only/user-only masks
+
 0.090003 2015-05-17
 
   - Various cleanups & optimizations
