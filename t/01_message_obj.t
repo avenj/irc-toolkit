@@ -71,7 +71,16 @@ my $from_raw = new_ok( 'IRC::Message::Object' => [
     raw_line => $tag_line,
   ],
 );
-cmp_ok( $from_raw->command, 'eq', 'PRIVMSG', 'obj from raw_line  ok' );
+# Breaking encapsulation needs to work for optimized bits like
+# POEx::IRC::Backend ->
+cmp_ok $from_raw->{command}, 'eq', 'PRIVMSG',
+  'backing HASH filled command from raw ok';
+is_deeply [ $from_raw->{params}->all ], [ '#somewhere', 'Some string' ],
+  'backing HASH filled params from raw ok';
+
+cmp_ok( $from_raw->command, 'eq', 'PRIVMSG', 'obj from raw_line ok: command' );
+is_deeply [ $from_raw->params->all ], [ '#somewhere', 'Some string' ],
+  'obj from raw_line ok: params';
 
 my $long_without_tags = q{PRIVMSG #somewhere :}.'X'x700;
 my $long_with_tags = $tag_line .'X'x700;
