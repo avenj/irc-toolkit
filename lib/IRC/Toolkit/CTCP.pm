@@ -34,7 +34,7 @@ sub ctcp_quote {
   }
 
   $line =~ s/\001/\\a/g;
-  "\001$line\001";
+  "\001$line\001"
 }
 
 sub ctcp_unquote {
@@ -53,9 +53,7 @@ sub ctcp_unquote {
   shift @chunks unless length $chunks[0];
   for (@chunks) {
     ## De-quote / convert escapes
-    s/\\([^\\a])/$1/g;
-    s/\\\\/\\/g;
-    s/\\a/\001/g;
+    s/\\([^\\a])/$1/g, s/\\\\/\\/g, s/\\a/\001/g
   }
 
   my (@ctcp, @text);
