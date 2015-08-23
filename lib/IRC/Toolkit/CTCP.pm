@@ -51,10 +51,8 @@ sub ctcp_unquote {
 
   my @chunks = split /\001/, $line;
   shift @chunks unless length $chunks[0];
-  for (@chunks) {
-    ## De-quote / convert escapes
-    s/\\([^\\a])/$1/g, s/\\\\/\\/g, s/\\a/\001/g
-  }
+  ## De-quote / convert escapes
+  s/\\([^\\a])/$1/g, s/\\\\/\\/g, s/\\a/\001/g for @chunks;
 
   my (@ctcp, @text);
 
@@ -115,7 +113,8 @@ sub ctcp_extract {
       )
     }
   }
-  return
+  
+  undef
 }
 
 
