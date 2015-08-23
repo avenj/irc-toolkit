@@ -20,10 +20,8 @@ use overload
 
 
 sub new {
-  my $class = shift;
-  confess "Expected at least a flag and mode"
-    unless @_ >= 2;
-  bless [ @_ ], $class
+  confess "Expected at least a flag and mode" unless @_ >= 3;
+  bless [ @_[1 .. $#_] ], $_[0]
 }
 
 sub flag  { $_[0]->[FLAG] }
