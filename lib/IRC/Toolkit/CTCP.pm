@@ -168,7 +168,8 @@ to the CTCP command:
   ## DCC SEND:
   $ev->command eq 'dcc_request_send' 
 
-Returns empty list if no valid CTCP was found.
+Returns C<undef> if no valid CTCP was found; this is a breaking change in
+C<v0.91.2>, as previous versions returned the empty list.
 
 =head2 ctcp_quote
 
