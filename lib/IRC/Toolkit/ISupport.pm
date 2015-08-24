@@ -132,10 +132,7 @@ sub _isupport_hash {
   \%cur
 }
 
-sub _isupport_hash_to_obj {
-  my ($isupport_hash) = @_;
-  IRC::Toolkit::ISupport::Obj->__new($isupport_hash)
-}
+sub _isupport_hash_to_obj { IRC::Toolkit::ISupport::Obj->__new($_[0]) }
 
 sub parse_isupport {
   my @items = map {;
