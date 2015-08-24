@@ -162,10 +162,7 @@ sub parse_isupport {
   IRC::Toolkit::_ISchanmodes;
   use Carp 'confess';
   use strictures 2;
-  sub new {
-    my ($cls, %self) = @_;
-    bless +{%self}, $cls 
-  }
+  sub new { bless +{ @_[1 .. $#_] }, $_[0] }
 
   sub list    { $_[0]->{list} }
   sub always  { $_[0]->{always} }
@@ -186,10 +183,7 @@ sub parse_isupport {
   IRC::Toolkit::_ISextban;
   use Carp 'confess';
   use strictures 2;
-  sub new {
-    my ($cls, %self) = @_;
-    bless +{%self}, $cls
-  }
+  sub new { bless +{ @_[1 .. $#_] }, $_[0] }
 
   sub prefix { $_[0]->{prefix} }
   sub flags  { $_[0]->{flags}  }
