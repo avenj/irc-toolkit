@@ -506,6 +506,22 @@ remapped via L</associate_numeric> are included in the exported hash.
 Like L</export>, but returns the reversed hash (mapping RPL/ERR names to
 numerics).
 
+=head2 Overriding numerics
+
+It's possible for a subclass to override individual numerics (and otherwise
+default to the standard list) by providing a constructor that uses
+L<List::Objects::WithUtils> to construct C<hash>-type objects containing
+overrides:
+
+  package My::Numerics;
+  use List::Objects::WithUtils 'hash';
+  use parent 'IRC::Toolkit::Numerics';
+  sub new {
+    bless +{
+      over_num  => hash(304 => 'RPL_FOO'),
+      over_name => hash(RPL_RPL => 304),
+    }, $_[0]
+  }
 
 =head1 AUTHOR
 
