@@ -506,7 +506,7 @@ remapped via L</associate_numeric> are included in the exported hash.
 Like L</export>, but returns the reversed hash (mapping RPL/ERR names to
 numerics).
 
-=head2 Overriding numerics
+=head1 SUBCLASSING
 
 It's possible for a subclass to override individual numerics (and otherwise
 default to the standard list) by providing a constructor that uses
