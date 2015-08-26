@@ -76,4 +76,22 @@ cmp_ok( $nameshash->get('ERR_RESTRICTED'), '==', 484,
   'override export_by_name ok'
 );
 
+{ package
+    IRC::Toolkit::Numerics::Test;
+  use Lowu 'hash';
+  our @ISA = 'IRC::Toolkit::Numerics';
+  sub new {
+    bless +{
+      over_num  => hash(304 => 'RPL_FOO'),
+      over_name => hash('RPL_OMOTD' => '100'),
+    }, $_[0]
+  }
+}
+
+$nobj = IRC::Toolkit::Numerics->new('Test');
+cmp_ok $nobj->get_name_for('304'), 'eq', 'RPL_FOO',
+  'numeric override ok';
+cmp_ok $nobj->get_numeric_for('RPL_OMOTD'), '==', 100,
+  'name override ok';
+
 done_testing;
