@@ -4,7 +4,7 @@ use strictures 2;
 use Carp 'confess';
 use List::Objects::WithUtils 'hash';
 
-use Module::Runtime 'use_module';
+use Module::Runtime 'use_package_optimistically';
 
 use parent 'Exporter::Tiny';
 our @EXPORT = qw/
@@ -350,7 +350,8 @@ sub new {
   my ($cls, $type) = splice @_, 0, 2;
 
   if ($type) {
-    return use_module('IRC::Toolkit::Numeric::'.$type)->new(@_)
+    return
+      use_package_optimistically('IRC::Toolkit::Numerics::'.$type)->new(@_)
   }
 
   bless +{ over_num => hash(), over_name => hash() }, $cls
@@ -504,6 +505,7 @@ remapped via L</associate_numeric> are included in the exported hash.
 
 Like L</export>, but returns the reversed hash (mapping RPL/ERR names to
 numerics).
+
 
 =head1 AUTHOR
 
