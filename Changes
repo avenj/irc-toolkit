@@ -1,5 +1,16 @@
 Revision history for Perl module IRC::Toolkit
 
+0.092001 2015-08-29
+
+  - Minor incompatible change in 'ctcp_extract'; return explicit undef (rather
+    than the empty list) if there is no CTCP to extract
+
+  - Various optimizations, including MooX::TypeTiny for IRC::Message::Object
+
+  - Fixes and documentation regarding overriding IRC::Toolkit::Numerics
+
+  - Expanded tests and documentation
+
 0.091001 2015-06-07
 
   - IRC::Message::Object now defaults to using a 'colonify => 0' filter
