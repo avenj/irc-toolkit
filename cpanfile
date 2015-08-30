@@ -10,6 +10,7 @@ requires "List::Objects::Types"      => "1";
 requires "POE::Filter::IRCv3" => "0.045";
 
 requires "Moo" => "2";
+requires "MooX::TypeTiny" => "0";
 
 requires "Role::Tiny"       => "0";
 requires "Types::Standard"  => "0";

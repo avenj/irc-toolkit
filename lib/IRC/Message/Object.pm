@@ -13,7 +13,7 @@ sub ircmsg { __PACKAGE__->new(@_) }
 our @EXPORT = our @EXPORT_OK = 'ircmsg';
 
 
-use Moo;
+use Moo; use MooX::TypeTiny;
 extends 'Exporter::Tiny';
 
 has colonify => (
