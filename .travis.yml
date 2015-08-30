@@ -24,8 +24,6 @@ perl:
   - "5.22"
 #  - "blead"   # git
 
-env:
-
 matrix:
 #  include:
 #    - perl: 5.18
