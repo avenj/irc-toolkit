@@ -93,5 +93,7 @@ cmp_ok $nobj->get_name_for('304'), 'eq', 'RPL_FOO',
   'numeric override ok';
 cmp_ok $nobj->get_numeric_for('RPL_OMOTD'), '==', 100,
   'name override ok';
+cmp_ok $nobj->get_name_for(471), 'eq', 'ERR_CHANNELISFULL',
+  'overrides did not mask original set';
 
 done_testing;
