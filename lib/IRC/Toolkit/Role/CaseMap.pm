@@ -25,7 +25,7 @@ sub equal {
   confess 'equal() expects two values' unless @_ == 3;
   my ($self, $one, $two) = @_;
   my $cmap = $self->casemap;
-  !! ( uc_irc($one, $cmap) eq uc_irc($two, $cmap) )
+  uc_irc($one, $cmap) eq uc_irc($two, $cmap)
 }
 
 1;
