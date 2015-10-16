@@ -3,6 +3,8 @@ package IRC::Message::Object;
 use strictures 2;
 use Carp;
 
+use Scalar::Util 'blessed';
+
 use List::Objects::WithUtils;
 use List::Objects::Types -all;
 use Types::Standard -all;
@@ -168,7 +170,7 @@ sub truncate {
     $new = length $current <= 510 ? $current : substr $current, 0, 510 ;
   }
 
-  (ref $self)->new(raw_line => $new)
+  (blessed $self)->new(raw_line => $new)
 }
 
 sub TO_JSON {
