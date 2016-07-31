@@ -40,7 +40,11 @@ has filter => (
 );
 
 sub __build_filter {
-  POE::Filter::IRCv3->new( colonify => (defined $_[1] ? $_[1] : 0) )
+  POE::Filter::IRCv3->new(
+    colonify => (
+      defined $_[1] ? $_[1] : $_[0]->colonify
+    ),
+  )
 }
 
 
@@ -66,8 +70,8 @@ has raw_line => (
   predicate => 1,
   default   => sub {
     my ($self) = @_;
-    my %opts;
-    for (qw/prefix command params tags/) {
+    my %opts = ( command => $self->command );
+    for (qw/colonify prefix params tags/) {
       my $pred = "has_".$_;
       $opts{$_} = $self->$_ if $self->$pred;
     }
@@ -92,7 +96,9 @@ sub BUILDARGS {
     if (defined $params{raw_line}) {
       ## Try to create self from raw_line instead:
       my $filt = $params{filter} ?
-        $params{filter} : $class->__build_filter($params{colonify});
+        $params{filter} : $class->__build_filter(
+          defined $params{colonify} ? $params{colonify} : 0
+        );
       my $refs = $filt->get( [$params{raw_line}] );
       %params = %{ $refs->[0] } if @$refs;
     } else {
