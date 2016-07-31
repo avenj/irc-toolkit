@@ -212,8 +212,7 @@ IRC::Message::Object - Incoming or outgoing IRC events
     params   => [ 'user', 'Welcome to IRC' ],
   );
 
-  ## ... or import and use the 'ircmsg()' shortcut:
-  use IRC::Message::Object 'ircmsg';
+  ## ... or use the 'ircmsg()' shortcut:
   my $event = ircmsg(
     command => '001',
     prefix  => ':some.server.org',
