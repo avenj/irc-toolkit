@@ -1,5 +1,13 @@
 Revision history for Perl module IRC::Toolkit
 
+0.092002 2016-07-31
+
+  - Samuel Hoffman (SJHOFFMAN / miniCruzer) reported that
+    IRC::Message::Object's ->raw_line generator was broken as the 'has_command'
+    predicate had been previously removed.
+
+    Related fixes include proper ->colonify checks.
+
 0.092001 2015-08-29
 
   - Minor incompatible change in 'ctcp_extract'; return explicit undef (rather
