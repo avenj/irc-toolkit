@@ -82,6 +82,17 @@ cmp_ok( $from_raw->command, 'eq', 'PRIVMSG', 'obj from raw_line ok: command' );
 is_deeply [ $from_raw->params->all ], [ '#somewhere', 'Some string' ],
   'obj from raw_line ok: params';
 
+my $clonedish = IRC::Message::Object->new(
+  colonify => 1,
+  command => $from_raw->command,
+  params  => [ @{ $from_raw->params } ],
+  prefix  => $from_raw->prefix,
+);
+my $line_from_clonedish = $clonedish->raw_line;
+
+cmp_ok $line_from_clonedish, 'eq', 'PRIVMSG #somewhere :Some string',
+  'raw_line from cloned ok';
+
 my $long_without_tags = q{PRIVMSG #somewhere :}.'X'x700;
 my $long_with_tags = $tag_line .'X'x700;
 
